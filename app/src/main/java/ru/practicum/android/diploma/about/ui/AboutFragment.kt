@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentAboutBinding
 
-class AboutFragment: Fragment(R.layout.fragment_about) {
+class AboutFragment : Fragment(R.layout.fragment_about) {
     private var _binding: FragmentAboutBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

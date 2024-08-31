@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 
-class SearchFragment : Fragment(R.layout.fragment_search){
+class SearchFragment : Fragment(R.layout.fragment_search) {
     private var _binding: FragmentSearchBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

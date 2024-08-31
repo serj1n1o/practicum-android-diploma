@@ -12,7 +12,7 @@ import ru.practicum.android.diploma.databinding.ActivityRootBinding
 class RootActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityRootBinding.inflate(layoutInflater).also {setContentView(it.root)}
+        val binding = ActivityRootBinding.inflate(layoutInflater).also { setContentView(it.root) }
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.rootFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
@@ -25,8 +25,6 @@ class RootActivity : AppCompatActivity() {
         binding.navigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-            }
         }
 
         // Пример использования access token для HeadHunter API

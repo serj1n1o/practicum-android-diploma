@@ -6,14 +6,13 @@ import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 
-class FavoritesFragment: Fragment(R.layout.fragment_favorites) {
+class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private var _binding: FragmentFavoritesBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentFavoritesBinding.bind(view)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

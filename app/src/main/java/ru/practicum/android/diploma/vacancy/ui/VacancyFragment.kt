@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 
-class VacancyFragment: Fragment(R.layout.fragment_vacancy) {
+class VacancyFragment : Fragment(R.layout.fragment_vacancy) {
     private var _binding: FragmentVacancyBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 
-class FilterFragment: Fragment(R.layout.fragment_filter) {
+class FilterFragment : Fragment(R.layout.fragment_filter) {
     private var _binding: FragmentFilterBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
