@@ -12,6 +12,9 @@ class RootActivity : AppCompatActivity() {
 
         // Пример использования access token для HeadHunter API
         networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
+
+        // Доступ к baseUrl HH так же через BuildConfig
+        BuildConfig.HH_BASE_URL
     }
 
     private fun networkRequestExample(accessToken: String) {
