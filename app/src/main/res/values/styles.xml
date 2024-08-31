@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:titleMarginStart">0dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="android:layout_marginVertical">8dp</item>
+    </style>
+    <style name="navigation">
+        <item name="android:background">@color/white</item>
+        <item name="itemIconTint">#3772E7</item>
+        <item name="itemTextColor">#3772E7</item>
+    </style>
+    <style name="divider">
+        <item name="android:background">#FDFDFD</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+</resources>
