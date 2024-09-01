@@ -1,21 +1,20 @@
 package ru.practicum.android.diploma.filter.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
-import ru.practicum.android.diploma.R
+import android.view.ViewGroup
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
+import ru.practicum.android.diploma.global.util.CustomFragment
 
-class FilterFragment : Fragment(R.layout.fragment_filter) {
-    private var _binding: FragmentFilterBinding? = null
+class FilterFragment : CustomFragment<FragmentFilterBinding>() {
+
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterBinding {
+        return FragmentFilterBinding.inflate(inflater, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentFilterBinding.bind(view)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

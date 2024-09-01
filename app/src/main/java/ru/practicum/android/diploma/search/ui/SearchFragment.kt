@@ -1,21 +1,18 @@
 package ru.practicum.android.diploma.search.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
-import ru.practicum.android.diploma.R
+import android.view.ViewGroup
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.global.util.CustomFragment
 
-class SearchFragment : Fragment(R.layout.fragment_search) {
-    private var _binding: FragmentSearchBinding? = null
+class SearchFragment : CustomFragment<FragmentSearchBinding>() {
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
+        return FragmentSearchBinding.inflate(inflater, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentSearchBinding.bind(view)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
