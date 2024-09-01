@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">@color/black</color>
+    <color name="background_reverse">@color/white</color>
+    <color name="editText_text_hint">@color/white</color>
+    <color name="editText_background">@color/dark_gray</color>
+</resources>
