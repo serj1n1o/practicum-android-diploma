@@ -3,15 +3,18 @@
     <item
         android:id="@id/searchFragment"
         android:contentDescription="@string/main"
-        android:title="@string/main" />
+        android:title="@string/main"
+        android:icon="@drawable/ic_main_24px"/>
 
     <item
         android:id="@id/favoritesFragment"
         android:contentDescription="@string/favorites"
-        android:title="@string/favorites" />
+        android:title="@string/favorites"
+        android:icon="@drawable/ic_favorites_on__24px"/>
 
     <item
         android:id="@id/aboutFragment"
         android:contentDescription="@string/command"
-        android:title="@string/command" />
+        android:title="@string/command"
+        android:icon="@drawable/ic_team_24px"/>
 </menu>
