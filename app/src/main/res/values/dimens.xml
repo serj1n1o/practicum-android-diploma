@@ -7,4 +7,10 @@
     <dimen name="margin_8dp">8dp</dimen>
     <dimen name="padding_4dp">4dp</dimen>
     <dimen name="padding_8dp">8dp</dimen>
+    <dimen name="dm_zero_dp">0dp</dimen>
+    <dimen name="dm_about_margin_horizontal">16dp</dimen>
+    <dimen name="dm_about_item_margin_top">16dp</dimen>
+    <dimen name="dm_about_item_text_size">16sp</dimen>
+    <dimen name="dm_about_header_margin_top">24dp</dimen>
+    <dimen name="dm_about_header_text_size">32sp</dimen>
 </resources>

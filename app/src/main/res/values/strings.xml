@@ -3,7 +3,7 @@
     <string name="app_name">Practicum-Android-Diploma</string>
     <string name="main">Главная</string>
     <string name="vacancy">Вакансия</string>
-    <string name="command">Команда</string>
+    <string name="team">Команда</string>
     <string name="favorites">Избранное</string>
     <string name="search">Поиск вакансий</string>
     <string name="sharing">Поделиться</string>
@@ -36,7 +36,7 @@
     <string name="vacancy_not_found_or_deleted">Вакансия не найдена или удалена</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="the_list_is_empty">Список пуст</string>
-    <string name="the_app_was_worked_on">Над приложением работали</string>
+    <string name="the_app_was_developed_by">Над приложением работали</string>
     <string name="Rinat_Gordeev">Ринат Гордеев</string>
     <string name="Alexander_Gabov">Александр Габов</string>
     <string name="Sergey_Bryukhanov">Сергей Брюханов</string>
