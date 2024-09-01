@@ -83,6 +83,25 @@
         <item name="itemPaddingTop">@dimen/padding_8dp</item>
         <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
     </style>
+    <style name="aboutItem">
+        <item name="android:layout_width">@dimen/dm_zero_dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/dm_about_margin_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/dm_about_item_margin_top</item>
+        <item name="android:textSize">@dimen/dm_about_item_text_size</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textColor">@color/about_text_color</item>
+    </style>
+    <style name="aboutHeader">
+        <item name="android:layout_width">@dimen/dm_zero_dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/dm_about_margin_horizontal</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">@dimen/dm_about_item_margin_top</item>
+        <item name="android:fontFamily">@font/ys_display_bold</item>
+        <item name="android:textColor">@color/about_text_color</item>
+        <item name="android:textSize">@dimen/dm_about_header_text_size</item>
+    </style>
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/background</item>
     </style>

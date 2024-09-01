@@ -9,7 +9,7 @@
         android:id="@+id/aboutFragment"
         android:name="ru.practicum.android.diploma.about.ui.AboutFragment"
         tools:layout="@layout/fragment_about"
-        android:label="@string/command" />
+        android:label="@string/team" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="ru.practicum.android.diploma.favorites.ui.FavoritesFragment"
