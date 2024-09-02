@@ -1,16 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:id="@+id/buildConfigReadExampleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/vacancy"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    xmlns:attr="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/systemBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dm_about_item_margin_top"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_bar_height_size"
+            android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/systemBar">
+
+            <FrameLayout
+                android:layout_width="@dimen/size_48dp"
+                android:layout_height="@dimen/size_48dp"
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_marginTop="@dimen/margin_8dp">
+
+                <ImageButton
+                    android:id="@+id/btBackArrow"
+                    android:layout_width="@dimen/size_bottomMenuIcon"
+                    android:layout_height="@dimen/size_bottomMenuIcon"
+                    android:layout_gravity="center"
+                    style="@style/imageButton"
+                    android:src="@drawable/ic_arrow_back_24px" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/buildConfigReadExampleTextView"
+                style="@style/text_22"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_26dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_weight="1"
+                android:text="@string/vacancy" />
+
+            <ImageButton
+                android:id="@+id/icSharing"
+                android:layout_width="@dimen/size_48dp"
+                android:layout_height="@dimen/size_48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_4dp"
+                style="@style/imageButton"
+                android:src="@drawable/ic_sharing_24px" />
+
+            <ImageButton
+                android:id="@+id/icFavorite"
+                android:layout_width="@dimen/size_48dp"
+                android:layout_height="@dimen/size_48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                style="@style/imageButton"
+                android:src="@drawable/ic_favorites_off__24px" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvNameVacancy"
+            style="@style/text_32"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dm_about_item_margin_top"
+            android:layout_marginTop="@dimen/dm_about_item_margin_top"
+            android:text="Android-разработчик"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBar" />
+
+        <TextView
+            android:id="@+id/salary"
+            style="@style/text_22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dm_about_item_margin_top"
+            android:text="от 100 000 Р"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNameVacancy" />
+
+        <LinearLayout
+            android:id="@+id/cardVacancy"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginStart="@dimen/dm_about_item_margin_top"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_marginEnd="@dimen/dm_about_item_margin_top"
+            android:background="@drawable/rectangle_12"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/salary">
+
+            <ImageView
+                android:id="@+id/ic_company"
+                android:layout_width="@dimen/size_48dp"
+                android:layout_height="@dimen/size_48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dm_about_item_margin_top"
+                android:src="@drawable/ic_yandex_eat" />
+
+            <LinearLayout
+                android:id="@+id/tvNameCompanyAndArea"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNameCompany"
+                    style="@style/text_22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dm_about_item_margin_top"
+                    android:text="Еда" />
+
+                <TextView
+                    android:id="@+id/tvAreaCompany"
+                    style="@style/text_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Москва" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/rvVacancy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_marginStart="@dimen/dm_about_item_margin_top"
+            android:layout_marginEnd="@dimen/dm_about_item_margin_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardVacancy">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/requiredExperience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/text_16"
+                    android:text="Требуемый опыт"/>
+
+                <TextView
+                    android:id="@+id/jobDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_32dp"
+                    style="@style/text_22"
+                    android:text="Описание вакансии"/>
+
+                <TextView
+                    android:id="@+id/keySkills"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_32dp"
+                    style="@style/text_22"
+                    android:text="Ключевые навыки"/>
+
+            </LinearLayout>
+
+
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
