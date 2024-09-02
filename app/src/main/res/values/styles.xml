@@ -23,6 +23,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
     </style>
     <style name="blueButton">
         <item name="android:background">@drawable/blue_rectangle</item>
@@ -47,6 +48,8 @@
         <item name="fontWeight">400</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingVertical">4dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
     </style>
     <style name="text_32">
         <item name="android:textSize">32sp</item>
