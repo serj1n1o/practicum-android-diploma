@@ -20,7 +20,7 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
             }
 
             is RequestResult.Error -> {
-                emit(RequestResult.Error(result.error!!, errTxt = ""))
+                emit(RequestResult.Error(result.error!!))
             }
         }
     }

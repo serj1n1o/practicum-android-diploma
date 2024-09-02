@@ -1,14 +1,14 @@
 package ru.practicum.android.diploma.global.data.network.dto
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.practicum.android.diploma.global.data.network.HhApi
 import ru.practicum.android.diploma.global.data.network.NetworkClient
-import ru.practicum.android.diploma.global.util.ErrorEnum
 import ru.practicum.android.diploma.global.util.NetworkUtil
 import ru.practicum.android.diploma.global.util.RequestResult
-import java.io.IOException
+import ru.practicum.android.diploma.global.util.ResponseCodes
 
 class RetrofitNetworkClient(
     private val hhApi: HhApi,
@@ -16,15 +16,14 @@ class RetrofitNetworkClient(
 
 ) : NetworkClient {
     override suspend fun doRequest(request: Request): RequestResult<Response> {
-        if (networkUtil.isConnected()) return RequestResult.Error(ErrorEnum.NO_INTERNET, errTxt = "")
+        if (networkUtil.isConnected()) return RequestResult.Error(ResponseCodes.CODE_NO_CONNECT)
         return withContext(Dispatchers.IO) {
             try {
                 val response = getResponse(request)
                 RequestResult.Success(response)
-            } catch (err: IOException) {
-                RequestResult.Error(ErrorEnum.SERVER_ERROR, errTxt = err.message)
             } catch (err: HttpException) {
-                RequestResult.Error(ErrorEnum.HTTP_ERROR, errTxt = err.message)
+                Log.e("RequestError", err.toString())
+                RequestResult.Error(ResponseCodes.CODE_BAD_REQUEST)
             }
         }
 

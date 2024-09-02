@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.global.data.network.HhApi
 import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.RetrofitNetworkClient
+import ru.practicum.android.diploma.global.util.HeaderInterceptor
 import ru.practicum.android.diploma.global.util.NetworkUtil
 import java.util.concurrent.TimeUnit
 
@@ -17,6 +18,7 @@ val dataModule = module {
         val client = OkHttpClient.Builder()
             .callTimeout(NetworkUtil.CALL_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(NetworkUtil.READ_TIMEOUT, TimeUnit.SECONDS)
+            .addInterceptor(HeaderInterceptor())
             .build()
 
         Retrofit.Builder()
