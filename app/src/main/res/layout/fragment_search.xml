@@ -1,15 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingHorizontal="16dp"
+    android:orientation="vertical"
+    tools:context="ru.practicum.android.diploma.search.ui.SearchFragment">
+
+
     <TextView
-        android:id="@+id/buildConfigReadExampleTextView"
-        android:layout_width="wrap_content"
+        style="@style/text_22"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/search" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp">
+
+        <EditText
+            android:id="@+id/editText"
+            style="@style/editText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableEnd="@drawable/ic_search_24px"
+            />
+
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/editText_background"
+            app:icon="@drawable/ic_close_24px"
+            app:iconTint="@color/black" />
+
+    </FrameLayout>
+
+    <TextView
+        style="@style/countVacancies"
+        android:text="таких вакансий нет"
+        android:layout_gravity="center"/>
+
+
+    <LinearLayout
+        android:id="@+id/windowMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/image_man_with_binoculars"/>
+
+        <TextView
+            android:id="@+id/textMessage"
+            style="@style/text_22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_such_vacancies"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vacancyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/windowProgressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone" />
+
+</LinearLayout>
