@@ -13,4 +13,10 @@
     <dimen name="dm_about_item_text_size">16sp</dimen>
     <dimen name="dm_about_header_margin_top">24dp</dimen>
     <dimen name="dm_about_header_text_size">32sp</dimen>
+    <dimen name="top_bar_height_size">64dp</dimen>
+    <dimen name="size_20dp">20dp</dimen>
+    <dimen name="size_48dp">48dp</dimen>
+    <dimen name="size_26dp">26dp</dimen>
+    <dimen name="size_32dp">32dp</dimen>
+    <dimen name="text_size_22dp">22sp</dimen>
 </resources>
