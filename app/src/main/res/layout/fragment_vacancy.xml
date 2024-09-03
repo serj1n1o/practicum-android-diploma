@@ -127,14 +127,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dm_about_item_margin_top"
-                    android:text="Еда" />
+                    android:text="Еда"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tvAreaCompany"
                     style="@style/text_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Москва" />
+                    android:text="Москва"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
         </LinearLayout>
