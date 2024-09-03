@@ -18,4 +18,9 @@ class NetworkUtil(private val context: Context) {
                 hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
         } ?: false
     }
+
+    companion object {
+        const val CALL_TIMEOUT = 30L
+        const val READ_TIMEOUT = 30L
+    }
 }
