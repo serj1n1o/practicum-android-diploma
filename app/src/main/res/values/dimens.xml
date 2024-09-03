@@ -13,8 +13,7 @@
     <dimen name="dm_about_item_text_size">16sp</dimen>
     <dimen name="dm_about_header_margin_top">24dp</dimen>
     <dimen name="dm_about_header_text_size">32sp</dimen>
-    <dimen name="dm_170dp">170dp</dimen>
-    <dimen name="dm_9dp">9dp</dimen>
+    <dimen name="dm_172dp">172dp</dimen>
     <dimen name="dm_223dp">223dp</dimen>
     <dimen name="dm_328dp">328dp</dimen>
     <dimen name="dm_placeholder_text_size">22sp</dimen>

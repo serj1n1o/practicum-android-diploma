@@ -8,7 +8,7 @@
     tools:context=".favorites.ui.FavoritesFragment">
 
     <ProgressBar
-        android:id="@+id/favorites_progressBar"
+        android:id="@+id/pbFavorites"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_gravity="center"
@@ -22,11 +22,11 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_favorites"
+        android:id="@+id/rvFavorites"
         android:layout_width="@dimen/dm_zero_dp"
         android:layout_height="@dimen/dm_zero_dp"
         android:layout_marginHorizontal="@dimen/dm_about_margin_horizontal"
-        android:layout_marginVertical="@dimen/dm_9dp"
+        android:layout_marginVertical="@dimen/margin_8dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +35,10 @@
         tools:listitem="@layout/vacancy_item" />
 
     <LinearLayout
-        android:id="@+id/ll_favorites_empty"
+        android:id="@+id/llFavoritesEmptyPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm_170dp"
+        android:layout_marginTop="@dimen/dm_172dp"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,10 +57,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/favorite_nothing_found"
+        android:id="@+id/llFavoritesNothingFoundPlaceholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm_170dp"
+        android:layout_marginTop="@dimen/dm_172dp"
         android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

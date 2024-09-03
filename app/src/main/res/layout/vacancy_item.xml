@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/dm_9dp">
+    android:paddingVertical="@dimen/padding_8dp">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_favourite_item"
+        android:id="@+id/cardFavouriteItem"
         android:layout_width="@dimen/dm_48dp"
         android:layout_height="@dimen/dm_48dp"
         android:layout_marginEnd="@dimen/dm_12dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_company"
+            android:id="@+id/ivCompany"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
@@ -32,7 +32,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
-        android:id="@+id/tv_vacancy_name"
+        android:id="@+id/tvVacancyName"
         style="@style/text_22"
         android:layout_width="@dimen/dm_zero_dp"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         android:maxLines="3"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/card_favourite_item"
+        app:layout_constraintStart_toEndOf="@id/cardFavouriteItem"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Разработчик на С++ в команду внутренних сервисов, Москвааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа" />
 
@@ -54,8 +54,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/card_favourite_item"
-        app:layout_constraintTop_toBottomOf="@id/tv_vacancy_name"
+        app:layout_constraintStart_toEndOf="@id/cardFavouriteItem"
+        app:layout_constraintTop_toBottomOf="@id/tvVacancyName"
         tools:text="Авто.руууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууу" />
 
     <TextView
@@ -67,7 +67,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/card_favourite_item"
+        app:layout_constraintStart_toEndOf="@id/cardFavouriteItem"
         app:layout_constraintTop_toBottomOf="@id/tv_employer_name"
         tools:text="от 40 000 до 80 000 ₽ррррррррррррррррррррррррррррррррррррррррррррррр" />
 
