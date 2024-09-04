@@ -35,7 +35,18 @@
             android:drawableEnd="@drawable/ic_search_24px"
             android:hint="@string/enter_query"
             android:inputType="text|textNoSuggestions"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
+        <Button
+            android:id="@+id/edIconSearch"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center"
+            android:layout_margin="8dp"
+            android:visibility="visible"
+            app:backgroundTint="@color/editText_background"
+            app:icon="@drawable/ic_search_24px"
+            app:iconTint="@color/black" />
         <Button
             android:id="@+id/clearButton"
             android:layout_width="48dp"
