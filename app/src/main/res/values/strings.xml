@@ -42,4 +42,5 @@
     <string name="Sergey_Bryukhanov">Сергей Брюханов</string>
     <string name="Artem_Baryshev">Артем Барышев</string>
     <string name="Sergey_Fedin">Сергей Федин</string>
+    <string name="enter_query">Введите запрос</string>
 </resources>
