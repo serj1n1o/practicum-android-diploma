@@ -15,7 +15,7 @@
     <!--Остальные строки-->
     <string name="no_such_vacancies">Таких вакансий нет</string>
     <string name="no_internet">Нет интернета</string>
-    <string name="unable_to_retrieve_job_listing">Не удалось получить список вакансий</string>
+    <string name="unable_to_retrieve_job_listing">Не удалось получить\nсписок вакансий</string>
     <string name="found_vacancies">Найдено %1$d вакансий</string> // например val count = 258;val result = getString(R.string.found_vacancies, count)
     <string name="main_bottom_menu">Главная</string>
     <string name="favorite_bottom_menu">Избранное</string>
@@ -44,4 +44,5 @@
     <string name="Artem_Baryshev">Артем Барышев</string>
     <string name="Sergey_Fedin">Сергей Федин</string>
     <string name="vacancy_and_city">%1$s, %2$s</string> // название вакансии и город в vacancy_list_item
+    <string name="enter_query">Введите запрос</string>
 </resources>
