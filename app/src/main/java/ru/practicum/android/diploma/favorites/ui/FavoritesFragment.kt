@@ -10,7 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 import ru.practicum.android.diploma.favorites.domain.models.FavoriteState
-import ru.practicum.android.diploma.favorites.viewModel.FavoriteVacancyFragmentViewModel
+import ru.practicum.android.diploma.favorites.viewmodel.FavoriteVacancyFragmentViewModel
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.ui.VacancyAdapter
@@ -45,7 +45,8 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
             findNavController().navigate(
                 R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
-                VacancyDetailFragment.createArgs(vacancy))
+                VacancyDetailFragment.createArgs(vacancy)
+            )
         }
     }
 
