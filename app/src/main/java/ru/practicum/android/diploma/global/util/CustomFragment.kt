@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 abstract class CustomFragment<T : ViewBinding> : Fragment() {
 
-    private var _binding: T? = null
+    var _binding: T? = null
     protected val binding get() = _binding!!
 
     fun clickDebounce(): Boolean {
