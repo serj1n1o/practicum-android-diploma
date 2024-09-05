@@ -10,7 +10,6 @@
 /.idea/gradle.xml
 /.idea/compiler.xml
 /.idea/misc.xml
-/.idea/
 
 # Gradle files
 .gradle/
