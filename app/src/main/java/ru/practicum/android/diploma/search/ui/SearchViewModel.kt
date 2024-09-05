@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.global.util.debounce
 import kotlin.random.Random
 
@@ -22,21 +21,21 @@ class SearchViewModel : ViewModel() {
     }
 
     class LocalSearchInteractor {
-        fun _search(string: String): Flow<Pair<List<_Vacancy>?, _TypeError?>> = flow {
-            when (Random.nextInt(1, 6)) {
+        fun searchEXAMPLE(string: String): Flow<Pair<List<_Vacancy>?, _TypeError?>> = flow {
+            when (Random.nextInt(1, 3)) {
                 1 -> {
                     emit(Pair(null, _TypeError.NO_CONNECTION))
                 }
-
                 2 -> {
                     emit(Pair(listOf(_Vacancy("a", "b"), _Vacancy("c", "d")), null))
                 }
-
                 3 -> {
                     emit(Pair(listOf<_Vacancy>(), null))
                 }
             }
         }
+
+
     }
 
     // ****************************************
@@ -66,7 +65,7 @@ class SearchViewModel : ViewModel() {
         renderState(SearchState.Loading)
         viewModelScope.launch {
             LocalSearchInteractor()
-                ._search(input)
+                .searchEXAMPLE(input)
                 .collect { pair ->
                     processResult(pair.first, pair.second)
                 }

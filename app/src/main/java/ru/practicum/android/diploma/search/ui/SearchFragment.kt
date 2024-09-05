@@ -81,12 +81,12 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 setStateLoading()
             }
             is SearchState.EmptyEditTextInFocus -> {
-               setStateEmptyEditTextInFocus()
+               setStateEmptyETInFocus()
             }
         }
     }
 
-    private fun setStateEmptyEditText(){
+    private fun setStateEmptyEditText() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = true
@@ -95,9 +95,9 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.imageMessage.setImageResource(R.drawable.image_man_with_binoculars)
     }
 
-    private fun setStateContent(_vacancies: List<SearchViewModel._Vacancy>){
+    private fun setStateContent(vacanciesFromVM: List<SearchViewModel._Vacancy>) {
         vacancies.clear()
-        vacancies.addAll(_vacancies)
+        vacancies.addAll(vacanciesFromVM)
         binding.vacancyList.isVisible = true
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = false
@@ -109,7 +109,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.countVacancies.isVisible = true
 //                adapter.notifyDataSetChanged()
     }
-    private fun setStateNotFound(){
+    private fun setStateNotFound() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = true
@@ -119,7 +119,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.textMessage.isVisible = true
         binding.imageMessage.setImageResource(R.drawable.image_no_list_vacancy)
     }
-    private fun setStateNoConnection(){
+    private fun setStateNoConnection() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = true
@@ -128,13 +128,13 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.textMessage.isVisible = true
         binding.imageMessage.setImageResource(R.drawable.image_no_internet)
     }
-    private fun setStateLoading(){
+    private fun setStateLoading() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = true
         binding.windowMessage.isVisible = false
         binding.countVacancies.isVisible = false
     }
-    private fun setStateEmptyEditTextInFocus(){
+    private fun setStateEmptyETInFocus() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = false
