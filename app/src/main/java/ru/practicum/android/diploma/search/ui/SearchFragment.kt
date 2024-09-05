@@ -52,6 +52,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         //          findNavController().navigate()
         //      }
     }
+
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         }
@@ -70,20 +71,25 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
             is SearchState.EmptyEditText -> {
                 setStateEmptyEditText()
             }
+
             is SearchState.Content -> {
                 setStateContent(state.vacancies)
             }
+
             is SearchState.NotFound -> {
                 setStateNotFound()
             }
+
             is SearchState.NoConnection -> {
                 setStateNoConnection()
             }
+
             is SearchState.Loading -> {
                 setStateLoading()
             }
+
             is SearchState.EmptyEditTextInFocus -> {
-               setStateEmptyScreen()
+                setStateEmptyTextInFocus()
             }
         }
     }
@@ -111,6 +117,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.countVacancies.isVisible = true
 //                adapter.notifyDataSetChanged()
     }
+
     private fun setStateNotFound() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
@@ -121,6 +128,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.textMessage.isVisible = true
         binding.imageMessage.setImageResource(R.drawable.image_no_list_vacancy)
     }
+
     private fun setStateNoConnection() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
@@ -130,13 +138,15 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.textMessage.isVisible = true
         binding.imageMessage.setImageResource(R.drawable.image_no_internet)
     }
+
     private fun setStateLoading() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = true
         binding.windowMessage.isVisible = false
         binding.countVacancies.isVisible = false
     }
-    private fun setStateEmptyScreen() {
+
+    private fun setStateEmptyTextInFocus() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = false

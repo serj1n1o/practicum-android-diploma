@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.global.util.debounce
-import kotlin.random.Random
 
 class SearchViewModel : ViewModel() {
 
