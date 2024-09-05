@@ -27,7 +27,7 @@ class VacancyAdapter(
         }
     }
 
-    override fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         return vacancyList.size
     }
 
