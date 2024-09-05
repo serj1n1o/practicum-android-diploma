@@ -29,16 +29,13 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 //        binding.vacancyList.layoutManager = LinearLayoutManager(requireContext())
 //        binding.vacancyList.adapter = adapter
-
         binding.editText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding.editText.text.isNullOrEmpty()) {
                 render(SearchState.EmptyEditTextInFocus)
             }
         }
-
         binding.clearButton.setOnClickListener {
             binding.editText.setText("")
             val inputMethodManager =
@@ -47,19 +44,14 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
             binding.editText.clearFocus()
             render(SearchState.EmptyEditText)
         }
-
-
         binding.editText.addTextChangedListener(textWatcher)
-
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-
         //       onVacancyClickDebounce = debounce(CLICK_DEBOUNCE_DELAY_MILLIS, viewLifecycleOwner.lifecycleScope, false) { track ->
         //          findNavController().navigate()
         //      }
     }
-
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -68,7 +60,6 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 viewModel.searchDebounce(p0.toString())
             }
         }
-
         override fun afterTextChanged(p0: Editable?) {}
     }
 

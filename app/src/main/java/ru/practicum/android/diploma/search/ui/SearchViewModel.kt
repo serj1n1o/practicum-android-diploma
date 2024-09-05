@@ -21,7 +21,7 @@ class SearchViewModel : ViewModel() {
         NO_CONNECTION
     }
 
-    class LocalSearchInteractor() {
+    class LocalSearchInteractor {
         fun _search(string: String): Flow<Pair<List<_Vacancy>?, _TypeError?>> = flow {
             when (Random.nextInt(1, 6)) {
                 1 -> {
