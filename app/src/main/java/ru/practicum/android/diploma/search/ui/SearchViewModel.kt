@@ -51,6 +51,13 @@ class SearchViewModel : ViewModel() {
             search(changedText)
         }
 
+    fun searchDebounce(changedText: String) {
+        if (lastSearchText != changedText) {
+            lastSearchText = changedText
+            trackSearchDebounce(changedText)
+        }
+    }
+
     private fun renderState(state: SearchState) {
         stateLiveData.postValue(state)
     }

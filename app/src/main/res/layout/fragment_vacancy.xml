@@ -35,8 +35,8 @@
 
                 <ImageButton
                     android:id="@+id/btBackArrow"
-                    android:layout_width="@dimen/size_bottomMenuIcon"
-                    android:layout_height="@dimen/size_bottomMenuIcon"
+                    android:layout_width="@dimen/size_Icon"
+                    android:layout_height="@dimen/size_Icon"
                     android:layout_gravity="center"
                     style="@style/imageButton"
                     android:src="@drawable/ic_arrow_back_24px" />

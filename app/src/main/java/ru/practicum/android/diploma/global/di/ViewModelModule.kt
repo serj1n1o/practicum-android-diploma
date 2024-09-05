@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.di
+package ru.practicum.android.diploma.global.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
