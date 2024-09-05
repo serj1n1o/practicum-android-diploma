@@ -22,20 +22,19 @@ class SearchViewModel : ViewModel() {
 
     class LocalSearchInteractor {
         fun searchEXAMPLE(string: String): Flow<Pair<List<_Vacancy>?, _TypeError?>> = flow {
-            when (Random.nextInt(1, 3)) {
-                1 -> {
-                    emit(Pair(null, _TypeError.NO_CONNECTION))
-                }
-                2 -> {
-                    emit(Pair(listOf(_Vacancy("a", "b"), _Vacancy("c", "d")), null))
-                }
-                3 -> {
-                    emit(Pair(listOf<_Vacancy>(), null))
-                }
-            }
+            emit(Pair(listOf(_Vacancy("a", "b"), _Vacancy("c", "d")), null))
+//            when (Random.nextInt(1, 3)) {
+//                1 -> {
+//                    emit(Pair(null, _TypeError.NO_CONNECTION))
+//                }
+//                2 -> {
+//                    emit(Pair(listOf(_Vacancy("a", "b"), _Vacancy("c", "d")), null))
+//                }
+//                3 -> {
+//                    emit(Pair(listOf<_Vacancy>(), null))
+//                }
+//            }
         }
-
-
     }
 
     // ****************************************

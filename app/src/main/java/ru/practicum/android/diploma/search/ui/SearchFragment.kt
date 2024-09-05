@@ -53,14 +53,16 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         //      }
     }
     private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             renderEditTextIconsVisibility(p0)
             if (!p0.isNullOrEmpty()) {
                 viewModel.searchDebounce(p0.toString())
             }
         }
-        override fun afterTextChanged(p0: Editable?) {}
+        override fun afterTextChanged(p0: Editable?) {
+        }
     }
 
     fun render(state: SearchState) {
@@ -81,7 +83,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 setStateLoading()
             }
             is SearchState.EmptyEditTextInFocus -> {
-               setStateEmptyETInFocus()
+               setStateEmptyScreen()
             }
         }
     }
@@ -134,7 +136,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.windowMessage.isVisible = false
         binding.countVacancies.isVisible = false
     }
-    private fun setStateEmptyETInFocus() {
+    private fun setStateEmptyScreen() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = false
