@@ -18,5 +18,9 @@ data class Vacancy(
     val address: String?,
     @SerializedName("alternate_url")
     val alternateUrl: String?,
-    var isFavorite: Boolean = false,
-)
+    val isFavorite: Boolean = false,
+) {
+    fun withFavoriteStatus(isFavorite: Boolean): Vacancy {
+        return this.copy(isFavorite = isFavorite)
+    }
+}

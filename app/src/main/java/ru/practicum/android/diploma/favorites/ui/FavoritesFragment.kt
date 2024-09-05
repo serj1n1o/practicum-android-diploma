@@ -29,9 +29,9 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
         super.onViewCreated(view, savedInstanceState)
 
         adapter = VacancyAdapter(java.util.ArrayList(),this)
-//        binding.rv_favorites.layoutManager = LinearLayoutManager(requireContext(),
-//            LinearLayoutManager.VERTICAL, false)
-//        binding.rv_favorites.adapter = adapter
+        binding.rv_favorites.layoutManager = LinearLayoutManager(requireContext(),
+            LinearLayoutManager.VERTICAL, false)
+        binding.rv_favorites.adapter = adapter
 
         viewModel.observeState().observe(viewLifecycleOwner) { state ->
             render(state)
@@ -43,9 +43,9 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
         if (clickDebounce()) {
             isClickAllowed = true
 
- //           findNavController().navigate(
- //                R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
- //                VacancyDetailFragment.createArgs(vacancy))
+            findNavController().navigate(
+                 R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
+                 VacancyDetailFragment.createArgs(vacancy))
         }
     }
 
@@ -69,10 +69,10 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
     private fun showContent(vacancies: List<Vacancy>) {
         binding.apply {
-//            rv_favorites.isVisible = true
-//            ll_favorites_empty.isVisible = false
-//            favorite_nothing_found.isVisible = false
-//            rv_favorites.adapter = adapter
+            rv_favorites.isVisible = true
+            ll_favorites_empty.isVisible = false
+            favorite_nothing_found.isVisible = false
+            rv_favorites.adapter = adapter
             adapter?.vacancyList = vacancies as ArrayList<Vacancy>
             adapter?.notifyDataSetChanged()
         }
@@ -80,8 +80,8 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
     private fun showEmpty() {
         binding.apply {
-//            rv_favorites.isVisible = false
-//            ll_favorites_empty.isVisible = true
+            rv_favorites.isVisible = false
+            ll_favorites_empty.isVisible = true
         }
     }
 

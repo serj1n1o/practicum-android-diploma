@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.favorites.domain.models.FavoriteState
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class FavoriteVacancyFragmentViewModel(
-//    private val favoriteInteractor: FavoriteInteractor,
+    private val favoriteInteractor: FavoriteInteractor,
 ): ViewModel() {
 
     private val stateLiveData = MutableLiveData<FavoriteState>()
@@ -22,8 +22,8 @@ class FavoriteVacancyFragmentViewModel(
 
     fun fillData() {
         viewModelScope.launch {
-            //favoriteInteractor.favoriteVacancy().collect { vacancies ->
-                //getState(vacancies)}
+            favoriteInteractor.favoriteVacancy().collect { vacancies ->
+                getState(vacancies)}
         }
     }
 
