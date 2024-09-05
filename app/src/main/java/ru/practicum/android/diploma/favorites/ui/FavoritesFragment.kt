@@ -44,8 +44,8 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
             isClickAllowed = true
 
  //           findNavController().navigate(
-//                R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
-//                VacancyDetailFragment.createArgs(vacancy))
+ //                R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
+ //                VacancyDetailFragment.createArgs(vacancy))
         }
     }
 
