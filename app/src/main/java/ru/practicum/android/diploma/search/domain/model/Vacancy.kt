@@ -20,7 +20,7 @@ data class Vacancy(
     val alternateUrl: String?,
     val isFavorite: Boolean = false,
 ) {
-    fun withFavoriteStatus(isFavorite: Boolean): Vacancy {
-        return this.copy(isFavorite = isFavorite)
-    }
+//    fun withFavoriteStatus(isFavorite: Boolean): Vacancy {
+//        return this.copy(isFavorite = isFavorite)
+//    }
 }

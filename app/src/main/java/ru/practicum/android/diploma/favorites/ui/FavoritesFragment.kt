@@ -10,7 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 import ru.practicum.android.diploma.favorites.domain.models.FavoriteState
-import ru.practicum.android.diploma.favorites.view_model.FavoriteVacancyFragmentViewModel
+import ru.practicum.android.diploma.favorites.viewModel.FavoriteVacancyFragmentViewModel
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.ui.VacancyAdapter
@@ -28,7 +28,7 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = VacancyAdapter(java.util.ArrayList(),this)
+        adapter = VacancyAdapter(java.util.ArrayList(), this)
         binding.rv_favorites.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         binding.rv_favorites.adapter = adapter
@@ -44,8 +44,8 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
             isClickAllowed = true
 
             findNavController().navigate(
-                 R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
-                 VacancyDetailFragment.createArgs(vacancy))
+                R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
+                VacancyDetailFragment.createArgs(vacancy))
         }
     }
 

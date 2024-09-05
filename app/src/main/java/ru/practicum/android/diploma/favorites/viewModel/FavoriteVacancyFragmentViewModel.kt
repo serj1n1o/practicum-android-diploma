@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.favorites.view_model
+package ru.practicum.android.diploma.favorites.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,7 +23,7 @@ class FavoriteVacancyFragmentViewModel(
     fun fillData() {
         viewModelScope.launch {
             favoriteInteractor.favoriteVacancy().collect { vacancies ->
-                getState(vacancies)}
+                getState(vacancies) }
         }
     }
 
