@@ -36,10 +36,12 @@
     <string name="vacancy_not_found_or_deleted">Вакансия не найдена или удалена</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="the_list_is_empty">Список пуст</string>
+    <string name="salary_not_specified">Зарплата не указана</string>
     <string name="the_app_was_developed_by">Над приложением работали</string>
     <string name="Rinat_Gordeev">Ринат Гордеев</string>
     <string name="Alexander_Gabov">Александр Габов</string>
     <string name="Sergey_Bryukhanov">Сергей Брюханов</string>
     <string name="Artem_Baryshev">Артем Барышев</string>
     <string name="Sergey_Fedin">Сергей Федин</string>
+    <string name="vacancy_and_city">%1$s, %2$s</string> // название вакансии и город в vacancy_list_item
 </resources>
