@@ -63,10 +63,7 @@ class SearchViewModel : ViewModel() {
     }
 
     fun search(input: String) {
-
         renderState(SearchState.Loading)
-
-
         viewModelScope.launch {
             LocalSearchInteractor()
                 ._search(input)

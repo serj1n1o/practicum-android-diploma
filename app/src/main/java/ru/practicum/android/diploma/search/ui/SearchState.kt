@@ -11,5 +11,5 @@ sealed interface SearchState {
 
     object NotFound : SearchState
 
-    object Empty: SearchState
+    object EmptyEditTextInFocus: SearchState
 }
