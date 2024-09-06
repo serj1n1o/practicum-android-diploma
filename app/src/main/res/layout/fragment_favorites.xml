@@ -5,7 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".favorites.ui.FavoritesFragment">
+    tools:context=".favorites.ui.view.FavoritesFragment">
+
+    <TextView
+        android:id="@+id/titleFavorites"
+        style="@style/text_22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:text="@string/favorites"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/pbFavorites"
@@ -31,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleFavorites"
         tools:listitem="@layout/vacancy_item" />
 
     <LinearLayout

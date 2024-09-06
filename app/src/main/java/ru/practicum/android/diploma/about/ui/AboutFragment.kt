@@ -1,23 +1,14 @@
 package ru.practicum.android.diploma.about.ui
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
-import ru.practicum.android.diploma.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import ru.practicum.android.diploma.databinding.FragmentAboutBinding
+import ru.practicum.android.diploma.global.util.CustomFragment
 
-class AboutFragment : Fragment(R.layout.fragment_about) {
-    private var _binding: FragmentAboutBinding? = null
+class AboutFragment : CustomFragment<FragmentAboutBinding>() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentAboutBinding.bind(view)
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAboutBinding {
+        return FragmentAboutBinding.inflate(inflater, container, false)
     }
 
 }

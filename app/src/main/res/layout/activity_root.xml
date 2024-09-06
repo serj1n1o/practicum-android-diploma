@@ -6,13 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".root.ui.RootActivity">
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        style="@style/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/search"/>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/rootFragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -22,19 +16,20 @@
         app:layout_constraintBottom_toTopOf="@id/navigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
+        style="@style/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="@dimen/size_bottomPanelHeight"
+        android:background="@color/background"
+        app:itemIconSize="@dimen/size_Icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:itemIconSize="@dimen/size_Icon"
-        style="@style/bottomNavigation"
         app:layout_constraintHorizontal_bias="0.0"
-        android:background="@color/background"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_nav" />
 
     <com.google.android.material.divider.MaterialDivider

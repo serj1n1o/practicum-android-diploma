@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.favorites.ui
+package ru.practicum.android.diploma.favorites.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 import ru.practicum.android.diploma.favorites.domain.models.FavoriteState
-import ru.practicum.android.diploma.favorites.viewmodel.FavoriteVacancyFragmentViewModel
+import ru.practicum.android.diploma.favorites.ui.viewmodel.FavoriteVacancyFragmentViewModel
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.ui.VacancyAdapter

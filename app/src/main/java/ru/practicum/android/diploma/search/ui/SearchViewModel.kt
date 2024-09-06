@@ -72,7 +72,7 @@ class SearchViewModel : ViewModel() {
 
     private fun processResult(
         foundVacancies: List<_Vacancy>?,
-        typeError: _TypeError?
+        typeError: _TypeError?,
     ) {
         val vacancies = mutableListOf<_Vacancy>()
         if (foundVacancies != null) {
@@ -99,4 +99,3 @@ class SearchViewModel : ViewModel() {
     }
 
 }
-

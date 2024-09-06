@@ -9,5 +9,5 @@ data class VacanciesListResponse(
     val page: Int,
     val pages: Int,
     @SerializedName("per_page")
-    val perPage: Int
+    val perPage: Int,
 ) : Response()
