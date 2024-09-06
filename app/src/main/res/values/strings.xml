@@ -48,4 +48,9 @@
     <string name="txt_description">Описание вакансии</string>
     <string name="txt_key_skills">Ключевые навыки</string>
     <string name="txt_contacts">Контакты</string>
+    <string name="decline_vacancy_11">вакансий</string>
+    <string name="decline_vacancy_1">вакансия</string>
+    <string name="decline_vacancy_2_4">вакансии</string>
+    <string name="decline_vacancy_default">вакансий</string>
+    <string name="founded_vacancies">Найдено %1$s %2$s</string>
 </resources>

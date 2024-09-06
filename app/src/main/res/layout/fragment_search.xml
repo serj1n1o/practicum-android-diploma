@@ -32,20 +32,26 @@
         <EditText
             android:id="@+id/editText"
             style="@style/editText"
-            android:drawableEnd="@drawable/ic_search_24px"
             android:hint="@string/enter_query"
             android:inputType="text|textNoSuggestions"
-            android:singleLine="true"/>
-        <Button
-            android:id="@+id/clearButton"
-            android:layout_width="48dp"
-            android:layout_height="24dp"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
+        <ImageView
+            android:id="@+id/editTextIconSearch"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
+            android:layout_marginEnd="12dp"
             android:layout_gravity="end|center"
-            android:layout_margin="8dp"
-            android:visibility="gone"
-            app:backgroundTint="@color/editText_background"
-            app:icon="@drawable/ic_close_24px"
-            app:iconTint="@color/black" />
+            android:src="@drawable/ic_search_24px"
+            android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/clearButton"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
+            android:layout_marginEnd="12dp"
+            android:layout_gravity="end|center"
+            android:src="@drawable/ic_close_24px"
+            android:visibility="gone"/>
     </FrameLayout>
 
     <TextView
