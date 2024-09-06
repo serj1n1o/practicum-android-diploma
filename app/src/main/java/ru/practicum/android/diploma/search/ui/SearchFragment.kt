@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
@@ -19,6 +20,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
     private val viewModel by viewModel<SearchViewModel>()
     private val vacancies = ArrayList<SearchViewModel._Vacancy>()
+    private lateinit var onVacancyClickDebounce: (SearchViewModel._Vacancy) -> Unit
 //    private val adapter = VacansyAdapter(vacancies){ vacancy ->
 //        onVacancyClickDebounce(vacancy)
 //    }
@@ -44,27 +46,19 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
             binding.editText.clearFocus()
             render(SearchState.EmptyEditText)
         }
-        binding.editText.addTextChangedListener(textWatcher)
+        binding.editText.doOnTextChanged { text, start, before, count ->
+            renderEditTextIconsVisibility(text)
+            if (!text.isNullOrEmpty()) {
+                viewModel.searchDebounce(text.toString())
+            }
+        }
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-        //       onVacancyClickDebounce = debounce(CLICK_DEBOUNCE_DELAY_MILLIS, viewLifecycleOwner.lifecycleScope, false) { track ->
-        //          findNavController().navigate()
-        //      }
-    }
-
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            val a = "A"
-        }
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            renderEditTextIconsVisibility(p0)
-            if (!p0.isNullOrEmpty()) {
-                viewModel.searchDebounce(p0.toString())
+        onVacancyClickDebounce = { vacancy->
+            if(clickDebounce()) {
+//                findNavController().navigate()
             }
-        }
-        override fun afterTextChanged(p0: Editable?) {
-            val a = "A"
         }
     }
 
