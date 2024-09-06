@@ -20,7 +20,7 @@ abstract class CustomFragment<T : ViewBinding> : Fragment() {
         if (isClickAllowed) {
             isClickAllowed = false
             lifecycleScope.launch {
-                delay(DELAY_CLICK)
+                delay(Constants.DELAY_CLICK)
                 isClickAllowed = true
             }
             return true
@@ -42,9 +42,5 @@ abstract class CustomFragment<T : ViewBinding> : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val DELAY_CLICK = 1000L
     }
 }

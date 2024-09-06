@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.global.util.CustomFragment
-import ru.practicum.android.diploma.global.util.declineVacancy
+import ru.practicum.android.diploma.global.util.Mapper
 
 class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
@@ -106,7 +106,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.countVacancies.text = getString(
             R.string.founded_vacancies,
             vacancies.size.toString(),
-            declineVacancy(requireContext(), vacancies.size)
+            Mapper.declineVacancy(requireContext(), vacancies.size)
         )
         binding.countVacancies.isVisible = true
 //                adapter.notifyDataSetChanged()

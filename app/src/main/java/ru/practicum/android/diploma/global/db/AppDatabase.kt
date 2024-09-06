@@ -1,9 +1,9 @@
-package ru.practicum.android.diploma.search.data.db
+package ru.practicum.android.diploma.global.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.practicum.android.diploma.search.data.db.dao.VacancyDao
-import ru.practicum.android.diploma.search.data.db.entity.VacancyEntity
+import ru.practicum.android.diploma.global.db.dao.VacancyDao
+import ru.practicum.android.diploma.global.db.entity.VacancyEntity
 
 @Database(
     version = 1,

@@ -1,11 +1,11 @@
-package ru.practicum.android.diploma.favorites.viewmodel
+package ru.practicum.android.diploma.favorites.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.db.domain.FavoriteInteractor
+import ru.practicum.android.diploma.favorites.domain.api.FavoriteInteractor
 import ru.practicum.android.diploma.favorites.domain.models.FavoriteState
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 

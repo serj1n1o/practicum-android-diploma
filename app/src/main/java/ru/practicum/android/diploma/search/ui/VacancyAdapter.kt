@@ -13,11 +13,12 @@ class VacancyAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): VacancyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.vacancy_list_item, parent, false)
         return VacancyViewHolder(view)
     }
+
     override fun onBindViewHolder(holder: VacancyViewHolder, position: Int) {
         val vacancy = vacancyList[position]
         holder.bind(vacancy)
