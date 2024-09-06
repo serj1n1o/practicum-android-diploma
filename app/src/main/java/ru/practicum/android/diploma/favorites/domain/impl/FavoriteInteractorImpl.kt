@@ -7,7 +7,9 @@ import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class FavoriteInteractorImpl : FavoriteInteractor {
     override fun favoriteVacancy(): Flow<List<Vacancy>> {
-        return flow<List<Vacancy>> {// TODO: написал так только чтоб не крашилось }
+        return flow<List<Vacancy>> {
+            val list = 1
+            // написал так только чтоб не крашилось
         }
     }
 }
