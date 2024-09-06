@@ -24,7 +24,8 @@ class FavoriteVacancyFragmentViewModel(
     fun fillData() {
         viewModelScope.launch {
             favoriteInteractor.favoriteVacancy().collect { vacancies ->
-                getState(vacancies) }
+                getState(vacancies)
+            }
         }
     }
 

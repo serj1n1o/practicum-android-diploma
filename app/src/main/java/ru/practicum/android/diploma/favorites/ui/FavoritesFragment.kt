@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 import ru.practicum.android.diploma.favorites.domain.models.FavoriteState
 import ru.practicum.android.diploma.favorites.viewmodel.FavoriteVacancyFragmentViewModel
@@ -26,9 +30,11 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
         super.onViewCreated(view, savedInstanceState)
 
         adapter = VacancyAdapter(java.util.ArrayList(), this)
-        // binding.rv_favorites.layoutManager = LinearLayoutManager(requireContext(),
-        // LinearLayoutManager.VERTICAL, false)
-        // binding.rv_favorites.adapter = adapter
+        binding.rvFavorites.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL, false
+        )
+        binding.rvFavorites.adapter = adapter
 
         viewModel.observeState().observe(viewLifecycleOwner) { state ->
             render(state)
@@ -41,8 +47,8 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
             isClickAllowed = true
 
             // findNavController().navigate(
-                // R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
-                // VacancyDetailFragment.createArgs(vacancy)
+            // R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
+            // VacancyDetailFragment.createArgs(vacancy)
             // )
         }
     }
@@ -54,7 +60,6 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         adapter = null
     }
 
@@ -67,10 +72,10 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
     private fun showContent(vacancies: List<Vacancy>) {
         binding.apply {
-            // rv_favorites.isVisible = true
-            // ll_favorites_empty.isVisible = false
-            // favorite_nothing_found.isVisible = false
-            // rv_favorites.adapter = adapter
+            rvFavorites.isVisible = true
+            llFavoritesEmptyPlaceholder.isVisible = false
+            llFavoritesNothingFoundPlaceholder.isVisible = false
+            rvFavorites.adapter = adapter
             adapter?.vacancyList = vacancies as ArrayList<Vacancy>
             adapter?.notifyDataSetChanged()
         }
@@ -78,8 +83,8 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
     private fun showEmpty() {
         binding.apply {
-            // rv_favorites.isVisible = false
-            // ll_favorites_empty.isVisible = true
+            rvFavorites.isVisible = false
+            llFavoritesEmptyPlaceholder.isVisible = true
         }
     }
 
