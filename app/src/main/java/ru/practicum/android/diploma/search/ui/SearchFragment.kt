@@ -2,8 +2,6 @@ package ru.practicum.android.diploma.search.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +18,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
     private val viewModel by viewModel<SearchViewModel>()
     private val vacancies = ArrayList<SearchViewModel._Vacancy>()
-    private lateinit var onVacancyClickDebounce: (SearchViewModel._Vacancy) -> Unit
+    private var onVacancyClickDebounce: ((SearchViewModel._Vacancy) -> Unit)? = null
 //    private val adapter = VacansyAdapter(vacancies){ vacancy ->
 //        onVacancyClickDebounce(vacancy)
 //    }
@@ -55,8 +53,8 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-        onVacancyClickDebounce = { vacancy->
-            if(clickDebounce()) {
+        onVacancyClickDebounce = { vacancy ->
+            if (clickDebounce()) {
 //                findNavController().navigate()
             }
         }
