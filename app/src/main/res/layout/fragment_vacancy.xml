@@ -16,8 +16,8 @@
         <ImageButton
             android:id="@+id/btBackArrow"
             style="@style/imageButton"
-            android:layout_width="@dimen/size_bottomMenuIcon"
-            android:layout_height="@dimen/size_bottomMenuIcon"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
             android:layout_gravity="center"
             android:src="@drawable/ic_arrow_back_24px" />
 
@@ -34,16 +34,16 @@
         <ImageButton
             android:id="@+id/icSharing"
             style="@style/imageButton"
-            android:layout_width="@dimen/size_24dp"
-            android:layout_height="@dimen/size_24dp"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
             android:layout_marginEnd="@dimen/margin_30dp"
             android:src="@drawable/ic_sharing_24px" />
 
         <ImageButton
             android:id="@+id/icFavorite"
             style="@style/imageButton"
-            android:layout_width="@dimen/size_24dp"
-            android:layout_height="@dimen/size_24dp"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
             android:src="@drawable/ic_favorites_off__24px" />
     </LinearLayout>
 
