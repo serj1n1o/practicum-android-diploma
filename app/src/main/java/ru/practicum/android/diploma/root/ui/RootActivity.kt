@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.root.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.R
@@ -16,12 +15,6 @@ class RootActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.rootFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.searchFragment, R.id.favoritesFragment, R.id.aboutFragment),
-            fallbackOnNavigateUpListener = ::onSupportNavigateUp
-        )
-
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.navigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
