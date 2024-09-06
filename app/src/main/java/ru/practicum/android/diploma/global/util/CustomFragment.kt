@@ -14,18 +14,18 @@ abstract class CustomFragment<T : ViewBinding> : Fragment() {
 
     private var _binding: T? = null
     protected val binding get() = _binding!!
+    private var isClickAllowed = true
 
     fun clickDebounce(): Boolean {
-        var isClickAllowed = true
-        val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
             lifecycleScope.launch {
                 delay(DELAY_CLICK)
                 isClickAllowed = true
             }
+            return true
         }
-        return current
+        return false
     }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): T
