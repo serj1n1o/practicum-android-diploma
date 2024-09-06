@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.vacancy.data.dto
+package ru.practicum.android.diploma.search.data.dto.details
 
 data class PhonesDto(
     val city: String,

@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.global.di
 
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,6 +12,9 @@ import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.RetrofitNetworkClient
 import ru.practicum.android.diploma.global.util.HeaderInterceptor
 import ru.practicum.android.diploma.global.util.NetworkUtil
+import ru.practicum.android.diploma.search.domain.api.SearchInteractor
+import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
+import ru.practicum.android.diploma.vacancy.ui.viewmodel.DetailsVacancyViewModel
 import java.util.concurrent.TimeUnit
 
 val dataModule = module {
@@ -34,5 +38,12 @@ val dataModule = module {
             hhApi = get(),
             networkUtil = NetworkUtil(context = androidContext())
         )
+    }
+    // потом во вьюмодель перенесем
+    factory<SearchInteractor> {
+        SearchInteractorImpl()
+    }
+    viewModel<DetailsVacancyViewModel> {
+        DetailsVacancyViewModel(get())
     }
 }

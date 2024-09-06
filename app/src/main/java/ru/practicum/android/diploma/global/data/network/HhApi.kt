@@ -4,7 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.search.data.dto.VacanciesListResponse
-import ru.practicum.android.diploma.vacancy.data.dto.VacancyResponse
+import ru.practicum.android.diploma.search.data.dto.details.VacancyResponse
 
 interface HhApi {
 

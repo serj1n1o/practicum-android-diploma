@@ -43,4 +43,9 @@
     <string name="Artem_Baryshev">Артем Барышев</string>
     <string name="Sergey_Fedin">Сергей Федин</string>
     <string name="enter_query">Введите запрос</string>
+    <string name="txt_experience">Требуемый опыт</string>
+    <string name="experience_employment_schedule">%1$s\\n%2$s, %3$s</string>
+    <string name="txt_description">Описание вакансии</string>
+    <string name="txt_key_skills">Ключевые навыки</string>
+    <string name="txt_contacts">Контакты</string>
 </resources>
