@@ -19,7 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField(type = "String", name = "HH_ACCESS_TOKEN", value = "\"${developProperties.hhAccessToken}\"")
-        buildConfigField(type = "String", name = "HH_BASE_URL", value = "\"https://api.hh.ru/\"")
+        buildConfigField(type = "String", name = "HH_BASE_URL", value = "https://api.hh.ru/")
     }
 
     buildTypes {
@@ -57,10 +57,10 @@ dependencies {
 
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
-    kapt("androidx.room:room-compiler:2.6.1")
+    kapt(libs.room.compiler)
 
     implementation(libs.glide)
-    annotationProcessor(libs.compiler)
+    annotationProcessor(libs.glide.compiler)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
