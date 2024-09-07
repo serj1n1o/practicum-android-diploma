@@ -11,8 +11,13 @@ class SearchInteractorImpl(private val repository: SearchRepository) : SearchInt
     override fun getDetailsVacancy(vacancyId: String): Flow<Pair<VacancyDetails?, Int?>> {
         return repository.getVacancy(vacancyId).map { result ->
             when (result) {
-                is RequestResult.Success -> Pair(result.data, null)
-                is RequestResult.Error -> Pair(null, result.error)
+                is RequestResult.Success -> {
+                    Pair(result.data, null)
+                }
+
+                is RequestResult.Error -> {
+                    Pair(null, result.error)
+                }
             }
         }
     }

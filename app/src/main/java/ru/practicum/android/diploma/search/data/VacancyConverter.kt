@@ -13,7 +13,7 @@ class VacancyConverter {
                 id = id,
                 name = name,
                 salary = mapSalaryToString(salary),
-                employerLogo = employer?.logoUrls?.logoUrl240,
+                employerLogo = employer?.logoUrls?.logoUrl90,
                 employerName = employer?.name,
                 area = area.name,
                 experience = experience?.name,

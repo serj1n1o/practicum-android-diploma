@@ -14,9 +14,11 @@ class DetailsVacancyViewModel(private val searchInteractor: SearchInteractor) : 
     fun getVacancy(): LiveData<VacancyState> = vacancyState
 
     fun getDetailsVacancy(vacancyId: String) {
-        viewModelScope.launch {
-            searchInteractor.getDetailsVacancy(vacancyId = vacancyId).collect { result ->
-                processResult(result.first, result.second)
+        if (vacancyId.isNotEmpty()) {
+            viewModelScope.launch {
+                searchInteractor.getDetailsVacancy(vacancyId = vacancyId).collect { result ->
+                    processResult(result.first, result.second)
+                }
             }
         }
     }

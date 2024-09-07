@@ -5,13 +5,15 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
+import ru.practicum.android.diploma.global.util.Constants
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.global.util.Mapper
 import ru.practicum.android.diploma.global.util.ResponseCodes
@@ -29,11 +31,11 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val vacancyId = requireArguments().getString(VACANCY_KEY)
 
-        if (vacancyId != null) {
-            viewModel.getDetailsVacancy(vacancyId = vacancyId)
-        }
+        val args: VacancyFragmentArgs by navArgs()
+        val vacancyId = args.vacancyId
+
+        viewModel.getDetailsVacancy(vacancyId = vacancyId)
 
         viewModel.getVacancy().observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -49,6 +51,10 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
         binding.icSharing.setOnClickListener {
             viewModel.shareVacancy()
+        }
+
+        binding.btBackArrow.setOnClickListener {
+            findNavController().popBackStack()
         }
 
     }
@@ -72,22 +78,26 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
         }
         when (errorCode) {
             ResponseCodes.CODE_VACANCY_HAVE_NOT -> {
-                with(binding) {
-                    placeholder.isVisible = true
-                    imgPlaceholder.setImageResource(R.drawable.image_no_vacancy)
-                    txtPlaceholder.text = getString(R.string.vacancy_not_found_or_deleted)
-                }
+                showPlaceholder(R.drawable.image_no_vacancy, R.string.vacancy_not_found_or_deleted)
             }
 
             ResponseCodes.CODE_BAD_REQUEST -> {
-                with(binding) {
-                    placeholder.isVisible = true
-                    imgPlaceholder.setImageResource(R.drawable.image_error_server_cat)
-                    txtPlaceholder.text = getString(R.string.server_error)
-                }
+                showPlaceholder(R.drawable.image_error_server_cat, R.string.server_error)
+            }
+
+            ResponseCodes.CODE_NO_CONNECT -> {
+                showPlaceholder(R.drawable.image_no_internet, R.string.no_internet)
             }
         }
 
+    }
+
+    private fun showPlaceholder(resIdImg: Int, resIdText: Int) {
+        with(binding) {
+            placeholder.isVisible = true
+            imgPlaceholder.setImageResource(resIdImg)
+            txtPlaceholder.text = getString(resIdText)
+        }
     }
 
     private fun showContent(vacancy: VacancyDetails) {
@@ -108,7 +118,7 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
             Glide.with(requireContext()).load(vacancy.employerLogo).fitCenter()
                 .placeholder(R.drawable.ic_placeholder_32px)
-                .transform(RoundedCorners(Mapper.mapRadiusForGlide(requireContext(), EMPLOYER_LOGO_RADIUS)))
+                .transform(RoundedCorners(Mapper.mapRadiusForGlide(requireContext(), Constants.CORNER_RADIUS_DP)))
                 .into(icCompany)
 
             tvAreaCompany.text = vacancy.area
@@ -137,9 +147,4 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
         }
     }
 
-    companion object {
-        private const val EMPLOYER_LOGO_RADIUS = 12f
-        private const val VACANCY_KEY = "vacancy key"
-        fun createArgs(vacancyId: String): Bundle = bundleOf(VACANCY_KEY to vacancyId)
-    }
 }

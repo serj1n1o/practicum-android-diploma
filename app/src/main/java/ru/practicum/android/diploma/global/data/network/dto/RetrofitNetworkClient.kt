@@ -15,7 +15,7 @@ class RetrofitNetworkClient(
     private val networkUtil: NetworkUtil,
 ) : NetworkClient {
     override suspend fun doRequest(request: Request): RequestResult<Response> {
-        if (networkUtil.isConnected()) return RequestResult.Error(ResponseCodes.CODE_NO_CONNECT)
+        if (!networkUtil.isConnected()) return RequestResult.Error(ResponseCodes.CODE_NO_CONNECT)
         return withContext(Dispatchers.IO) {
             try {
                 val response = getResponse(request)
