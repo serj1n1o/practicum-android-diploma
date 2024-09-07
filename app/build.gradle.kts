@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("kotlin-kapt")
 }
 
 android {
@@ -18,6 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField(type = "String", name = "HH_ACCESS_TOKEN", value = "\"${developProperties.hhAccessToken}\"")
+        buildConfigField(type = "String", name = "HH_BASE_URL", value = "\"https://api.hh.ru/\"")
     }
 
     buildTypes {
@@ -36,12 +38,33 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
 dependencies {
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
+
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
+
+    implementation(libs.fragment.ktx)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
+    implementation(libs.activity.ktx)
+
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    kapt("androidx.room:room-compiler:2.6.1")
+
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.gson)
 
     // UI layer libraries
     implementation(libs.ui.material)

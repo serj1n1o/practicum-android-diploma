@@ -1,3 +1,45 @@
 <resources>
+    <!--Названия экранов-->
     <string name="app_name">Practicum-Android-Diploma</string>
+    <string name="main">Главная</string>
+    <string name="vacancy">Вакансия</string>
+    <string name="team">Команда</string>
+    <string name="favorites">Избранное</string>
+    <string name="search">Поиск вакансий</string>
+    <string name="sharing">Поделиться</string>
+    <string name="select_region">Выбор региона</string>
+    <string name="select_place">Выбор места работы</string>
+    <string name="select_Industry">Настройка фильтрации</string>
+    <string name="setup_filter">Настройка фильтрации</string>
+
+    <!--Остальные строки-->
+    <string name="no_such_vacancies">Таких вакансий нет</string>
+    <string name="no_internet">Нет интернета</string>
+    <string name="unable_to_retrieve_job_listing">Не удалось получить список вакансий</string>
+    <string name="found_vacancies">Найдено %1$d вакансий</string> // например val count = 258;val result = getString(R.string.found_vacancies, count)
+    <string name="main_bottom_menu">Главная</string>
+    <string name="favorite_bottom_menu">Избранное</string>
+    <string name="team_bottom_menu">Команда</string>
+    <string name="place_of_work">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="expected_salary">Ожидаемая зарплата</string>
+    <string name="enter_the_amount">Введите сумму</string>
+    <string name="do_not_show_without_salary">Не показывать без зарплаты</string>
+    <string name="country">Страна</string>
+    <string name="region">Регион</string>
+    <string name="choose">Выбрать</string>
+    <string name="enter_region">Введите регион</string>
+    <string name="there_is_no_such_region">Такого региона нет</string>
+    <string name="failed_to_get_list">Не удалось получить список</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
+    <string name="vacancy_not_found_or_deleted">Вакансия не найдена или удалена</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="the_list_is_empty">Список пуст</string>
+    <string name="the_app_was_developed_by">Над приложением работали</string>
+    <string name="Rinat_Gordeev">Ринат Гордеев</string>
+    <string name="Alexander_Gabov">Александр Габов</string>
+    <string name="Sergey_Bryukhanov">Сергей Брюханов</string>
+    <string name="Artem_Baryshev">Артем Барышев</string>
+    <string name="Sergey_Fedin">Сергей Федин</string>
 </resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".about.ui.AboutFragment">
+
+
+    <TextView
+        android:id="@+id/tvAboutHeader"
+        style="@style/aboutHeader"
+        android:text="@string/the_app_was_developed_by"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvFirstDev"
+        style="@style/aboutItem"
+        android:layout_marginTop="32dp"
+        android:text="@string/Alexander_Gabov"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAboutHeader" />
+
+    <TextView
+        android:id="@+id/tvSecondDev"
+        style="@style/aboutItem"
+        android:text="@string/Sergey_Bryukhanov"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFirstDev" />
+
+    <TextView
+        android:id="@+id/tvThirdDev"
+        style="@style/aboutItem"
+        android:text="@string/Rinat_Gordeev"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSecondDev" />
+
+    <TextView
+        android:id="@+id/tvFourthDev"
+        style="@style/aboutItem"
+        android:text="@string/Artem_Baryshev"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvThirdDev" />
+
+    <TextView
+        android:id="@+id/tvFifthDev"
+        style="@style/aboutItem"
+        android:text="@string/Sergey_Fedin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFourthDev" />
+</androidx.constraintlayout.widget.ConstraintLayout>
