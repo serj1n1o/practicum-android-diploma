@@ -18,12 +18,15 @@ import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.global.util.Mapper
 import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
+import ru.practicum.android.diploma.vacancy.ui.adapters.SkillsAdapter
 import ru.practicum.android.diploma.vacancy.ui.viewmodel.DetailsVacancyViewModel
 import ru.practicum.android.diploma.vacancy.ui.viewmodel.VacancyState
 
 class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
     private val viewModel by viewModel<DetailsVacancyViewModel>()
+
+    private val adapter by lazy { SkillsAdapter() }
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVacancyBinding {
         return FragmentVacancyBinding.inflate(inflater, container, false)
@@ -122,14 +125,18 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 .into(icCompany)
 
             tvAreaCompany.text = vacancy.area
-            if (vacancy.employerName != null) tvNameCompany.text = vacancy.employerName
+            if (vacancy.employerName != null) {
+                tvNameCompany.text = vacancy.employerName
+            } else {
+                tvNameVacancy.isVisible = false
+            }
 
             if (vacancy.experience != null || vacancy.schedule != null || vacancy.employment != null) {
                 experienceContent.text = getString(
                     R.string.experience_employment_schedule,
-                    vacancy.experience,
-                    vacancy.employment,
-                    vacancy.schedule
+                    vacancy.experience ?: "",
+                    vacancy.employment ?: "",
+                    vacancy.schedule ?: ""
                 )
             } else {
                 experienceContent.isVisible = false
@@ -137,14 +144,20 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
             }
 
             descriptionContent.setText(Html.fromHtml(vacancy.description, Html.FROM_HTML_MODE_COMPACT))
-
             if (vacancy.keySkills != null) {
-                keySkillsContent.text = Mapper.mapListTextWithDots(vacancy.keySkills)
+                adapter.skills.addAll(vacancy.keySkills)
+                keySkillsContent.adapter = adapter
             } else {
                 keySkillsContent.isVisible = false
                 keySkills.isVisible = false
             }
         }
+    }
+
+    override fun onDestroyView() {
+        adapter.skills.clear()
+        binding.keySkillsContent.adapter = null
+        super.onDestroyView()
     }
 
 }
