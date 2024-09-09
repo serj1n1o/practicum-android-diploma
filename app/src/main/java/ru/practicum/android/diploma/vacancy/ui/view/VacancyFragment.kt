@@ -29,8 +29,8 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val vacancyId = requireArguments().getString(VACANCY_KEY)
 
+        val vacancyId = requireArguments().getString(VACANCY_KEY)
         if (vacancyId != null) {
             viewModel.getDetailsVacancy(vacancyId = vacancyId)
         }
@@ -48,9 +48,10 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
         }
 
         binding.icSharing.setOnClickListener {
-            viewModel.shareVacancy()
+            if (vacancyId != null) {
+                viewModel.shareVacancy()
+            }
         }
-
     }
 
     private fun showLoading() {
@@ -87,7 +88,6 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 }
             }
         }
-
     }
 
     private fun showContent(vacancy: VacancyDetails) {
@@ -106,7 +106,9 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 salary.isVisible = false
             }
 
-            Glide.with(requireContext()).load(vacancy.employerLogo).fitCenter()
+            Glide.with(requireContext())
+                .load(vacancy.employerLogo)
+                .fitCenter()
                 .placeholder(R.drawable.ic_placeholder_32px)
                 .transform(RoundedCorners(Mapper.mapRadiusForGlide(requireContext(), EMPLOYER_LOGO_RADIUS)))
                 .into(icCompany)
