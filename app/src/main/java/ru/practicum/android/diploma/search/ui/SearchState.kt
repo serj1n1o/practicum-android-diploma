@@ -1,9 +1,13 @@
 package ru.practicum.android.diploma.search.ui
 
+import ru.practicum.android.diploma.search.domain.model.VacancyList
+
 sealed interface SearchState {
     object Loading : SearchState
 
-    data class Content(val vacancies: List<SearchViewModel._Vacancy>) : SearchState
+    object LoadingNewPage : SearchState
+
+    data class Content(val vacancies: VacancyList) : SearchState
 
     object NoConnection : SearchState
 

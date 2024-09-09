@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/titleVacancy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
@@ -19,6 +20,8 @@
             android:layout_width="@dimen/size_Icon"
             android:layout_height="@dimen/size_Icon"
             android:layout_gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_arrow_back_24px" />
 
         <TextView
@@ -74,16 +77,19 @@
             style="@style/text_22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/size_48dp"
             android:gravity="center"
-            tools:text="@string/vacancy_not_found_or_deleted" />
+            tools:text="@string/no_internet" />
 
 
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_88dp"
+        android:paddingBottom="@dimen/margin_16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/vacancyInfo"
@@ -96,7 +102,6 @@
                 style="@style/text_32"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_88dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -115,7 +120,7 @@
             <LinearLayout
                 android:id="@+id/cardVacancy"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_20dp"
                 android:background="@drawable/rectangle_12"
                 android:orientation="horizontal"
@@ -123,8 +128,8 @@
 
                 <ImageView
                     android:id="@+id/ic_company"
-                    android:layout_width="@dimen/size_48dp"
-                    android:layout_height="@dimen/size_48dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/dm_about_item_margin_top"
                     tools:src="@drawable/ic_yandex_eat" />
@@ -132,7 +137,7 @@
                 <LinearLayout
                     android:id="@+id/tvNameCompanyAndArea"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8dp"
                     android:orientation="vertical">
 
@@ -150,47 +155,48 @@
                         style="@style/text_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_16dp"
                         android:textColor="@color/black"
                         tools:text="Москва" />
                 </LinearLayout>
 
             </LinearLayout>
 
-                <TextView
-                    android:id="@+id/requiredExperience"
-                    style="@style/text_16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_24dp"
-                    android:tag="experience"
-                    android:text="@string/txt_experience"
-                    app:layout_constraintTop_toBottomOf="@id/cardVacancy"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/requiredExperience"
+                style="@style/text_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:tag="experience"
+                android:text="@string/txt_experience"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardVacancy" />
 
             <TextView
                 android:id="@+id/experienceContent"
-                    style="@style/text_16"
+                style="@style/text_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/requiredExperience"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/margin_4dp"
                 android:lineSpacingExtra="@dimen/margin_8dp"
-                app:layout_constraintHorizontal_bias="0"
                 android:tag="experience"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/requiredExperience"
                 tools:text="@string/experience_employment_schedule" />
 
-                <TextView
-                    android:id="@+id/jobDescription"
-                    style="@style/text_22"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_32dp"
-                    android:tag="description"
-                    android:text="@string/txt_description"
-                    app:layout_constraintTop_toBottomOf="@id/experienceContent"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/jobDescription"
+                style="@style/text_22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_32dp"
+                android:tag="description"
+                android:text="@string/txt_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/experienceContent" />
 
             <TextView
                 android:id="@+id/descriptionContent"
@@ -198,21 +204,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="description"
-                tools:text="и сниться нам не рокот космодрома, не эта ледяная синева, а снится нам трава , трава удома, зеленая , зеленая трава "
-                app:layout_constraintTop_toBottomOf="@id/jobDescription"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/jobDescription"
+                tools:text="и сниться нам не рокот космодрома, не эта ледяная синева, а снится нам трава , трава удома, зеленая , зеленая трава " />
 
-                <TextView
-                    android:id="@+id/keySkills"
-                    style="@style/text_22"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_32dp"
-                    android:tag="skills"
-                    android:text="@string/txt_key_skills"
-                    app:layout_constraintTop_toBottomOf="@id/descriptionContent"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/keySkills"
+                style="@style/text_22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_32dp"
+                android:tag="skills"
+                android:text="@string/txt_key_skills"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionContent" />
 
             <TextView
                 android:id="@+id/keySkillsContent"
@@ -220,10 +226,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="skills"
-                tools:text="мы свое призванье не забудем, смех и радость мы приносим людям, наш ковер - цветочная поляна, наши пальмы - сосны великаны"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textAlignment="viewStart"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/keySkills" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/keySkills"
+                tools:text="мы свое призванье не забудем, смех и радость мы приносим людям, наш ковер - цветочная поляна, наши пальмы - сосны великаны" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

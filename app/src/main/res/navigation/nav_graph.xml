@@ -8,30 +8,36 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="ru.practicum.android.diploma.about.ui.AboutFragment"
-        tools:layout="@layout/fragment_about"
-        android:label="@string/team" />
-
+        android:label="@string/team"
+        tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="ru.practicum.android.diploma.favorites.ui.view.FavoritesFragment"
-        tools:layout="@layout/fragment_favorites"
-        android:label="@string/favorites" />
-
+        android:label="@string/favorites"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_vacancyFragment"
+            app:destination="@id/vacancyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="ru.practicum.android.diploma.search.ui.SearchFragment"
-        tools:layout="@layout/fragment_search"
-        android:label="@string/search" >
-
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_vacancyFragment"
-            app:destination="@+id/vacancyFragment"/>
-
+            app:destination="@id/vacancyFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/vacancyFragment"
         android:name="ru.practicum.android.diploma.vacancy.ui.view.VacancyFragment"
-        tools:layout="@layout/fragment_vacancy"
-        android:label="VacancyFragment" />
+        android:label="VacancyFragment"
+        tools:layout="@layout/fragment_vacancy">
+        <argument
+            android:name="vacancyId"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
 </navigation>
