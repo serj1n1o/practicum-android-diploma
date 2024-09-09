@@ -143,62 +143,74 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
     }
 
     private fun setStateNotFound() {
-        binding.vacancyList.isVisible = false
-        binding.progressBar.isVisible = false
-        binding.recyclerViewProgressBar.isVisible = false
-        binding.windowMessage.isVisible = true
-        binding.countVacancies.setText(R.string.no_such_vacancies)
-        binding.countVacancies.isVisible = true
-        binding.textMessage.setText(R.string.unable_to_retrieve_job_listing)
-        binding.textMessage.isVisible = true
-        binding.imageMessage.setImageResource(R.drawable.image_no_list_vacancy)
+        with(binding) {
+            vacancyList.isVisible = false
+            progressBar.isVisible = false
+            recyclerViewProgressBar.isVisible = false
+            windowMessage.isVisible = true
+            countVacancies.setText(R.string.no_such_vacancies)
+            countVacancies.isVisible = true
+            textMessage.setText(R.string.unable_to_retrieve_job_listing)
+            textMessage.isVisible = true
+            imageMessage.setImageResource(R.drawable.image_no_list_vacancy)
+        }
     }
 
     private fun setStateNoConnection() {
-        binding.vacancyList.isVisible = false
-        binding.progressBar.isVisible = false
-        binding.recyclerViewProgressBar.isVisible = false
-        binding.windowMessage.isVisible = true
-        binding.countVacancies.isVisible = false
-        binding.textMessage.setText(R.string.no_internet)
-        binding.textMessage.isVisible = true
-        binding.imageMessage.setImageResource(R.drawable.image_no_internet)
+        with(binding) {
+            vacancyList.isVisible = false
+            progressBar.isVisible = false
+            recyclerViewProgressBar.isVisible = false
+            windowMessage.isVisible = true
+            countVacancies.isVisible = false
+            textMessage.setText(R.string.no_internet)
+            textMessage.isVisible = true
+            imageMessage.setImageResource(R.drawable.image_no_internet)
+        }
     }
 
     private fun setStateLoading() {
         hideKeyboard()
-        binding.vacancyList.isVisible = false
-        binding.progressBar.isVisible = true
-        binding.recyclerViewProgressBar.isVisible = false
-        binding.windowMessage.isVisible = false
-        binding.countVacancies.isVisible = false
-        binding.vacancyListLayout.isVisible = false
+        with(binding) {
+            vacancyList.isVisible = false
+            progressBar.isVisible = true
+            recyclerViewProgressBar.isVisible = false
+            windowMessage.isVisible = false
+            countVacancies.isVisible = false
+            vacancyListLayout.isVisible = false
+        }
     }
 
     private fun setStateLoadingNewPage() {
         hideKeyboard()
-        binding.vacancyList.isVisible = true
-        binding.progressBar.isVisible = false
-        binding.recyclerViewProgressBar.isVisible = true
-        binding.windowMessage.isVisible = false
-        binding.countVacancies.isVisible = true
-        binding.vacancyListLayout.isVisible = true
+        with(binding) {
+            vacancyList.isVisible = true
+            progressBar.isVisible = false
+            recyclerViewProgressBar.isVisible = true
+            windowMessage.isVisible = false
+            countVacancies.isVisible = true
+            vacancyListLayout.isVisible = true
+        }
     }
 
     private fun setStateEmptyTextInFocus() {
-        binding.vacancyList.isVisible = false
-        binding.progressBar.isVisible = false
-        binding.windowMessage.isVisible = false
-        binding.countVacancies.isVisible = false
+        with(binding) {
+            vacancyList.isVisible = false
+            progressBar.isVisible = false
+            windowMessage.isVisible = false
+            countVacancies.isVisible = false
+        }
     }
 
     private fun renderEditTextIconsVisibility(s: CharSequence?) {
-        if (s.isNullOrEmpty()) {
-            binding.editTextIconSearch.isVisible = true
-            binding.clearButton.isVisible = false
-        } else {
-            binding.editTextIconSearch.isVisible = false
-            binding.clearButton.isVisible = true
+        with(binding) {
+            if (s.isNullOrEmpty()) {
+                editTextIconSearch.isVisible = true
+                clearButton.isVisible = false
+            } else {
+                editTextIconSearch.isVisible = false
+                clearButton.isVisible = true
+            }
         }
     }
 
