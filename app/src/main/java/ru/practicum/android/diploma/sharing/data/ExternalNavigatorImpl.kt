@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import ru.practicum.android.diploma.sharing.domain.api.ExternalNavigator
 
-class ExternalNavigatorImpl(private val application: Application): ExternalNavigator {
+class ExternalNavigatorImpl(private val application: Application) : ExternalNavigator {
 
     override fun shareLink(message: String) {
         val shareIntent = Intent(Intent.ACTION_SEND).apply {

@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.global.di
 
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteInteractor
 import ru.practicum.android.diploma.favorites.domain.impl.FavoriteInteractorImpl

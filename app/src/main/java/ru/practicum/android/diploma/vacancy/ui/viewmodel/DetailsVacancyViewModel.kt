@@ -12,7 +12,7 @@ import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 class DetailsVacancyViewModel(
     private val searchInteractor: SearchInteractor,
     private val sharingInteractor: SharingInteractor,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val vacancyState = MutableLiveData<VacancyState>(VacancyState.Loading)
     fun getVacancy(): LiveData<VacancyState> = vacancyState
