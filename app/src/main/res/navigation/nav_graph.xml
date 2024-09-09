@@ -39,4 +39,5 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+
 </navigation>
