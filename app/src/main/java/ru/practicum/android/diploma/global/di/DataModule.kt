@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.RetrofitNetworkClient
 import ru.practicum.android.diploma.global.util.HeaderInterceptor
 import ru.practicum.android.diploma.global.util.NetworkUtil
+import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.data.repository.SearchRepositoryImpl
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import java.util.concurrent.TimeUnit
@@ -39,6 +40,10 @@ val dataModule = module {
     }
 
     factory<SearchRepository> {
-        SearchRepositoryImpl(networkClient = get())
+        SearchRepositoryImpl(networkClient = get(), VacancyMapper())
+    }
+
+    factory {
+        VacancyMapper()
     }
 }

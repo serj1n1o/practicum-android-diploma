@@ -7,21 +7,30 @@ import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.Request
 import ru.practicum.android.diploma.global.util.RequestResult
-import ru.practicum.android.diploma.search.data.VacancyConverter
 import ru.practicum.android.diploma.search.data.dto.VacanciesListResponse
 import ru.practicum.android.diploma.search.data.dto.details.VacancyResponse
+import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import ru.practicum.android.diploma.search.domain.model.SearchQuery
+import ru.practicum.android.diploma.search.domain.model.VacancyList
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 
-class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRepository {
-    override fun searchVacancies(searchQuery: SearchQuery): Flow<RequestResult<VacanciesListResponse>> = flow {
-        val request = Request.GetVacancies(HashMap())
+class SearchRepositoryImpl(
+    private val networkClient: NetworkClient,
+    private val vacancyMapper: VacancyMapper
+) : SearchRepository {
+    override fun searchVacancies(searchQuery: SearchQuery): Flow<RequestResult<VacancyList>> = flow {
+        val body: HashMap<String, String> = HashMap()
+        if (searchQuery.text != null) {
+            body["text"] = searchQuery.text!!
+        }
+        body["page"] = searchQuery.page.toString()
+        body["per_page"] = searchQuery.perPage.toString()
+        val request = Request.GetVacancies(body)
 
         when (val result = networkClient.doRequest(request)) {
             is RequestResult.Success -> {
-                // Тут нужен маппер, пока для теста сделано так
-                emit(RequestResult.Success(result.data as VacanciesListResponse))
+                emit(RequestResult.Success(vacancyMapper.map(result.data as VacanciesListResponse)))
             }
 
             is RequestResult.Error -> {
@@ -38,7 +47,7 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
                     // database.vacancyDao.getListId()
                     listOf("2132131", "41424")
                 }
-                val vacancy = converter.mapVacancyResponseToVacancyDetails(
+                val vacancy = vacancyMapper.map(
                     vacancy = result.data as VacancyResponse,
                     inFavorite = result.data.id in favoritesVacancyId
                 )
@@ -51,6 +60,4 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
             }
         }
     }
-
-    private val converter = VacancyConverter() // передавать в конструктор надо будет
 }

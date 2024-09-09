@@ -4,48 +4,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.global.util.debounce
+import ru.practicum.android.diploma.search.domain.api.SearchInteractor
+import ru.practicum.android.diploma.search.domain.model.SearchQuery
+import ru.practicum.android.diploma.search.domain.model.Vacancy
+import ru.practicum.android.diploma.search.domain.model.VacancyList
 
-class SearchViewModel : ViewModel() {
-
-    // ********** FOR TEST ***********
-
-    data class _Vacancy(val name: String, val description: String)
-
-    enum class _TypeError {
-        NO_CONNECTION
-    }
-
-    class LocalSearchInteractor {
-        fun searchEXAMPLE(string: String): Flow<Pair<List<_Vacancy>?, _TypeError?>> = flow {
-            emit(Pair(listOf(_Vacancy("a", "b"), _Vacancy("c", "d")), null))
-//            when (Random.nextInt(1, 3)) {
-//                1 -> {
-//                    emit(Pair(null, _TypeError.NO_CONNECTION))
-//                }
-//                2 -> {
-//                    emit(Pair(listOf(_Vacancy("a", "b"), _Vacancy("c", "d")), null))
-//                }
-//                3 -> {
-//                    emit(Pair(listOf<_Vacancy>(), null))
-//                }
-//            }
-        }
-    }
-
-    // ****************************************
+class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewModel() {
 
     private val stateLiveData = MutableLiveData<SearchState>(SearchState.EmptyEditText)
     fun observeState(): LiveData<SearchState> = stateLiveData
-
+    private var vacanciesList = mutableListOf<Vacancy>()
     private var lastSearchText: String? = null
+    private var pages: Int = 0
+    private var currentPage: Int = 0
+    private var vacanciesFound: Int = 0
+    private var isLoading: Boolean = false
 
     private val trackSearchDebounce =
         debounce<String>(SEARCH_DEBOUNCE_DELAY, viewModelScope, true) { changedText ->
-            search(changedText)
+            pages = 0
+            currentPage = 0
+            vacanciesFound = 0
+            vacanciesList.clear()
+            search(changedText, currentPage)
         }
 
     fun searchDebounce(changedText: String) {
@@ -59,43 +43,61 @@ class SearchViewModel : ViewModel() {
         stateLiveData.postValue(state)
     }
 
-    fun search(input: String) {
-        renderState(SearchState.Loading)
-        viewModelScope.launch {
-            LocalSearchInteractor()
-                .searchEXAMPLE(input)
-                .collect { pair ->
-                    processResult(pair.first, pair.second)
-                }
+    fun search(input: String, page: Int) {
+        if (!input.isNullOrEmpty()) {
+            if (page == 0) {
+                renderState(SearchState.Loading)
+            }
+            viewModelScope.launch {
+                searchInteractor.getVacancies(
+                    SearchQuery(
+                        text = input,
+                        page = page,
+                        perPage = RECORDS_PER_PAGE
+                    )
+                )
+                    .collect {
+                        processResult(result = it)
+                        isLoading = false
+                    }
+            }
         }
     }
 
-    private fun processResult(
-        foundVacancies: List<_Vacancy>?,
-        typeError: _TypeError?,
-    ) {
-        val vacancies = mutableListOf<_Vacancy>()
-        if (foundVacancies != null) {
-            vacancies.addAll(foundVacancies)
+    fun getNextPage() {
+        if (currentPage < pages - 1 && !isLoading && !lastSearchText.isNullOrEmpty()) {
+            isLoading = true
+            renderState(SearchState.LoadingNewPage)
+            search(lastSearchText!!, currentPage + 1)
         }
+    }
 
-        when {
-            typeError != null -> {
-                renderState(SearchState.NoConnection)
+    private fun processResult(result: RequestResult<VacancyList>) {
+        when (result) {
+            is RequestResult.Success -> {
+                if (!lastSearchText.isNullOrEmpty() && result.data!!.found == 0) {
+                    vacanciesList.clear()
+                    renderState(SearchState.NotFound)
+                } else {
+                    val preparedData = result.data!!
+                    vacanciesList.addAll(preparedData.items)
+                    pages = result.data.pages
+                    currentPage = result.data.page
+                    vacanciesFound = result.data.found
+                    val data = preparedData.copy(items = vacanciesList)
+                    renderState(SearchState.Content(data))
+                }
             }
 
-            foundVacancies.isNullOrEmpty() -> {
+            is RequestResult.Error -> {
                 renderState(SearchState.NotFound)
-            }
-
-            else -> {
-                renderState(SearchState.Content(vacancies))
             }
         }
     }
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val RECORDS_PER_PAGE = 20
     }
 
 }
