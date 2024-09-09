@@ -50,13 +50,14 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
         }
 
         binding.icSharing.setOnClickListener {
-            viewModel.shareVacancy()
+            if (vacancyId != null) {
+                viewModel.shareVacancy()
+            }
         }
 
         binding.btBackArrow.setOnClickListener {
             findNavController().popBackStack()
         }
-
     }
 
     private fun showLoading() {
@@ -89,7 +90,6 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 showPlaceholder(R.drawable.image_no_internet, R.string.no_internet)
             }
         }
-
     }
 
     private fun showPlaceholder(resIdImg: Int, resIdText: Int) {
@@ -116,7 +116,9 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 salary.isVisible = false
             }
 
-            Glide.with(requireContext()).load(vacancy.employerLogo).fitCenter()
+            Glide.with(requireContext())
+                .load(vacancy.employerLogo)
+                .fitCenter()
                 .placeholder(R.drawable.ic_placeholder_32px)
                 .transform(RoundedCorners(Mapper.mapRadiusForGlide(requireContext(), Constants.CORNER_RADIUS_DP)))
                 .into(icCompany)
