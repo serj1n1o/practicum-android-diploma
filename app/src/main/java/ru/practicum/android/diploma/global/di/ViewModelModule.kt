@@ -13,7 +13,7 @@ val viewModelModule = module {
     }
 
     viewModel<DetailsVacancyViewModel> {
-        DetailsVacancyViewModel(get())
+        DetailsVacancyViewModel(get(), get())
     }
 
     viewModel<FavoriteVacancyFragmentViewModel> {
