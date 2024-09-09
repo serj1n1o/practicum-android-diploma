@@ -13,6 +13,6 @@ val domainModule = module {
     }
 
     factory<FavoriteInteractor> {
-        FavoriteInteractorImpl()
+        FavoriteInteractorImpl(get())
     }
 }

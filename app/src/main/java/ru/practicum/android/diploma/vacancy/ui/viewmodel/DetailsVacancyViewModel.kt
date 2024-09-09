@@ -5,10 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.favorites.domain.api.FavoriteInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 
-class DetailsVacancyViewModel(private val searchInteractor: SearchInteractor) : ViewModel() {
+class DetailsVacancyViewModel(
+    private val searchInteractor: SearchInteractor,
+    private val favoriteInteractor: FavoriteInteractor
+) : ViewModel() {
 
     private val vacancyState = MutableLiveData<VacancyState>(VacancyState.Loading)
     fun getVacancy(): LiveData<VacancyState> = vacancyState
@@ -34,10 +38,12 @@ class DetailsVacancyViewModel(private val searchInteractor: SearchInteractor) : 
     }
 
     fun addToFavorites() {
-        val vacancy = if (vacancyState.value is VacancyState.Content) {
-            (vacancyState.value as VacancyState.Content).vacancy
-        } else {
-            null
+        if (vacancyState.value is VacancyState.Content) {
+            val vacancy = (vacancyState.value as VacancyState.Content).vacancy
+            viewModelScope.launch {
+                favoriteInteractor.addFavoriteVacancy(vacancy)
+            }
+
         }
     }
 
