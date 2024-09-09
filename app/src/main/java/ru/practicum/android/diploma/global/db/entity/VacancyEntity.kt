@@ -3,21 +3,20 @@ package ru.practicum.android.diploma.global.db.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
 @Entity(tableName = "vacancy_table")
 data class VacancyEntity(
     @PrimaryKey val id: String,
-    val name: String?,
-    val area: String?,
-    val link: String?,
-    val address: String?,
-    val contactName: String?,
-    val contactPhone: String?,
-    val contactEmail: String?,
-    val employerName: String?,
+    val name: String,
     val salary: String?,
-    val schedule: String?,
-    val skills: String?,
+    val employerLogo: String?,
+    val employerName: String?,
+    val area: String,
     val experience: String?,
-    val description: String?,
-    val isFavorite: Boolean
+    val employment: String?,
+    val schedule: String?,
+    val description: String,
+    val keySkills: String?,
+    val alternateUrl: String,
+    val inFavorite: Boolean,
 )

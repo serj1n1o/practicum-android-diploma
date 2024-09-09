@@ -29,7 +29,7 @@ class FavoriteRepositoryImpl(
         emit(vacancyDbConvertor.mapVacancyEntityToVacancyDetails(vacancy))
     }
 
-    override fun getIdsVacancies(): Flow<List<String>> {
-        TODO("Not yet implemented")
+    override fun getIdsVacancies(): Flow<List<String>> = flow {
+        appDatabase.vacancyDao().getIdsFavoriteVacancies()
     }
 }
