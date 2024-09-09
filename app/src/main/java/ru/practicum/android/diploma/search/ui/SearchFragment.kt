@@ -8,20 +8,25 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.global.util.Mapper
+import ru.practicum.android.diploma.search.domain.model.Vacancy
+import ru.practicum.android.diploma.search.domain.model.VacancyList
 
 class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
     private val viewModel by viewModel<SearchViewModel>()
-    private val vacancies = ArrayList<SearchViewModel._Vacancy>()
-    private var onVacancyClickDebounce: ((SearchViewModel._Vacancy) -> Unit)? = null
-//    private val adapter = VacansyAdapter(vacancies){ vacancy ->
-//        onVacancyClickDebounce(vacancy)
-//    }
+    private val vacancies = mutableListOf<Vacancy>()
+    private var onVacancyClickDebounce: ((String) -> Unit)? = null
+    private val adapter = VacancyAdapter(vacancies) { vacancy ->
+        onVacancyClickDebounce?.let { it(vacancy.id) }
+    }
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
         return FragmentSearchBinding.inflate(inflater, container, false)
@@ -29,8 +34,8 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.vacancyList.layoutManager = LinearLayoutManager(requireContext())
-//        binding.vacancyList.adapter = adapter
+        binding.vacancyList.adapter = adapter
+        binding.vacancyList.setHasFixedSize(false)
         binding.editText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding.editText.text.isNullOrEmpty()) {
                 render(SearchState.EmptyEditTextInFocus)
@@ -46,21 +51,32 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         }
         binding.editText.doOnTextChanged { text, start, before, count ->
             renderEditTextIconsVisibility(text)
-            if (!text.isNullOrEmpty()) {
-                viewModel.searchDebounce(text.toString())
-            }
+            viewModel.searchDebounce(text.toString())
         }
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-        onVacancyClickDebounce = { vacancy ->
+        onVacancyClickDebounce = { vacancyId ->
             if (clickDebounce()) {
-//                findNavController().navigate()
+                val direction = SearchFragmentDirections.actionSearchFragmentToVacancyFragment(vacancyId)
+                findNavController().navigate(direction)
             }
         }
+        binding.vacancyList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    val lastVisiblePosition =
+                        (binding.vacancyList.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    if (lastVisiblePosition >= adapter.itemCount - 1) {
+                        viewModel.getNextPage()
+                    }
+                }
+            }
+        })
     }
 
-    fun render(state: SearchState) {
+    fun render(state: SearchState, newSearch: Boolean = false) {
         when (state) {
             is SearchState.EmptyEditText -> {
                 setStateEmptyEditText()
@@ -82,6 +98,10 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 setStateLoading()
             }
 
+            is SearchState.LoadingNewPage -> {
+                setStateLoadingNewPage()
+            }
+
             is SearchState.EmptyEditTextInFocus -> {
                 setStateEmptyTextInFocus()
             }
@@ -91,30 +111,41 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
     private fun setStateEmptyEditText() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
+        binding.recyclerViewProgressBar.isVisible = false
         binding.windowMessage.isVisible = true
         binding.countVacancies.isVisible = false
         binding.textMessage.isVisible = false
         binding.imageMessage.setImageResource(R.drawable.image_man_with_binoculars)
     }
 
-    private fun setStateContent(vacanciesFromVM: List<SearchViewModel._Vacancy>) {
+    private fun setStateContent(vacanciesFromVM: VacancyList) {
+        val countBeforeAdd = vacancies.count()
         vacancies.clear()
-        vacancies.addAll(vacanciesFromVM)
+        vacancies.addAll(vacanciesFromVM.items)
+
         binding.vacancyList.isVisible = true
         binding.progressBar.isVisible = false
+        binding.recyclerViewProgressBar.isVisible = false
         binding.windowMessage.isVisible = false
+        binding.vacancyListLayout.isVisible = true
         binding.countVacancies.text = getString(
             R.string.founded_vacancies,
-            vacancies.size.toString(),
-            Mapper.declineVacancy(requireContext(), vacancies.size)
+            vacanciesFromVM.found.toString(),
+            Mapper.declineVacancy(requireContext(), vacanciesFromVM.found)
         )
         binding.countVacancies.isVisible = true
-//                adapter.notifyDataSetChanged()
+        adapter.vacancyList = vacancies
+        if (vacanciesFromVM.page > 0 && countBeforeAdd < vacanciesFromVM.items.size) {
+            adapter.notifyItemRangeInserted(countBeforeAdd, vacanciesFromVM.items.size - countBeforeAdd)
+        } else {
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun setStateNotFound() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
+        binding.recyclerViewProgressBar.isVisible = false
         binding.windowMessage.isVisible = true
         binding.countVacancies.setText(R.string.no_such_vacancies)
         binding.countVacancies.isVisible = true
@@ -126,6 +157,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
     private fun setStateNoConnection() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
+        binding.recyclerViewProgressBar.isVisible = false
         binding.windowMessage.isVisible = true
         binding.countVacancies.isVisible = false
         binding.textMessage.setText(R.string.no_internet)
@@ -134,10 +166,23 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
     }
 
     private fun setStateLoading() {
+        hideKeyboard()
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = true
+        binding.recyclerViewProgressBar.isVisible = false
         binding.windowMessage.isVisible = false
         binding.countVacancies.isVisible = false
+        binding.vacancyListLayout.isVisible = false
+    }
+
+    private fun setStateLoadingNewPage() {
+        hideKeyboard()
+        binding.vacancyList.isVisible = true
+        binding.progressBar.isVisible = false
+        binding.recyclerViewProgressBar.isVisible = true
+        binding.windowMessage.isVisible = false
+        binding.countVacancies.isVisible = false
+        binding.vacancyListLayout.isVisible = true
     }
 
     private fun setStateEmptyTextInFocus() {
@@ -155,5 +200,11 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
             binding.editTextIconSearch.isVisible = false
             binding.clearButton.isVisible = true
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(binding.editText.windowToken, 0)
     }
 }
