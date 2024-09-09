@@ -7,11 +7,13 @@ import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 interface FavoriteInteractor {
     suspend fun addVacancy(vacancyDetails: VacancyDetails)
 
+    fun getVacancy(vacancyId: String): Flow<VacancyDetails>
+
+    fun updateVacancy(vacancyDetails: VacancyDetails)
+
     suspend fun deleteVacancy(vacancyId: String)
 
     fun getVacancies(): Flow<List<Vacancy>>
-
-    fun getVacancy(vacancyId: String): Flow<VacancyDetails>
 
     fun getIdsVacancies(): Flow<List<String>>
 }

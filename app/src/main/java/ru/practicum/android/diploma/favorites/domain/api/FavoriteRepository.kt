@@ -8,9 +8,11 @@ interface FavoriteRepository {
 
     suspend fun addVacancy(vacancyDetails: VacancyDetails)
 
-    suspend fun deleteVacancy(vacancyId: String)
-
     fun getVacancies(): Flow<List<Vacancy>>
+
+    fun updateVacancy(vacancyDetails: VacancyDetails)
+
+    suspend fun deleteVacancy(vacancyId: String)
 
     fun getVacancy(vacancyId: String): Flow<VacancyDetails>
 

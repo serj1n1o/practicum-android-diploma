@@ -15,21 +15,25 @@ class FavoriteRepositoryImpl(
         appDatabase.vacancyDao().insertVacancy(vacancyDbConvertor.mapVacancyDetailsToVacancyEntity(vacancyDetails))
     }
 
-    override suspend fun deleteVacancy(vacancyId: String) {
-        appDatabase.vacancyDao().deleteVacancy(vacancyId)
-    }
-
     override fun getVacancies(): Flow<List<Vacancy>> = flow {
         val vacancies = appDatabase.vacancyDao().getAllVacancies()
         emit(vacancyDbConvertor.mapListVacancyEntityToListVacancy(vacancies))
     }
 
+    override fun updateVacancy(vacancyDetails: VacancyDetails) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteVacancy(vacancyId: String) {
+        appDatabase.vacancyDao().deleteVacancy(vacancyId)
+    }
+
     override fun getVacancy(vacancyId: String): Flow<VacancyDetails> = flow {
-        val vacancy = appDatabase.vacancyDao().getFavoriteVacancy(vacancyId)
+        val vacancy = appDatabase.vacancyDao().getVacancy(vacancyId)
         emit(vacancyDbConvertor.mapVacancyEntityToVacancyDetails(vacancy))
     }
 
     override fun getIdsVacancies(): Flow<List<String>> = flow {
-        appDatabase.vacancyDao().getIdsFavoriteVacancies()
+        appDatabase.vacancyDao().getIdsVacancies()
     }
 }
