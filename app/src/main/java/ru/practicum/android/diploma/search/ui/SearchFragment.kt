@@ -181,7 +181,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         binding.progressBar.isVisible = false
         binding.recyclerViewProgressBar.isVisible = true
         binding.windowMessage.isVisible = false
-        binding.countVacancies.isVisible = false
+        binding.countVacancies.isVisible = true
         binding.vacancyListLayout.isVisible = true
     }
 
