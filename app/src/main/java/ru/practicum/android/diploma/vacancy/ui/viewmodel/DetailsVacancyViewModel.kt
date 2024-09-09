@@ -12,8 +12,7 @@ import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 
 class DetailsVacancyViewModel(
     private val searchInteractor: SearchInteractor,
-    private val favoriteInteractor: FavoriteInteractor,
-    private val sharingInteractor: SharingInteractor,
+    private val favoriteInteractor: FavoriteInteractor
 ) : ViewModel() {
 
     private val vacancyState = MutableLiveData<VacancyState>(VacancyState.Loading)
@@ -53,6 +52,5 @@ class DetailsVacancyViewModel(
         val vacancyUrl = (vacancyState.value as? VacancyState.Content)?.vacancy?.id?.let { id ->
             "https://api.hh.ru/vacancies/{vacancy_id}"
         }
-        vacancyUrl?.let { sharingInteractor.shareVacancy(it) }
     }
 }
