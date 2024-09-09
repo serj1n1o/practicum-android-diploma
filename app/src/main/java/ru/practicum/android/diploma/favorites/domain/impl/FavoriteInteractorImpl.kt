@@ -1,33 +1,30 @@
 package ru.practicum.android.diploma.favorites.domain.impl
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteInteractor
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteRepository
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 
 class FavoriteInteractorImpl(private val favoriteRepository: FavoriteRepository) : FavoriteInteractor {
-    override fun favoriteVacancy(): Flow<List<Vacancy>> {
-        return flow<List<Vacancy>> {
-            val list = 1
-            // написал так только чтоб не крашилось
-        }
+
+    override suspend fun addVacancy(vacancyDetails: VacancyDetails) {
+        favoriteRepository.addVacancy(vacancyDetails)
     }
 
-    override suspend fun addFavoriteVacancy(vacancyDetails: VacancyDetails) {
-        favoriteRepository.addFavoriteVacancy(vacancyDetails)
+    override fun getVacancy(vacancyId: String): Flow<VacancyDetails> {
+        return favoriteRepository.getVacancy(vacancyId)
     }
 
-    override suspend fun deleteFavoriteVacancy(vacancyDetails: VacancyDetails) {
-        favoriteRepository.deleteFavoriteVacancy(vacancyDetails)
+    override suspend fun deleteVacancy(vacancyId: String) {
+        favoriteRepository.deleteVacancy(vacancyId)
     }
 
-    override fun getFavoriteVacancies(): Flow<List<VacancyDetails>> {
-        return favoriteRepository.getFavoriteVacancies()
+    override fun getVacancies(): Flow<List<Vacancy>> {
+        return favoriteRepository.getVacancies()
     }
 
-    override fun getIdsFavoriteVacancies(): Flow<List<String>> {
-        return favoriteRepository.getIdsFavoriteVacancies()
+    override fun getIdsVacancies(): Flow<List<String>> {
+        return favoriteRepository.getIdsVacancies()
     }
 }

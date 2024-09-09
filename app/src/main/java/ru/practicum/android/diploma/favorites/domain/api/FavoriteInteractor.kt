@@ -5,13 +5,13 @@ import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 
 interface FavoriteInteractor {
-    fun favoriteVacancy(): Flow<List<Vacancy>>
+    suspend fun addVacancy(vacancyDetails: VacancyDetails)
 
-    suspend fun addFavoriteVacancy(vacancyDetails: VacancyDetails)
+    suspend fun deleteVacancy(vacancyId: String)
 
-    suspend fun deleteFavoriteVacancy(vacancyDetails: VacancyDetails)
+    fun getVacancies(): Flow<List<Vacancy>>
 
-    fun getFavoriteVacancies(): Flow<List<VacancyDetails>>
+    fun getVacancy(vacancyId: String): Flow<VacancyDetails>
 
-    fun getIdsFavoriteVacancies(): Flow<List<String>>
+    fun getIdsVacancies(): Flow<List<String>>
 }

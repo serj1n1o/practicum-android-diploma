@@ -20,6 +20,9 @@ interface VacancyDao {
     @Query("SELECT * FROM _vacancy_table")
     suspend fun getAllVacancies(): List<_VacancyEntity>
 
+    @Query("SELECT * FROM _vacancy_table WHERE id = :vacancyId")
+    suspend fun getFavoriteVacancy(vacancyId: String): _VacancyEntity
+
     @Query("SELECT id FROM _vacancy_table")
     suspend fun getIdsFavoriteVacancies(): List<String>
 }

@@ -41,7 +41,7 @@ class DetailsVacancyViewModel(
         if (vacancyState.value is VacancyState.Content) {
             val vacancy = (vacancyState.value as VacancyState.Content).vacancy
             viewModelScope.launch {
-                favoriteInteractor.addFavoriteVacancy(vacancy)
+                favoriteInteractor.addVacancy(vacancy)
             }
 
         }
