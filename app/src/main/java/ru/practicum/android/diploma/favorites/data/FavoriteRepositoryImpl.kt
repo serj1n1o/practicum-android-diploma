@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 class FavoriteRepositoryImpl(
     private val appDatabase: AppDatabase,
     private val vacancyDbConvertor: VacancyDbConvertor
-): FavoriteRepository {
+) : FavoriteRepository {
     override suspend fun addVacancy(vacancyDetails: VacancyDetails) {
         appDatabase.vacancyDao().insertVacancy(vacancyDbConvertor.mapVacancyDetailsToVacancyEntity(vacancyDetails))
     }

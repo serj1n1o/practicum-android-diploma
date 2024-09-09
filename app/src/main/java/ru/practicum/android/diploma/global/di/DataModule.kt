@@ -10,7 +10,6 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.favorites.data.FavoriteRepositoryImpl
 import ru.practicum.android.diploma.favorites.data.VacancyDbConvertor
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteRepository
-import ru.practicum.android.diploma.favorites.domain.impl.FavoriteInteractorImpl
 import ru.practicum.android.diploma.global.data.network.HhApi
 import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.RetrofitNetworkClient
