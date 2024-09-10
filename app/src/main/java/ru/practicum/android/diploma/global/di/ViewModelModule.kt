@@ -13,10 +13,14 @@ val viewModelModule = module {
     }
 
     viewModel<DetailsVacancyViewModel> {
-        DetailsVacancyViewModel(get(), get())
+        DetailsVacancyViewModel(
+            searchInteractor = get(),
+            favoriteInteractor = get(),
+            sharingInteractor = get()
+        )
     }
 
     viewModel<FavoriteVacancyFragmentViewModel> {
-        FavoriteVacancyFragmentViewModel(get())
+        FavoriteVacancyFragmentViewModel(favoriteInteractor = get())
     }
 }

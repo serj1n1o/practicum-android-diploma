@@ -44,7 +44,7 @@
 
         <ImageButton
             android:id="@+id/icFavorite"
-            style="@style/imageButton"
+            android:backgroundTint="@color/background"
             android:layout_width="@dimen/size_Icon"
             android:layout_height="@dimen/size_Icon"
             android:src="@drawable/ic_favorites_off__24px" />

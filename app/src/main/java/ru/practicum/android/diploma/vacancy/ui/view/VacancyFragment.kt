@@ -5,6 +5,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -48,14 +49,16 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
             }
         }
 
+        viewModel.getFavoritesState().observe(viewLifecycleOwner) { state ->
+            setFavoritesState(inFavorite = state)
+        }
+
         binding.icFavorite.setOnClickListener {
             viewModel.addToFavorites()
         }
 
         binding.icSharing.setOnClickListener {
-            if (vacancyId != null) {
-                viewModel.shareVacancy()
-            }
+            viewModel.shareVacancy()
         }
 
         binding.btBackArrow.setOnClickListener {
@@ -112,12 +115,9 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
             vacancyInfo.isVisible = true
 
             tvNameVacancy.text = vacancy.name
-
-            if (vacancy.salary != null) {
-                salary.text = vacancy.salary
-            } else {
-                salary.isVisible = false
-            }
+            tvAreaCompany.text = vacancy.area
+            setVacancyTextBlocks(vacancy.salary, salary)
+            setVacancyTextBlocks(vacancy.employerName, tvNameCompany)
 
             Glide.with(requireContext())
                 .load(vacancy.employerLogo)
@@ -125,13 +125,6 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 .placeholder(R.drawable.ic_placeholder_32px)
                 .transform(RoundedCorners(Mapper.mapRadiusForGlide(requireContext(), Constants.CORNER_RADIUS_DP)))
                 .into(icCompany)
-
-            tvAreaCompany.text = vacancy.area
-            if (vacancy.employerName != null) {
-                tvNameCompany.text = vacancy.employerName
-            } else {
-                tvNameVacancy.isVisible = false
-            }
 
             if (vacancy.experience != null || vacancy.schedule != null || vacancy.employment != null) {
                 experienceContent.text = getString(
@@ -146,13 +139,35 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
             }
 
             descriptionContent.setText(Html.fromHtml(vacancy.description, Html.FROM_HTML_MODE_COMPACT))
-            if (vacancy.keySkills != null) {
-                adapter.skills.addAll(vacancy.keySkills)
-                keySkillsContent.adapter = adapter
-            } else {
-                keySkillsContent.isVisible = false
-                keySkills.isVisible = false
-            }
+
+            setVacancySkills(vacancy.keySkills)
+
+        }
+    }
+
+    private fun setVacancySkills(skills: List<String>?) {
+        if (skills != null) {
+            adapter.skills.addAll(skills)
+            binding.keySkillsContent.adapter = adapter
+        } else {
+            binding.keySkillsContent.isVisible = false
+            binding.keySkills.isVisible = false
+        }
+    }
+
+    private fun setVacancyTextBlocks(text: String?, view: TextView) {
+        if (text != null) {
+            view.text = text
+        } else {
+            view.isVisible = false
+        }
+    }
+
+    private fun setFavoritesState(inFavorite: Boolean) {
+        if (inFavorite) {
+            binding.icFavorite.setImageResource(R.drawable.ic_favorites_on__24px)
+        } else {
+            binding.icFavorite.setImageResource(R.drawable.ic_favorites_off__24px)
         }
     }
 

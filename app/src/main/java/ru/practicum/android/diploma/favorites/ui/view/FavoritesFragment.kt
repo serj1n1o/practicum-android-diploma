@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
@@ -18,7 +19,6 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
     private val viewModel by viewModel<FavoriteVacancyFragmentViewModel>()
     private var adapter: VacancyAdapter? = null
-    private var isClickAllowed = true
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavoritesBinding {
         return FragmentFavoritesBinding.inflate(inflater, container, false)
@@ -26,6 +26,8 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.fillData()
 
         adapter = VacancyAdapter(java.util.ArrayList(), this)
         binding.rvFavorites.layoutManager = LinearLayoutManager(
@@ -37,23 +39,14 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
         viewModel.observeState().observe(viewLifecycleOwner) { state ->
             render(state)
         }
-        viewModel.fillData()
+
     }
 
     override fun onVacancyClick(vacancy: Vacancy) {
         if (clickDebounce()) {
-            isClickAllowed = true
-
-            // findNavController().navigate(
-            // R.id.action_favoriteVacancyFragment_to_vacancyDetailFragment,
-            // VacancyDetailFragment.createArgs(vacancy)
-            // )
+            val direction = FavoritesFragmentDirections.actionFavoritesFragmentToVacancyFragment(vacancy.id)
+            findNavController().navigate(direction)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.fillData()
     }
 
     override fun onDestroyView() {
@@ -84,9 +77,5 @@ class FavoritesFragment : CustomFragment<FragmentFavoritesBinding>(), VacancyAda
             rvFavorites.isVisible = false
             llFavoritesEmptyPlaceholder.isVisible = true
         }
-    }
-
-    companion object {
-        fun newInstance() = FavoritesFragment()
     }
 }

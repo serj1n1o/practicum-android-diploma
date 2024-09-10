@@ -19,6 +19,8 @@ import ru.practicum.android.diploma.global.util.NetworkUtil
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.data.repository.SearchRepositoryImpl
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
+import ru.practicum.android.diploma.sharing.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.sharing.domain.api.ExternalNavigator
 import java.util.concurrent.TimeUnit
 
 val dataModule = module {
@@ -45,7 +47,7 @@ val dataModule = module {
     }
 
     factory<SearchRepository> {
-        SearchRepositoryImpl(networkClient = get(), VacancyMapper())
+        SearchRepositoryImpl(networkClient = get(), vacancyMapper = get(), database = get())
     }
 
     factory {
@@ -62,5 +64,9 @@ val dataModule = module {
 
     factory<FavoriteRepository> {
         FavoriteRepositoryImpl(get(), get())
+    }
+
+    factory<ExternalNavigator> {
+        ExternalNavigatorImpl(application = get())
     }
 }

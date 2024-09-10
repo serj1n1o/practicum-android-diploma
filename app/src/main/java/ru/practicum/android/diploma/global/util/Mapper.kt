@@ -54,7 +54,6 @@ object Mapper {
                 format.format(it)
             }
         }
-
         val from = formatNumber(salary?.from)
         val to = formatNumber(salary?.to)
 

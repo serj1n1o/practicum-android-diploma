@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.ItemSkillsBinding
 
 class SkillsAdapter : RecyclerView.Adapter<SkillsViewHolder>() {
+
     var skills = mutableListOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillsViewHolder {
