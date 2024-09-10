@@ -15,9 +15,7 @@ val domainModule = module {
 
     factory<SearchInteractor> { SearchInteractorImpl(repository = get()) }
 
-    factory<FavoriteInteractor> { FavoriteInteractorImpl() }
-
-    factory<ExternalNavigator> { ExternalNavigatorImpl(application = androidApplication()) }
-
-    factory<SharingInteractor> { SharingInteractorImpl(externalNavigator = get()) }
+    factory<FavoriteInteractor> {
+        FavoriteInteractorImpl(get())
+    }
 }

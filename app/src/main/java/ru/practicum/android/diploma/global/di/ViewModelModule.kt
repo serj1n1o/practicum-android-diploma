@@ -17,6 +17,6 @@ val viewModelModule = module {
     }
 
     viewModel<FavoriteVacancyFragmentViewModel> {
-        FavoriteVacancyFragmentViewModel(favoriteInteractor = get())
+        FavoriteVacancyFragmentViewModel(get())
     }
 }
