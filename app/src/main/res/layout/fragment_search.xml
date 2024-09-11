@@ -128,8 +128,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="visible">
-            а бл
-            <ProgressBar
+
+        <ProgressBar
                 android:layout_width="@dimen/progress_bar_36dp"
                 android:layout_height="@dimen/progress_bar_36dp"
                 android:layout_gravity="center"
