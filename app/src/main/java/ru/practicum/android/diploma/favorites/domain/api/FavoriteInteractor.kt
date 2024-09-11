@@ -9,7 +9,7 @@ interface FavoriteInteractor {
 
     fun getVacancy(vacancyId: String): Flow<VacancyDetails>
 
-    fun updateVacancy(vacancyDetails: VacancyDetails)
+    suspend fun updateVacancy(vacancyDetails: VacancyDetails)
 
     suspend fun deleteVacancy(vacancyId: String)
 

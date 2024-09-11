@@ -15,7 +15,7 @@ interface VacancyDao {
     @Query("SELECT * FROM vacancy_table WHERE id = :vacancyId")
     suspend fun getVacancy(vacancyId: String): VacancyEntity
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateVacancy(vacancy: VacancyEntity)
 
     @Query("DELETE FROM vacancy_table WHERE id = :vacancyId")

@@ -30,9 +30,9 @@ class VacancyDbConvertor {
     }
 
     fun mapVacancyEntityToVacancyDetails(vacancy: VacancyEntity): VacancyDetails {
-        val skills = mutableListOf<String>()
+        val skills: MutableList<String>? = null
         if (vacancy.keySkills?.isNotEmpty() == true) {
-            skills.addAll(vacancy.keySkills.split(",").toMutableList())
+            skills?.addAll(vacancy.keySkills.split(",").toMutableList())
         }
         with(vacancy) {
             return VacancyDetails(
@@ -53,7 +53,7 @@ class VacancyDbConvertor {
         }
     }
 
-    fun mapVacancyEntityToVacancy(vacancy: VacancyEntity): Vacancy {
+    private fun mapVacancyEntityToVacancy(vacancy: VacancyEntity): Vacancy {
         with(vacancy) {
             return Vacancy(
                 id = id,

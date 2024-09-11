@@ -16,7 +16,7 @@ class FavoriteInteractorImpl(private val favoriteRepository: FavoriteRepository)
         return favoriteRepository.getVacancy(vacancyId)
     }
 
-    override fun updateVacancy(vacancyDetails: VacancyDetails) {
+    override suspend fun updateVacancy(vacancyDetails: VacancyDetails) {
         favoriteRepository.updateVacancy(vacancyDetails)
     }
 

@@ -10,7 +10,7 @@ interface FavoriteRepository {
 
     fun getVacancies(): Flow<List<Vacancy>>
 
-    fun updateVacancy(vacancyDetails: VacancyDetails)
+    suspend fun updateVacancy(vacancyDetails: VacancyDetails)
 
     suspend fun deleteVacancy(vacancyId: String)
 
