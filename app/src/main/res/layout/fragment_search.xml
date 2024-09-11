@@ -102,9 +102,8 @@
             android:id="@+id/vacancyList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -125,11 +124,11 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:background="@color/background"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="visible">
-
+            а бл
             <ProgressBar
                 android:layout_width="@dimen/progress_bar_36dp"
                 android:layout_height="@dimen/progress_bar_36dp"
