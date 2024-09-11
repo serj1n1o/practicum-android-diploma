@@ -16,6 +16,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.global.util.Mapper
+import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.domain.model.VacancyList
 
@@ -90,8 +91,8 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 setStateNotFound()
             }
 
-            is SearchState.NoConnection -> {
-                setStateNoConnection()
+            is SearchState.Error -> {
+                setStateError(state.error)
             }
 
             is SearchState.Loading -> {
@@ -156,16 +157,21 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun setStateNoConnection() {
+    private fun setStateError(err: Int) {
         with(binding) {
             vacancyList.isVisible = false
             progressBar.isVisible = false
             recyclerViewProgressBar.isVisible = false
             windowMessage.isVisible = true
             countVacancies.isVisible = false
-            textMessage.setText(R.string.no_internet)
+            if(err ==ResponseCodes.CODE_NO_CONNECT) {
+                    textMessage.setText(R.string.no_internet)
+                    imageMessage.setImageResource(R.drawable.image_no_internet)
+            }else{
+                    textMessage.setText(R.string.server_error)
+                    imageMessage.setImageResource(R.drawable.ic_error_server)
+                }
             textMessage.isVisible = true
-            imageMessage.setImageResource(R.drawable.image_no_internet)
         }
     }
 

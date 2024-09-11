@@ -28,10 +28,15 @@ class RetrofitNetworkClient(
                 } else {
                     RequestResult.Error(ResponseCodes.CODE_BAD_REQUEST)
                 }
-
-            } catch (err: SocketException) {
-                Log.e("SocketError", err.toString())
-                RequestResult.Error(ResponseCodes.CODE_NO_CONNECT)
+            } catch (e: HttpException) {
+                Log.e("HttpException",e.toString())
+                RequestResult.Error(ResponseCodes.CODE_REQUEST_EXCEPTION)
+            } catch (e: SocketException) {
+                Log.e("SocketError", e.toString())
+                RequestResult.Error(ResponseCodes.CODE_REQUEST_EXCEPTION)
+            }catch (e:Exception){
+                Log.e("Exception", e.toString())
+                RequestResult.Error(ResponseCodes.CODE_REQUEST_EXCEPTION)
             }
         }
     }
