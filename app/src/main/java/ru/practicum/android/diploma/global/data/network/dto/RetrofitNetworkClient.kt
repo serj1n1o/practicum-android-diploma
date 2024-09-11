@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.util.NetworkUtil
 import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.global.util.ResponseCodes
-import java.net.SocketException
+import java.io.IOException
 
 class RetrofitNetworkClient(
     private val hhApi: HhApi,
@@ -28,10 +28,9 @@ class RetrofitNetworkClient(
                 } else {
                     RequestResult.Error(ResponseCodes.CODE_BAD_REQUEST)
                 }
-
-            } catch (err: SocketException) {
-                Log.e("SocketError", err.toString())
-                RequestResult.Error(ResponseCodes.CODE_NO_CONNECT)
+            } catch (e: IOException) {
+                Log.e("IOException", e.toString())
+                RequestResult.Error(ResponseCodes.CODE_REQUEST_EXCEPTION)
             }
         }
     }

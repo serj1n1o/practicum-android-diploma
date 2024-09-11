@@ -90,7 +90,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
             }
 
             is RequestResult.Error -> {
-                renderState(SearchState.NotFound)
+                renderState(SearchState.Error(result.error!!))
             }
         }
     }
