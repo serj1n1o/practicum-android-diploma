@@ -77,7 +77,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         })
     }
 
-    fun render(state: SearchState, newSearch: Boolean = false) {
+    private fun render(state: SearchState, newSearch: Boolean = false) {
         when (state) {
             is SearchState.EmptyEditText -> {
                 setStateEmptyEditText()
@@ -112,7 +112,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
     private fun setStateEmptyEditText() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
-        binding.recyclerViewProgressBar.isVisible = false
+        binding.recyclerProgressBar.isVisible = false
         binding.windowMessage.isVisible = true
         binding.countVacancies.isVisible = false
         binding.textMessage.isVisible = false
@@ -126,7 +126,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
         binding.vacancyList.isVisible = true
         binding.progressBar.isVisible = false
-        binding.recyclerViewProgressBar.isVisible = false
+        binding.recyclerProgressBar.isVisible = false
         binding.windowMessage.isVisible = false
         binding.vacancyListLayout.isVisible = true
         binding.countVacancies.text = getString(
@@ -147,7 +147,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         with(binding) {
             vacancyList.isVisible = false
             progressBar.isVisible = false
-            recyclerViewProgressBar.isVisible = false
+            recyclerProgressBar.isVisible = false
             windowMessage.isVisible = true
             countVacancies.setText(R.string.no_such_vacancies)
             countVacancies.isVisible = true
@@ -161,7 +161,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         with(binding) {
             vacancyList.isVisible = false
             progressBar.isVisible = false
-            recyclerViewProgressBar.isVisible = false
+            recyclerProgressBar.isVisible = false
             windowMessage.isVisible = true
             countVacancies.isVisible = false
             if (err == ResponseCodes.CODE_NO_CONNECT) {
@@ -180,7 +180,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         with(binding) {
             vacancyList.isVisible = false
             progressBar.isVisible = true
-            recyclerViewProgressBar.isVisible = false
+            recyclerProgressBar.isVisible = false
             windowMessage.isVisible = false
             countVacancies.isVisible = false
             vacancyListLayout.isVisible = false
@@ -192,7 +192,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         with(binding) {
             vacancyList.isVisible = true
             progressBar.isVisible = false
-            recyclerViewProgressBar.isVisible = true
+            recyclerProgressBar.isVisible = true
             windowMessage.isVisible = false
             countVacancies.isVisible = true
             vacancyListLayout.isVisible = true
