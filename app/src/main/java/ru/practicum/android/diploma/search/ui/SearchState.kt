@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.search.ui
 
-import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.search.domain.model.VacancyList
 
 sealed interface SearchState {

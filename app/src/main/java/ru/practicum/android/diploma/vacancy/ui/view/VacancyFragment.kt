@@ -140,12 +140,6 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
             descriptionContent.setText(Html.fromHtml(vacancy.description, Html.FROM_HTML_MODE_COMPACT))
 
-            if (vacancy.keySkills != null) {
-                keySkillsContent.text = Mapper.mapListTextWithDots(vacancy.keySkills)
-            } else {
-                keySkillsContent.isVisible = false
-                keySkills.isVisible = false
-            }
         }
     }
 

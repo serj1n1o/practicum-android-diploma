@@ -164,13 +164,13 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
             recyclerViewProgressBar.isVisible = false
             windowMessage.isVisible = true
             countVacancies.isVisible = false
-            if(err ==ResponseCodes.CODE_NO_CONNECT) {
-                    textMessage.setText(R.string.no_internet)
-                    imageMessage.setImageResource(R.drawable.image_no_internet)
-            }else{
-                    textMessage.setText(R.string.server_error)
-                    imageMessage.setImageResource(R.drawable.ic_error_server)
-                }
+            if (err == ResponseCodes.CODE_NO_CONNECT) {
+                textMessage.setText(R.string.no_internet)
+                imageMessage.setImageResource(R.drawable.image_no_internet)
+            } else {
+                textMessage.setText(R.string.server_error)
+                imageMessage.setImageResource(R.drawable.ic_error_server)
+            }
             textMessage.isVisible = true
         }
     }
