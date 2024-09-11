@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
+import ru.practicum.android.diploma.sharing.domain.api.SharingInteractor
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 
 class DetailsVacancyViewModel(
