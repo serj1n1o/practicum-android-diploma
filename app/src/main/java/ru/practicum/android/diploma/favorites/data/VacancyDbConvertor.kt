@@ -30,7 +30,7 @@ class VacancyDbConvertor {
     }
 
     fun mapVacancyEntityToVacancyDetails(vacancy: VacancyEntity): VacancyDetails {
-        var skills = mutableListOf<String>()
+        val skills = mutableListOf<String>()
         if (vacancy.keySkills?.isNotEmpty() == true) {
             skills.addAll(vacancy.keySkills.split(",").toMutableList())
         }

@@ -15,10 +15,6 @@ class FavoriteVacancyFragmentViewModel(
 
     private val stateLiveData = MutableLiveData<FavoriteState>()
 
-    init {
-        fillData()
-    }
-
     fun observeState(): LiveData<FavoriteState> = stateLiveData
 
     fun fillData() {

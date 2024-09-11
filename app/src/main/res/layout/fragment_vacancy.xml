@@ -44,7 +44,7 @@
 
         <ImageButton
             android:id="@+id/icFavorite"
-            style="@style/imageButton"
+            android:backgroundTint="@color/background"
             android:layout_width="@dimen/size_Icon"
             android:layout_height="@dimen/size_Icon"
             android:src="@drawable/ic_favorites_off__24px" />
@@ -220,18 +220,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionContent" />
 
-            <TextView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/keySkillsContent"
-                style="@style/text_16"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:tag="skills"
-                android:textAlignment="viewStart"
-                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/keySkills"
-                tools:text="мы свое призванье не забудем, смех и радость мы приносим людям, наш ковер - цветочная поляна, наши пальмы - сосны великаны" />
+                app:layout_constraintTop_toBottomOf="@id/keySkills" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

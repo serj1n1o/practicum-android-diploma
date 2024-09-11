@@ -3,6 +3,6 @@
     <style name="imageButton">
         <item name="iconTint">@color/white</item>
         <item name="android:tint">@color/white</item>
-        <item name="android:backgroundTint">#121111</item>
+        <item name="android:backgroundTint">@color/background</item>
     </style>
 </resources>

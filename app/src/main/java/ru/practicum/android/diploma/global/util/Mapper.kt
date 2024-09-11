@@ -1,10 +1,6 @@
 package ru.practicum.android.diploma.global.util
 
 import android.content.Context
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.BulletSpan
 import android.util.TypedValue
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.global.util.Constants.NUMBER_1
@@ -17,24 +13,6 @@ import java.text.NumberFormat
 import java.util.Locale
 
 object Mapper {
-
-    fun mapListTextWithDots(strings: List<String>, bulletGapWidth: Int = 16): SpannableString {
-        val spannableString = SpannableStringBuilder()
-
-        for (string in strings) {
-            val start = spannableString.length
-            spannableString.append(string).append("\n")
-
-            spannableString.setSpan(
-                BulletSpan(bulletGapWidth),
-                start,
-                spannableString.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-
-        return SpannableString(spannableString.trim())
-    }
 
     fun mapRadiusForGlide(context: Context, radius: Float): Int {
         return TypedValue.applyDimension(
@@ -76,7 +54,6 @@ object Mapper {
                 format.format(it)
             }
         }
-
         val from = formatNumber(salary?.from)
         val to = formatNumber(salary?.to)
 
@@ -89,7 +66,11 @@ object Mapper {
     }
 
     fun mapSkillsToStringList(list: List<KeySkillsDto>?): List<String>? {
-        return list?.map { it.name }
+        return if (list?.isEmpty() == true) {
+            null
+        } else {
+            list?.map { it.name }
+        }
     }
 
 }

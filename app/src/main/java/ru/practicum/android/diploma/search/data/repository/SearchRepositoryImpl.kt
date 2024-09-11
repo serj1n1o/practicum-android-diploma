@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.Request
+import ru.practicum.android.diploma.global.db.AppDatabase
 import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.search.data.dto.VacanciesListResponse
 import ru.practicum.android.diploma.search.data.dto.details.VacancyResponse
@@ -17,7 +18,8 @@ import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 
 class SearchRepositoryImpl(
     private val networkClient: NetworkClient,
-    private val vacancyMapper: VacancyMapper
+    private val vacancyMapper: VacancyMapper,
+    private val database: AppDatabase,
 ) : SearchRepository {
     override fun searchVacancies(searchQuery: SearchQuery): Flow<RequestResult<VacancyList>> = flow {
         val body: HashMap<String, String> = HashMap()
@@ -44,8 +46,7 @@ class SearchRepositoryImpl(
         when (val result = networkClient.doRequest(request)) {
             is RequestResult.Success -> {
                 val favoritesVacancyId = withContext(Dispatchers.IO) {
-                    // database.vacancyDao.getListId()
-                    listOf("2132131", "41424")
+                    database.vacancyDao().getIdsVacancies()
                 }
                 val vacancy = vacancyMapper.map(
                     vacancy = result.data as VacancyResponse,
