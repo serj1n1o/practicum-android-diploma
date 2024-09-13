@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.search.domain.api
 
 import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.global.util.RequestResult
-import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponse
+import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponseDto
 import ru.practicum.android.diploma.search.data.dto.regions.AreasResponse
 import ru.practicum.android.diploma.search.domain.model.SearchQuery
 import ru.practicum.android.diploma.search.domain.model.VacancyList
@@ -17,5 +17,5 @@ interface SearchRepository {
 
     fun getAreas(): Flow<RequestResult<AreasResponse>> // нужно будет возвращать класс с domain
 
-    fun getIndustries(): Flow<RequestResult<IndustriesResponse>> // также поменять на domain класс
+    fun getIndustries(): Flow<RequestResult<IndustriesResponseDto>> // также поменять на domain класс
 }

@@ -12,7 +12,7 @@ import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.search.data.dto.VacanciesListResponse
 import ru.practicum.android.diploma.search.data.dto.details.VacancyResponse
-import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponse
+import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponseDto
 import ru.practicum.android.diploma.search.data.dto.regions.AreasResponse
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
@@ -83,7 +83,7 @@ class SearchRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getIndustries(): Flow<RequestResult<IndustriesResponse>> {
+    override fun getIndustries(): Flow<RequestResult<IndustriesResponseDto>> {
         TODO("Not yet implemented")
     }
 

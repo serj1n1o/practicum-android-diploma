@@ -10,6 +10,9 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.favorites.data.FavoriteRepositoryImpl
 import ru.practicum.android.diploma.favorites.data.VacancyDbConvertor
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteRepository
+import ru.practicum.android.diploma.filter.data.FilterRepositoryImpl
+import ru.practicum.android.diploma.filter.data.mapper.FilterMapper
+import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.global.data.network.HhApi
 import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.RetrofitNetworkClient
@@ -54,6 +57,10 @@ val dataModule = module {
         VacancyMapper()
     }
 
+    factory {
+        FilterMapper()
+    }
+
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db").build()
     }
@@ -68,5 +75,9 @@ val dataModule = module {
 
     factory<ExternalNavigator> {
         ExternalNavigatorImpl(application = get())
+    }
+
+    single<FilterRepository> {
+        FilterRepositoryImpl(get())
     }
 }
