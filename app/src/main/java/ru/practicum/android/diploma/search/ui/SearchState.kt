@@ -9,7 +9,7 @@ sealed interface SearchState {
 
     data class Content(val vacancies: VacancyList) : SearchState
 
-    data class Error(val error: Int) : SearchState
+    data class Error(val error: Int, val currentPage: Int) : SearchState
 
     object EmptyEditText : SearchState
 

@@ -2,17 +2,17 @@ package ru.practicum.android.diploma.filter.domain.impl
 
 import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
-import ru.practicum.android.diploma.filter.domain.models.Area
-import ru.practicum.android.diploma.filter.domain.models.City
-import ru.practicum.android.diploma.filter.domain.models.Industry
+import ru.practicum.android.diploma.filter.domain.model.Area
+import ru.practicum.android.diploma.filter.domain.model.Country
+import ru.practicum.android.diploma.filter.domain.model.Industry
 
 class FilterInteractorImpl(private val repository: FilterRepository) : FilterInteractor {
-    override fun getCity(): City? {
-        return repository.getCity()
+    override fun getCity(): Country? {
+        return repository.getCountry()
     }
 
-    override fun setCity(city: City?) {
-        repository.setCity(city)
+    override fun setCity(country: Country?) {
+        repository.setCountry(country)
     }
 
     override fun getArea(): Area? {
@@ -29,6 +29,10 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
 
     override fun setIndustries(industries: MutableList<Industry>) {
         repository.setIndustries(industries)
+    }
+
+    override fun setOnlyWithSalary(status: Boolean){
+        repository.setOnlyWithSalary(status)
     }
 
     override fun clearFilters() {

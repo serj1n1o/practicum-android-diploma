@@ -78,6 +78,6 @@ val dataModule = module {
     }
 
     single<FilterRepository> {
-        FilterRepositoryImpl(get())
+        FilterRepositoryImpl()
     }
 }

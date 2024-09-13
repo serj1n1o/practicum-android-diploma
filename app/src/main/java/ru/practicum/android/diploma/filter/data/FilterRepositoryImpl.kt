@@ -1,61 +1,58 @@
 package ru.practicum.android.diploma.filter.data
 
-import ru.practicum.android.diploma.filter.data.mapper.FilterMapper
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
-import ru.practicum.android.diploma.filter.domain.models.Area
-import ru.practicum.android.diploma.filter.domain.models.City
-import ru.practicum.android.diploma.filter.domain.models.Industry
-import ru.practicum.android.diploma.filter.domain.models.Salary
-import ru.practicum.android.diploma.search.data.dto.AreaDto
-import ru.practicum.android.diploma.search.data.dto.CityDto
-import ru.practicum.android.diploma.search.data.dto.SalaryDto
-import ru.practicum.android.diploma.search.data.dto.industries.IndustryDto
+import ru.practicum.android.diploma.filter.domain.model.Area
+import ru.practicum.android.diploma.filter.domain.model.Country
+import ru.practicum.android.diploma.filter.domain.model.Industry
 
-class FilterRepositoryImpl(
-    private val filterMapper: FilterMapper
-) : FilterRepository {
-    private var cityDto: CityDto? = null
-    private var areaDto: AreaDto? = null
-    private var salaryDto: SalaryDto? = null
-    private var industriesDto = mutableListOf<IndustryDto>()
+class FilterRepositoryImpl() : FilterRepository {
+    private var country: Country? = null
+    private var area: Area? = null
+    private var salary: Int? = null
+    private var onlyWithSalary: Boolean = false
+    private var industries = mutableListOf<Industry>()
 
-    override fun getCity(): City? {
-        return filterMapper.mapCityDtoToCity(cityDto)
+    override fun getCountry(): Country? {
+        return country
     }
 
-    override fun setCity(city: City?) {
-        cityDto = filterMapper.mapCityToCityDto(city)
+    override fun setCountry(country: Country?) {
+        this.country = country
     }
 
     override fun getArea(): Area? {
-        return filterMapper.mapAreaDtoToArea(areaDto)
+        return area
     }
 
     override fun setArea(area: Area?) {
-        areaDto = filterMapper.mapAreaToAreaDto(area)
+        this.area = area
     }
 
-    override fun getSalary(): Salary? {
-        return filterMapper.mapSalaryDtoToSalary(salaryDto)
+    override fun getSalary(): Int? {
+        return salary
     }
 
-    override fun setSalary(salary: Salary?) {
-        salaryDto = filterMapper.mapSalaryToSalaryDto(salary)
+    override fun setSalary(salary: Int?) {
+        this.salary = salary
     }
 
     override fun getIndustries(): MutableList<Industry> {
-        return filterMapper.mapIndustriesDtoToIndustries(industriesDto)
+        return industries
     }
 
     override fun setIndustries(industries: MutableList<Industry>) {
-        industriesDto = filterMapper.mapIndustriesToIndustriesDto(industries)
+        this.industries = industries
+    }
+
+    override fun setOnlyWithSalary(status: Boolean) {
+        onlyWithSalary = status
     }
 
     override fun clearFilters() {
-        cityDto = null
-        areaDto = null
-        salaryDto = null
-        industriesDto = mutableListOf<IndustryDto>()
+        country = null
+        area = null
+        salary = null
+        industries = mutableListOf<Industry>()
     }
 
 }

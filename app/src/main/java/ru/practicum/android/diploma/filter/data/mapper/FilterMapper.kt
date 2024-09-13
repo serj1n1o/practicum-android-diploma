@@ -1,23 +1,23 @@
 package ru.practicum.android.diploma.filter.data.mapper
 
-import ru.practicum.android.diploma.filter.domain.models.Area
-import ru.practicum.android.diploma.filter.domain.models.City
-import ru.practicum.android.diploma.filter.domain.models.Industry
-import ru.practicum.android.diploma.filter.domain.models.Salary
+import ru.practicum.android.diploma.filter.domain.model.Area
+import ru.practicum.android.diploma.filter.domain.model.Country
+import ru.practicum.android.diploma.filter.domain.model.Industry
+import ru.practicum.android.diploma.filter.domain.model.Salary
 import ru.practicum.android.diploma.search.data.dto.AreaDto
-import ru.practicum.android.diploma.search.data.dto.CityDto
+import ru.practicum.android.diploma.search.data.dto.CountryDto
 import ru.practicum.android.diploma.search.data.dto.SalaryDto
 import ru.practicum.android.diploma.search.data.dto.industries.IndustryDto
 
 class FilterMapper {
-    fun mapCityDtoToCity(cityDto: CityDto?): City? {
-        if (cityDto == null) return null
-        return City(id = cityDto.id, name = cityDto.name)
+    fun mapCityDtoToCity(countryDto: CountryDto?): Country? {
+        if (countryDto == null) return null
+        return Country(id = countryDto.id, name = countryDto.name)
     }
 
-    fun mapCityToCityDto(city: City?): CityDto? {
+    fun mapCityToCityDto(city: Country?): CountryDto? {
         if (city == null) return null
-        return CityDto(id = city.id, name = city.name)
+        return CountryDto(id = city.id, name = city.name)
     }
 
     fun mapAreaDtoToArea(areaDto: AreaDto?): Area? {
@@ -43,11 +43,11 @@ class FilterMapper {
     fun mapIndustriesDtoToIndustries(industriesDto: MutableList<IndustryDto>): MutableList<Industry> {
         val industries = mutableListOf<Industry>()
         for (industry in industriesDto) {
-            val industy = Industry(
+            val industry = Industry(
                 id = industry.id,
                 name = industry.name
             )
-            industries.add(industy)
+            industries.add(industry)
         }
         return industries
     }
@@ -55,11 +55,11 @@ class FilterMapper {
     fun mapIndustriesToIndustriesDto(industries: MutableList<Industry>): MutableList<IndustryDto> {
         val industriesDto = mutableListOf<IndustryDto>()
         for (industry in industries) {
-            val industyDto = IndustryDto(
+            val industryDto = IndustryDto(
                 id = industry.id,
                 name = industry.name
             )
-            industriesDto.add(industyDto)
+            industriesDto.add(industryDto)
         }
         return industriesDto
     }

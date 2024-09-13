@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
@@ -92,7 +93,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
             }
 
             is SearchState.Error -> {
-                setStateError(state.error)
+                setStateError(state.error, state.currentPage)
             }
 
             is SearchState.Loading -> {
@@ -157,23 +158,34 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun setStateError(err: Int) {
-        with(binding) {
-            vacancyList.isVisible = false
-            progressBar.isVisible = false
-            recyclerProgressBar.isVisible = false
-            windowMessage.isVisible = true
-            countVacancies.isVisible = false
-            if (err == ResponseCodes.CODE_NO_CONNECT) {
-                textMessage.setText(R.string.no_internet)
-                imageMessage.setImageResource(R.drawable.image_no_internet)
-            } else {
-                textMessage.setText(R.string.server_error)
-                imageMessage.setImageResource(R.drawable.ic_error_server)
+    private fun setStateError(err: Int, currentPage: Int) {
+        if (currentPage == -1) {
+            with(binding) {
+                vacancyList.isVisible = false
+                progressBar.isVisible = false
+                recyclerProgressBar.isVisible = false
+                windowMessage.isVisible = true
+                countVacancies.isVisible = false
+                if (err == ResponseCodes.CODE_NO_CONNECT) {
+                    textMessage.setText(R.string.no_internet)
+                    imageMessage.setImageResource(R.drawable.image_no_internet)
+                } else {
+                    textMessage.setText(R.string.server_error)
+                    imageMessage.setImageResource(R.drawable.ic_error_server)
+                }
+                textMessage.isVisible = true
             }
-            textMessage.isVisible = true
+        } else {
+            if (err == ResponseCodes.CODE_NO_CONNECT) {
+                binding.recyclerProgressBar.isVisible = false
+                Toast.makeText(requireContext(), R.string.check_the_internet, Toast.LENGTH_LONG).show()
+            } else {
+                binding.recyclerProgressBar.isVisible = false
+                Toast.makeText(requireContext(), R.string.error, Toast.LENGTH_LONG).show()
+            }
         }
     }
+
 
     private fun setStateLoading() {
         hideKeyboard()
