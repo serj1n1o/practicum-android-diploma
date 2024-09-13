@@ -19,14 +19,14 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
     private var vacanciesList = mutableListOf<Vacancy>()
     private var lastSearchText: String? = null
     private var pages: Int = 0
-    private var currentPage: Int = 0
+    private var currentPage: Int = -1
     private var vacanciesFound: Int = 0
     private var isLoading: Boolean = false
 
     private val trackSearchDebounce =
         debounce<String>(SEARCH_DEBOUNCE_DELAY, viewModelScope, true) { changedText ->
             pages = 0
-            currentPage = 0
+            currentPage = -1
             vacanciesFound = 0
             vacanciesList.clear()
             search(changedText, currentPage)
@@ -52,7 +52,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
                 searchInteractor.getVacancies(
                     SearchQuery(
                         text = input,
-                        page = page,
+                        page = page + 1,
                         perPage = RECORDS_PER_PAGE
                     )
                 )
@@ -90,7 +90,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
             }
 
             is RequestResult.Error -> {
-                renderState(SearchState.Error(result.error!!))
+                renderState(SearchState.Error(result.error!!, currentPage))
             }
         }
     }
