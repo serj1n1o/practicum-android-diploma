@@ -52,7 +52,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
                 searchInteractor.getVacancies(
                     SearchQuery(
                         text = input,
-                        page = page+1,
+                        page = page + 1,
                         perPage = RECORDS_PER_PAGE
                     )
                 )

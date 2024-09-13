@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.filter.domain.model.Area
 import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.Industry
 
-class FilterRepositoryImpl() : FilterRepository {
+class FilterRepositoryImpl : FilterRepository {
     private var country: Country? = null
     private var area: Area? = null
     private var salary: Int? = null

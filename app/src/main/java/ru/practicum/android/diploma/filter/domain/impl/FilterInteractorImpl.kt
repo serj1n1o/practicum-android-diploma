@@ -31,7 +31,7 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         repository.setIndustries(industries)
     }
 
-    override fun setOnlyWithSalary(status: Boolean){
+    override fun setOnlyWithSalary(status: Boolean) {
         repository.setOnlyWithSalary(status)
     }
 
