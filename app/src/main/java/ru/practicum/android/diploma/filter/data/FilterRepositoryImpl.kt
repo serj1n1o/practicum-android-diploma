@@ -10,7 +10,7 @@ class FilterRepositoryImpl : FilterRepository {
     private var area: Area? = null
     private var salary: Int? = null
     private var onlyWithSalary: Boolean = false
-    private var industries = mutableListOf<Industry>()
+    private var industry: Industry? = null
 
     override fun getCountry(): Country? {
         return country
@@ -36,12 +36,12 @@ class FilterRepositoryImpl : FilterRepository {
         this.salary = salary
     }
 
-    override fun getIndustries(): MutableList<Industry> {
-        return industries
+    override fun getIndustry(): Industry? {
+        return industry
     }
 
-    override fun setIndustries(industries: MutableList<Industry>) {
-        this.industries = industries
+    override fun setIndustry(industry: Industry?) {
+        this.industry = industry
     }
 
     override fun setOnlyWithSalary(status: Boolean) {
@@ -52,7 +52,7 @@ class FilterRepositoryImpl : FilterRepository {
         country = null
         area = null
         salary = null
-        industries = mutableListOf<Industry>()
+        industry = null
     }
 
 }

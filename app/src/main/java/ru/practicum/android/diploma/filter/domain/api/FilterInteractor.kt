@@ -11,8 +11,8 @@ interface FilterInteractor {
     fun getArea(): Area?
     fun setArea(area: Area?)
 
-    fun getIndustries(): MutableList<Industry>
-    fun setIndustries(industries: MutableList<Industry>)
+    fun getIndustry(): Industry?
+    fun setIndustry(industry: Industry?)
 
     fun setOnlyWithSalary(status: Boolean)
 

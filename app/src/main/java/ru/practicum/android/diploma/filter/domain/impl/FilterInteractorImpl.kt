@@ -23,12 +23,12 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         repository.setArea(area)
     }
 
-    override fun getIndustries(): MutableList<Industry> {
-        return repository.getIndustries()
+    override fun getIndustry(): Industry? {
+        return repository.getIndustry()
     }
 
-    override fun setIndustries(industries: MutableList<Industry>) {
-        repository.setIndustries(industries)
+    override fun setIndustry(industry: Industry?) {
+        repository.setIndustry(industry)
     }
 
     override fun setOnlyWithSalary(status: Boolean) {

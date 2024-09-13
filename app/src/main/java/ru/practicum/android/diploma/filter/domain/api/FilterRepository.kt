@@ -14,8 +14,8 @@ interface FilterRepository {
     fun getSalary(): Int?
     fun setSalary(salary: Int?)
 
-    fun getIndustries(): MutableList<Industry>
-    fun setIndustries(industries: MutableList<Industry>)
+    fun getIndustry(): Industry?
+    fun setIndustry(industries: Industry?)
 
     fun setOnlyWithSalary(status: Boolean)
 
