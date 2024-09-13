@@ -8,4 +8,8 @@ sealed interface Request {
     data class GetVacancyById(
         val vacancyId: String
     ) : Request
+
+    data object GetAreas : Request
+
+    data object GetIndustries : Request
 }

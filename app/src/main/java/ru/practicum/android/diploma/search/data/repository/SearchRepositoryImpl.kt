@@ -12,6 +12,8 @@ import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.search.data.dto.VacanciesListResponse
 import ru.practicum.android.diploma.search.data.dto.details.VacancyResponse
+import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponse
+import ru.practicum.android.diploma.search.data.dto.regions.AreasResponse
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import ru.practicum.android.diploma.search.domain.model.SearchQuery
@@ -25,13 +27,8 @@ class SearchRepositoryImpl(
     private val vacancyDbConvertor: VacancyDbConvertor,
 ) : SearchRepository {
     override fun searchVacancies(searchQuery: SearchQuery): Flow<RequestResult<VacancyList>> = flow {
-        val body: HashMap<String, String> = HashMap()
-        if (searchQuery.text != null) {
-            body["text"] = searchQuery.text!!
-        }
-        body["page"] = searchQuery.page.toString()
-        body["per_page"] = searchQuery.perPage.toString()
-        val request = Request.GetVacancies(body)
+        val options = useFilter(searchQuery = searchQuery)
+        val request = Request.GetVacancies(options)
 
         when (val result = networkClient.doRequest(request)) {
             is RequestResult.Success -> {
@@ -80,5 +77,35 @@ class SearchRepositoryImpl(
                 }
             }
         }
+    }
+
+    override fun getAreas(): Flow<RequestResult<AreasResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getIndustries(): Flow<RequestResult<IndustriesResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    private fun useFilter(searchQuery: SearchQuery): HashMap<String, String> {
+        val body: HashMap<String, String> = HashMap()
+        if (searchQuery.text != null) {
+            body["text"] = searchQuery.text!!
+        }
+        body["page"] = searchQuery.page.toString()
+        body["per_page"] = searchQuery.perPage.toString()
+        if (searchQuery.areaId != null) {
+            body["area"]
+        }
+        if (searchQuery.industryId != null) {
+            body["industry"]
+        }
+        if (searchQuery.salary != null) {
+            body["salary"]
+        }
+        if (searchQuery.onlyWithSalary != null) {
+            body["only_with_salary"]
+        }
+        return body
     }
 }

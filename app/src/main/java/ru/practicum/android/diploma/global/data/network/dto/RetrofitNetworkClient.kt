@@ -9,6 +9,8 @@ import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.util.NetworkUtil
 import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.global.util.ResponseCodes
+import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponseWrapper
+import ru.practicum.android.diploma.search.data.dto.regions.AreasResponseWrapper
 import java.io.IOException
 
 class RetrofitNetworkClient(
@@ -41,6 +43,8 @@ class RetrofitNetworkClient(
         return when (request) {
             is Request.GetVacancies -> hhApi.getVacanciesRequest(request.params)
             is Request.GetVacancyById -> hhApi.getVacancyById(request.vacancyId)
+            Request.GetAreas -> AreasResponseWrapper(hhApi.getAreas())
+            Request.GetIndustries -> IndustriesResponseWrapper(hhApi.getIndustries())
         }
     }
 
