@@ -82,6 +82,7 @@
 
     <style name="text_16_hint" parent="text_16">
         <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:paddingLeft">0dp</item>
     </style>
 
     <style name="text_12" parent="text_16">
