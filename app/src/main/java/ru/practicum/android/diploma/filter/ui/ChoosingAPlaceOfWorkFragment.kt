@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentChoosingAPlaceOfWorkBinding
 import ru.practicum.android.diploma.filter.ui.viewmodel.LocationViewModel
 import ru.practicum.android.diploma.global.util.CustomFragment
-import ru.practicum.android.diploma.global.util.KeyboardUtils
+import ru.practicum.android.diploma.global.util.HideKeyboard
 
 class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWorkBinding>() {
 
@@ -36,7 +36,7 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
 
         binding.edNameCountry.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                KeyboardUtils.hideKeyboard(binding.edNameCountry)
+                HideKeyboard.hideKeyboard(binding.edNameCountry)
                 binding.edNameCountry.clearFocus()
                 true
             } else {
@@ -45,13 +45,17 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         }
 
         binding.edNameCountry.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //пока пусто
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 updateCountryInputUi(s.toString())
             }
 
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+                //пока пусто
+            }
         })
 
         binding.crossCountry.setOnClickListener {
