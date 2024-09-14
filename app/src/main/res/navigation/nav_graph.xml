@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_searchFragment_to_vacancyFragment"
             app:destination="@id/vacancyFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_filterSettingsFragment"
+            app:destination="@id/filterSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/vacancyFragment"
@@ -39,5 +42,10 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/filterSettingsFragment"
+        android:name="ru.practicum.android.diploma.search.ui.filters.FilterSettingsFragment"
+        android:label="fragment_filter_settings"
+        tools:layout="@layout/fragment_filter_settings" />
 
 </navigation>
