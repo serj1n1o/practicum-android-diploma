@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_searchFragment_to_vacancyFragment"
             app:destination="@id/vacancyFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_filterIndustryFragment"
+            app:destination="@id/filterIndustryFragment" />
     </fragment>
     <fragment
         android:id="@+id/vacancyFragment"
@@ -39,5 +42,10 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/filterIndustryFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.industry.FilterIndustryFragment"
+        android:label="FilterIndustryFragment"
+        tools:layout="@layout/fragment_filter_industry"/>
 
 </navigation>

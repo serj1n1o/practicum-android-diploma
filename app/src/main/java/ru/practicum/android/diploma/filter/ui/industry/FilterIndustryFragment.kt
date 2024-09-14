@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentFilterIndustryBinding
+import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.ui.SearchState
@@ -18,12 +20,13 @@ import ru.practicum.android.diploma.search.ui.VacancyAdapter
 
 class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
 
-    private val viewModel by viewModel<SearchViewModel>()
-    private val vacancies = mutableListOf<Vacancy>()
-    private var onVacancyClickDebounce: ((String) -> Unit)? = null
-    private val adapter = VacancyAdapter(vacancies) { vacancy ->
-        onVacancyClickDebounce?.let { it(vacancy.id) }
-    }
+    private val viewModel by viewModel<FilterIndustryViewModel>()
+    private val industries = mutableListOf<Industry>()
+//    private var onVacancyClickDebounce: ((String) -> Unit)? = null
+    private val adapter = IndustryAdapter(industries)
+//{ vacancy ->
+//        onVacancyClickDebounce?.let { it(vacancy.id) }
+//    }
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterIndustryBinding {
         return FragmentFilterIndustryBinding.inflate(inflater, container, false)
@@ -32,10 +35,11 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.industryList.adapter = adapter
-        binding.industryList.setHasFixedSize(false)
+        binding.industryList.layoutManager = LinearLayoutManager(requireContext())
+//        binding.industryList.setHasFixedSize(false)
         binding.editText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding.editText.text.isNullOrEmpty()) {
-                render(SearchState.EmptyEditTextInFocus)
+//                render(SearchState.EmptyEditTextInFocus)
             }
         }
         binding.clearButton.setOnClickListener {
@@ -44,20 +48,22 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.clearButton.windowToken, 0)
             binding.editText.clearFocus()
-            render(SearchState.EmptyEditText)
+//            render(SearchState.EmptyEditText)
         }
         binding.editText.doOnTextChanged { text, start, before, count ->
             renderEditTextIconsVisibility(text)
-            viewModel.searchDebounce(text.toString())
+//            viewModel.searchDebounce(text.toString())
         }
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-        onVacancyClickDebounce = { vacancyId ->
-            if (clickDebounce()) {
+//        onVacancyClickDebounce = { vacancyId ->
+//            if (clickDebounce()) {
+//
+//            }
+//        }
 
-            }
-        }
+        viewModel.fillData()
 
     }
 
@@ -73,12 +79,18 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
         }
     }
 
-    private fun render(state: SearchState, newSearch: Boolean = false) {
+    private fun render(state: ScreenState) {
         when (state) {
-            else -> {
-
+            is ScreenState.Content -> {
+                industries.clear()
+                industries.addAll(state.industries)
+                adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    private fun setContent(list: List<Industry>) {
+
     }
 
 
