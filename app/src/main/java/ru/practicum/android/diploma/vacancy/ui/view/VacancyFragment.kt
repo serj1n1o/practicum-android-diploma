@@ -5,6 +5,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,12 +19,15 @@ import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.global.util.Mapper
 import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
+import ru.practicum.android.diploma.vacancy.ui.adapters.SkillsAdapter
 import ru.practicum.android.diploma.vacancy.ui.viewmodel.DetailsVacancyViewModel
 import ru.practicum.android.diploma.vacancy.ui.viewmodel.VacancyState
 
 class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
     private val viewModel by viewModel<DetailsVacancyViewModel>()
+
+    private val adapter by lazy { SkillsAdapter() }
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVacancyBinding {
         return FragmentVacancyBinding.inflate(inflater, container, false)
@@ -45,14 +49,16 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
             }
         }
 
+        viewModel.getFavoritesState().observe(viewLifecycleOwner) { state ->
+            setFavoritesState(inFavorite = state)
+        }
+
         binding.icFavorite.setOnClickListener {
             viewModel.addToFavorites()
         }
 
         binding.icSharing.setOnClickListener {
-            if (vacancyId != null) {
-                viewModel.shareVacancy()
-            }
+            viewModel.shareVacancy()
         }
 
         binding.btBackArrow.setOnClickListener {
@@ -109,12 +115,9 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
             vacancyInfo.isVisible = true
 
             tvNameVacancy.text = vacancy.name
-
-            if (vacancy.salary != null) {
-                salary.text = vacancy.salary
-            } else {
-                salary.isVisible = false
-            }
+            tvAreaCompany.text = vacancy.area
+            setVacancyTextBlocks(vacancy.salary, salary)
+            setVacancyTextBlocks(vacancy.employerName, tvNameCompany)
 
             Glide.with(requireContext())
                 .load(vacancy.employerLogo)
@@ -123,15 +126,12 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 .transform(RoundedCorners(Mapper.mapRadiusForGlide(requireContext(), Constants.CORNER_RADIUS_DP)))
                 .into(icCompany)
 
-            tvAreaCompany.text = vacancy.area
-            if (vacancy.employerName != null) tvNameCompany.text = vacancy.employerName
-
             if (vacancy.experience != null || vacancy.schedule != null || vacancy.employment != null) {
                 experienceContent.text = getString(
                     R.string.experience_employment_schedule,
-                    vacancy.experience,
-                    vacancy.employment,
-                    vacancy.schedule
+                    vacancy.experience ?: "",
+                    vacancy.employment ?: "",
+                    vacancy.schedule ?: ""
                 )
             } else {
                 experienceContent.isVisible = false
@@ -140,13 +140,41 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
 
             descriptionContent.setText(Html.fromHtml(vacancy.description, Html.FROM_HTML_MODE_COMPACT))
 
-            if (vacancy.keySkills != null) {
-                keySkillsContent.text = Mapper.mapListTextWithDots(vacancy.keySkills)
-            } else {
-                keySkillsContent.isVisible = false
-                keySkills.isVisible = false
-            }
+            setVacancySkills(vacancy.keySkills)
+
         }
+    }
+
+    private fun setVacancySkills(skills: List<String>?) {
+        if (skills != null) {
+            adapter.skills.addAll(skills)
+            binding.keySkillsContent.adapter = adapter
+        } else {
+            binding.keySkillsContent.isVisible = false
+            binding.keySkills.isVisible = false
+        }
+    }
+
+    private fun setVacancyTextBlocks(text: String?, view: TextView) {
+        if (text != null) {
+            view.text = text
+        } else {
+            view.isVisible = false
+        }
+    }
+
+    private fun setFavoritesState(inFavorite: Boolean) {
+        if (inFavorite) {
+            binding.icFavorite.setImageResource(R.drawable.ic_favorites_on__24px)
+        } else {
+            binding.icFavorite.setImageResource(R.drawable.ic_favorites_off__24px)
+        }
+    }
+
+    override fun onDestroyView() {
+        adapter.skills.clear()
+        binding.keySkillsContent.adapter = null
+        super.onDestroyView()
     }
 
 }

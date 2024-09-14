@@ -136,7 +136,9 @@
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/background</item>
     </style>
+
     <style name="imageButton">
         <item name="backgroundTint">@color/white</item>
     </style>
+
 </resources>

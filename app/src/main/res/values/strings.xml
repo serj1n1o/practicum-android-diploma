@@ -57,6 +57,6 @@
     <string name="decline_vacancy_2_4">вакансии</string>
     <string name="decline_vacancy_default">вакансий</string>
     <string name="founded_vacancies">Найдено %1$s %2$s</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="check_the_internet">Проверьте подключение к интернету</string>
+    <string name="error">Произошла ошибка</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.global.util.CustomFragment
 import ru.practicum.android.diploma.global.util.Mapper
+import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.domain.model.VacancyList
 
@@ -76,7 +78,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         })
     }
 
-    fun render(state: SearchState, newSearch: Boolean = false) {
+    private fun render(state: SearchState, newSearch: Boolean = false) {
         when (state) {
             is SearchState.EmptyEditText -> {
                 setStateEmptyEditText()
@@ -90,8 +92,8 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 setStateNotFound()
             }
 
-            is SearchState.NoConnection -> {
-                setStateNoConnection()
+            is SearchState.Error -> {
+                setStateError(state.error, state.currentPage)
             }
 
             is SearchState.Loading -> {
@@ -111,7 +113,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
     private fun setStateEmptyEditText() {
         binding.vacancyList.isVisible = false
         binding.progressBar.isVisible = false
-        binding.recyclerViewProgressBar.isVisible = false
+        binding.recyclerProgressBar.isVisible = false
         binding.windowMessage.isVisible = true
         binding.countVacancies.isVisible = false
         binding.textMessage.isVisible = false
@@ -125,7 +127,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
 
         binding.vacancyList.isVisible = true
         binding.progressBar.isVisible = false
-        binding.recyclerViewProgressBar.isVisible = false
+        binding.recyclerProgressBar.isVisible = false
         binding.windowMessage.isVisible = false
         binding.vacancyListLayout.isVisible = true
         binding.countVacancies.text = getString(
@@ -146,7 +148,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         with(binding) {
             vacancyList.isVisible = false
             progressBar.isVisible = false
-            recyclerViewProgressBar.isVisible = false
+            recyclerProgressBar.isVisible = false
             windowMessage.isVisible = true
             countVacancies.setText(R.string.no_such_vacancies)
             countVacancies.isVisible = true
@@ -156,16 +158,31 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun setStateNoConnection() {
-        with(binding) {
-            vacancyList.isVisible = false
-            progressBar.isVisible = false
-            recyclerViewProgressBar.isVisible = false
-            windowMessage.isVisible = true
-            countVacancies.isVisible = false
-            textMessage.setText(R.string.no_internet)
-            textMessage.isVisible = true
-            imageMessage.setImageResource(R.drawable.image_no_internet)
+    private fun setStateError(err: Int, currentPage: Int) {
+        if (currentPage == -1) {
+            with(binding) {
+                vacancyList.isVisible = false
+                progressBar.isVisible = false
+                recyclerProgressBar.isVisible = false
+                windowMessage.isVisible = true
+                countVacancies.isVisible = false
+                if (err == ResponseCodes.CODE_NO_CONNECT) {
+                    textMessage.setText(R.string.no_internet)
+                    imageMessage.setImageResource(R.drawable.image_no_internet)
+                } else {
+                    textMessage.setText(R.string.server_error)
+                    imageMessage.setImageResource(R.drawable.ic_error_server)
+                }
+                textMessage.isVisible = true
+            }
+        } else {
+            if (err == ResponseCodes.CODE_NO_CONNECT) {
+                binding.recyclerProgressBar.isVisible = false
+                Toast.makeText(requireContext(), R.string.check_the_internet, Toast.LENGTH_LONG).show()
+            } else {
+                binding.recyclerProgressBar.isVisible = false
+                Toast.makeText(requireContext(), R.string.error, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -174,7 +191,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         with(binding) {
             vacancyList.isVisible = false
             progressBar.isVisible = true
-            recyclerViewProgressBar.isVisible = false
+            recyclerProgressBar.isVisible = false
             windowMessage.isVisible = false
             countVacancies.isVisible = false
             vacancyListLayout.isVisible = false
@@ -186,7 +203,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         with(binding) {
             vacancyList.isVisible = true
             progressBar.isVisible = false
-            recyclerViewProgressBar.isVisible = true
+            recyclerProgressBar.isVisible = true
             windowMessage.isVisible = false
             countVacancies.isVisible = true
             vacancyListLayout.isVisible = true
