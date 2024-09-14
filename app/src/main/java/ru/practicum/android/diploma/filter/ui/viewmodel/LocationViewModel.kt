@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filter.ui.viewModel
+package ru.practicum.android.diploma.filter.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class LocationViewModel(
-    // private val locationInteractor: LocationInteractor,
-) : ViewModel() {
+class LocationViewModel() : ViewModel() {
 
     private val _countries = MutableLiveData<List<String>>() // Список стран
     val countries: LiveData<List<String>> get() = _countries
@@ -27,8 +25,6 @@ class LocationViewModel(
     private fun loadCountries() {
         viewModelScope.launch {
             try {
-                // val countryList = locationInteractor.getCountries()
-                // _countries.postValue(countryList)
             } catch (e: Exception) {
                 _errorState.postValue(e.message)
             }
@@ -38,8 +34,6 @@ class LocationViewModel(
     fun loadRegions(countryId: String) {
         viewModelScope.launch {
             try {
-                // val regionList = locationInteractor.getRegions(countryId)
-                // _regions.postValue(regionList)
             } catch (e: Exception) {
                 _errorState.postValue(e.message)
             }
