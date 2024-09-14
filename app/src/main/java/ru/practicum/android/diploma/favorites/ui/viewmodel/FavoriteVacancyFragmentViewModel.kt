@@ -15,15 +15,11 @@ class FavoriteVacancyFragmentViewModel(
 
     private val stateLiveData = MutableLiveData<FavoriteState>()
 
-    init {
-        fillData()
-    }
-
     fun observeState(): LiveData<FavoriteState> = stateLiveData
 
     fun fillData() {
         viewModelScope.launch {
-            favoriteInteractor.favoriteVacancy().collect { vacancies ->
+            favoriteInteractor.getVacancies().collect { vacancies ->
                 getState(vacancies)
             }
         }
