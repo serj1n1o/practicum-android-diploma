@@ -9,34 +9,51 @@
     tools:context="ru.practicum.android.diploma.search.ui.SearchFragment">
 
     <LinearLayout
+        android:id="@+id/titlePlace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
-        android:orientation="horizontal">
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btBackArrow"
+            style="@style/imageButton"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_24px" />
 
         <TextView
+            android:id="@+id/selectArea"
             style="@style/text_22"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_26dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_8dp"
             android:layout_weight="1"
-            android:text="@string/search" />
-
-        <ImageView
-            android:id="@+id/filter"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_filter_off__24px" />
+            android:text="@string/select_region" />
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp">
+        android:layout_marginVertical="@dimen/margin_8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rightBorder"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/leftBorder"
+        app:layout_constraintTop_toBottomOf="@id/titlePlace"
+        app:layout_constraintVertical_bias="0.035">
 
         <EditText
             android:id="@+id/editText"
             style="@style/editText"
-            android:hint="@string/enter_query"
+            android:hint="@string/enter_region"
             android:imeOptions="actionDone"
             android:inputType="text|textNoSuggestions"
             android:singleLine="true" />
@@ -71,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/image_no_internet"
+            android:src="@drawable/image_no_list_vacancy"
             app:layout_constraintBottom_toTopOf="@id/textMessage"
             app:layout_constraintDimensionRatio="3:2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +101,7 @@
             style="@style/text_22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_such_vacancies"
+            android:text="@string/there_is_no_such_region"
             android:textAlignment="center"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -93,51 +110,16 @@
             app:layout_constraintTop_toBottomOf="@id/imageMessage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/vacancyListLayout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/areaList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/vacancyList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/vacancy_list_item" />
-
-        <TextView
-            android:id="@+id/countVacancies"
-            style="@style/countVacancies"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="[таких вакансий нет]" />
-
-        <FrameLayout
-            android:id="@+id/recyclerProgressBar"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:background="@color/background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible">
-
-        <ProgressBar
-                android:layout_width="@dimen/progress_bar_36dp"
-                android:layout_height="@dimen/progress_bar_36dp"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/blue" />
-        </FrameLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/area_list_item" />
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -39,5 +39,9 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/areaSelectFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.area.AreaSelectFragment"
+        android:label="AreaSelectFragment" />
 
 </navigation>
