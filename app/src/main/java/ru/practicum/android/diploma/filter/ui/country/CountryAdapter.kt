@@ -12,12 +12,13 @@ class CountryAdapter : RecyclerView.Adapter<CountryViewHolder>() {
     var itemClickListener: ((Int, Country) -> Unit)? = null
     var filteredList = ArrayList<Country>()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return CountryViewHolder(
             CountryItemBinding.inflate(
-                layoutInflater, parent, false
+                layoutInflater,
+                parent,
+                false
             )
         )
     }

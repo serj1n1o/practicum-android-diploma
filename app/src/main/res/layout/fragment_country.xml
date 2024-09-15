@@ -35,22 +35,14 @@
             android:layout_weight="1"
             android:text="@string/select_country" />
 
-
     </LinearLayout>
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCountry"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/size_20dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCountry"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/country_item"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-    </FrameLayout>
-
+        android:layout_marginTop="@dimen/size_20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/country_item" />
 
 </LinearLayout>
