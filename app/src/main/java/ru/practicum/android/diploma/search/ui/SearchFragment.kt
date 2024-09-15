@@ -91,7 +91,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
             is SearchState.NotFound -> setStateNotFound()
 
             is SearchState.Error -> setStateError(state.error, state.currentPage)
-            
+
             is SearchState.Loading -> setStateLoading()
 
             is SearchState.LoadingNewPage -> setStateLoadingNewPage()
