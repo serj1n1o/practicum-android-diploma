@@ -25,6 +25,8 @@
             android:id="@+id/filter"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/background_reverse"
             android:src="@drawable/ic_filter_off__24px" />
     </LinearLayout>
 

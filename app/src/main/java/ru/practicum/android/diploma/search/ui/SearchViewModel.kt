@@ -53,7 +53,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
                     SearchQuery(
                         text = input,
                         page = page + 1,
-                        perPage = ITEMS_PER_PAGE
+                        perPage = VACANCIES_PER_PAGE
                     )
                 )
                     .collect {
@@ -97,7 +97,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
-        private const val ITEMS_PER_PAGE = 20
+        private const val VACANCIES_PER_PAGE = 20
     }
 
 }
