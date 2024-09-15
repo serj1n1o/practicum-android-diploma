@@ -18,7 +18,6 @@ class CountryViewModel : ViewModel() {
         TODO("Доработать")
     }
 
-
     fun setCountryInfo(country: ShareCountry) {
         TODO("Доработать")
     }
