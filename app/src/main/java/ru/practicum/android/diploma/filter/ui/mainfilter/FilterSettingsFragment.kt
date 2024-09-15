@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.ui.filters.mainfilter
+package ru.practicum.android.diploma.filter.ui.mainfilter
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,7 +29,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // здесь будем запрашивать данные из sharedPreferences при новом открытии фрагмента
-        viewModel.getDataSharedPref()
+        viewModel.getSettingsFilter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,8 +39,9 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
         viewModel.getFilterState().observe(viewLifecycleOwner) { state ->
             when (state) {
-                is FilterState.Content -> setState(state)
-                FilterState.Empty -> {}
+                is FilterState.Content -> renderState(state)
+
+                FilterState.Empty -> renderStateReset()
             }
         }
 
@@ -71,25 +73,48 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             viewModel.setOnlyWithSalary(binding.checkOnlySalary.isChecked)
         }
 
+        binding.btnApply.setOnClickListener {
+            viewModel.saveSettingsFilter()
+        }
+
+        binding.btnReset.setOnClickListener {
+            viewModel.resetSettings()
+        }
+
     }
 
-    private fun setState(data: FilterState.Content) {
-        if (data.onlyWithSalary != null) {
-            binding.checkOnlySalary.isChecked = data.onlyWithSalary
-        } else {
-            binding.checkOnlySalary.isChecked = false
+    private fun renderStateReset() {
+        with(binding) {
+            setTextPlaceWork(country = null, city = null)
+            setTextIndustry(industry = null)
+            salaryEditText.text = null
+            checkOnlySalary.isChecked = false
+            btnReset.isVisible = false
+            btnApply.isVisible = false
         }
+    }
 
-        if (data.salary != null) {
-            binding.salaryEditText.setText(data.salary)
-        }
+    private fun renderState(data: FilterState.Content) {
+        with(binding) {
+            checkOnlySalary.isChecked = data.onlyWithSalary ?: false
 
-        if (data.industry != null) {
-            setTextIndustry(data.industry)
-        }
+            data.salary?.let { salaryEditText.setText(it) }
 
-        if (data.city != null || data.country != null) {
-            setTextPlaceWork(data.country, data.city)
+            data.industry?.let { setTextIndustry(it) }
+
+            if (data.city != null || data.country != null) {
+                setTextPlaceWork(data.country, data.city)
+            }
+
+            val isFilterSet = listOf(
+                data.onlyWithSalary,
+                data.salary,
+                data.city,
+                data.country,
+                data.industry
+            ).any { it != null }
+            btnReset.isVisible = isFilterSet
+            btnApply.isVisible = isFilterSet
         }
     }
 
@@ -106,7 +131,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
     }
 
-    private fun setTextIndustry(industry: String) {
+    private fun setTextIndustry(industry: String?) {
         with(binding) {
             editTextIndustry.setText(industry)
             editTextIndustry.isActivated = true

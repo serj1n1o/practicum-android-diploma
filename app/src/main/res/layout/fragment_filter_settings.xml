@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_16dp"
-    tools:context="ru.practicum.android.diploma.search.ui.filters.mainfilter.FilterSettingsFragment">
+    tools:context="ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsFragment">
 
     <ImageView
         android:id="@+id/btnBack"
@@ -29,7 +29,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/size_60dp"
         android:hint="@string/place_of_work"
         android:textColorHint="@color/text_hint_for_text_input_layout"
         app:boxStrokeWidth="0dp"
@@ -42,7 +42,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/size_60dp"
             android:background="@android:color/transparent"
             android:clickable="false"
             android:cursorVisible="false"
@@ -65,7 +65,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/size_60dp"
         android:hint="@string/industry"
         android:textColorHint="@color/text_hint_for_text_input_layout"
         app:boxStrokeWidth="0dp"
@@ -78,7 +78,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextIndustry"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/size_60dp"
             android:background="@android:color/transparent"
             android:clickable="false"
             android:cursorVisible="false"

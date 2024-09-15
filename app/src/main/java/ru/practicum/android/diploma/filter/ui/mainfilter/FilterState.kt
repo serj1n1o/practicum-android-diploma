@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.ui.filters.mainfilter
+package ru.practicum.android.diploma.filter.ui.mainfilter
 
 sealed interface FilterState {
     data class Content(

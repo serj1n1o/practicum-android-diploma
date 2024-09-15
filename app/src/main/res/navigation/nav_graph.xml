@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterSettingsFragment"
-        android:name="ru.practicum.android.diploma.search.ui.filters.mainfilter.FilterSettingsFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsFragment"
         android:label="fragment_filter_settings"
         tools:layout="@layout/fragment_filter_settings" />
 

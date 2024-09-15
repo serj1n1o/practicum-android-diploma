@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.ui.filters.mainfilter
+package ru.practicum.android.diploma.filter.ui.mainfilter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,9 +28,21 @@ class FilterSettingsViewModel : ViewModel() {
          */
     }
 
-    fun getDataSharedPref() {
+    fun getSettingsFilter() {
         // запрос сохраненных данных из sharedPreferences и устанвока в FilterState
     }
+
+    fun saveSettingsFilter() {
+        // отправляем настройки в sharedPreferences
+    }
+
+    fun resetSettings() {
+        filterSettingsState.postValue(
+            FilterState.Empty
+        )
+
+    }
+
 }
 
 class FilterRepository {
