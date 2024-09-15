@@ -18,7 +18,6 @@ class CountryFragment : CustomFragment<FragmentCountryBinding>() {
         return FragmentCountryBinding.inflate(inflater, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -28,12 +27,14 @@ class CountryFragment : CustomFragment<FragmentCountryBinding>() {
 
         val adapter = CountryAdapter()
         adapter.itemClickListener = { _, item ->
-            viewModel.setCountryInfo(
-                ShareCountry(
-                    countryId = item.id, countryName = item.name
+            if (clickDebounce()) {
+                viewModel.setCountryInfo(
+                    ShareCountry(
+                        countryId = item.id, countryName = item.name
+                    )
                 )
-            )
-            findNavController().popBackStack()
+                findNavController().popBackStack()
+            }
         }
 
         binding.rvCountry.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
