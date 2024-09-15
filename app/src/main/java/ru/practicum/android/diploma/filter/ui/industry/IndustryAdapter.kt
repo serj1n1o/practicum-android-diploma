@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.filter.domain.model.Industry
-import ru.practicum.android.diploma.search.domain.model.Vacancy
-import ru.practicum.android.diploma.search.ui.VacancyViewHolder
 
 class IndustryAdapter(
     var industries: MutableList<Industry>,
-//    private var itemClickListener: VacancyClickListener,
+    private var itemClickListener: VacancyClickListener,
 ) : RecyclerView.Adapter<IndustryViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -23,10 +21,10 @@ class IndustryAdapter(
 
     override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
         val industry = industries[position]
-        holder.bind(industry)
+        holder.bind(industry, itemClickListener)
 
 //        holder.itemView.setOnClickListener {
-//            itemClickListener.onVacancyClick(vacancy)
+//            itemClickListener.onVacancyClick(industry)
 //        }
     }
 
@@ -34,7 +32,7 @@ class IndustryAdapter(
         return industries.size
     }
 
-//    fun interface VacancyClickListener {
-//        fun onVacancyClick(vacancy: Vacancy)
-//    }
+    fun interface VacancyClickListener {
+        fun onVacancyClick(industry: Industry)
+    }
 }

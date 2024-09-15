@@ -8,25 +8,27 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterIndustryBinding
 import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.global.util.CustomFragment
-import ru.practicum.android.diploma.search.domain.model.Vacancy
-import ru.practicum.android.diploma.search.ui.SearchState
-import ru.practicum.android.diploma.search.ui.SearchViewModel
-import ru.practicum.android.diploma.search.ui.VacancyAdapter
+import ru.practicum.android.diploma.global.util.ResponseCodes
 
 class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
 
     private val viewModel by viewModel<FilterIndustryViewModel>()
     private val industries = mutableListOf<Industry>()
-//    private var onVacancyClickDebounce: ((String) -> Unit)? = null
+    private var onVacancyClickDebounce: ((Industry) -> Unit)? = null
+
+    private var selectIndustrie: Industry? = null
+
     private val adapter = IndustryAdapter(industries)
-//{ vacancy ->
-//        onVacancyClickDebounce?.let { it(vacancy.id) }
-//    }
+{ industry ->
+        onVacancyClickDebounce?.let { industry }
+    }
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterIndustryBinding {
         return FragmentFilterIndustryBinding.inflate(inflater, container, false)
@@ -36,35 +38,26 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.industryList.adapter = adapter
         binding.industryList.layoutManager = LinearLayoutManager(requireContext())
-//        binding.industryList.setHasFixedSize(false)
-        binding.editText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && binding.editText.text.isNullOrEmpty()) {
-//                render(SearchState.EmptyEditTextInFocus)
-            }
-        }
         binding.clearButton.setOnClickListener {
             binding.editText.setText("")
-            val inputMethodManager =
-                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(binding.clearButton.windowToken, 0)
+            hideKeyboard()
             binding.editText.clearFocus()
-//            render(SearchState.EmptyEditText)
         }
         binding.editText.doOnTextChanged { text, start, before, count ->
             renderEditTextIconsVisibility(text)
-//            viewModel.searchDebounce(text.toString())
+            viewModel.searchDebounce(text.toString())
         }
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-//        onVacancyClickDebounce = { vacancyId ->
-//            if (clickDebounce()) {
-//
-//            }
-//        }
-
+        binding.backButton.setOnClickListener{
+            findNavController().navigateUp()
+        }
+        onVacancyClickDebounce = { industry ->
+            selectIndustrie = industry
+            binding.buttonApply.isVisible = true
+        }
         viewModel.fillData()
-
     }
 
     private fun renderEditTextIconsVisibility(s: CharSequence?) {
@@ -80,19 +73,42 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
     }
 
     private fun render(state: ScreenState) {
+        binding.industryList.isVisible = false
+        binding.windowProgressBar.isVisible = false
+        binding.errorPlaceholder.isVisible = false
         when (state) {
             is ScreenState.Content -> {
-                industries.clear()
-                industries.addAll(state.industries)
-                adapter.notifyDataSetChanged()
+                showContent(state.industries)
+            }
+            is ScreenState.Loading -> {
+                binding.windowProgressBar.isVisible = true
+            }
+            is ScreenState.Error -> {
+                showErrorPlaceHolder(state.errorCode)
             }
         }
     }
 
-    private fun setContent(list: List<Industry>) {
-
+    private fun showContent(list: List<Industry>) {
+        industries.clear()
+        industries.addAll(list)
+        adapter.notifyDataSetChanged()
+        binding.industryList.isVisible = true
     }
 
+    private fun showErrorPlaceHolder(errorCode: Int) {
+        when(errorCode) {
+            ResponseCodes.CODE_BAD_REQUEST -> {
+                binding.imageMessage.setImageResource(R.drawable.image_error_server_cat)
+                binding.textMessage.text = getString(R.string.server_error)
+            }
+            ResponseCodes.CODE_NO_CONNECT -> {
+                binding.imageMessage.setImageResource(R.drawable.image_no_internet)
+                binding.textMessage.text = getString(R.string.no_internet)
+            }
+        }
+        binding.errorPlaceholder.isVisible = true
+    }
 
     private fun hideKeyboard() {
         val inputMethodManager =

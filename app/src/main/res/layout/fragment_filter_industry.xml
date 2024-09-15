@@ -11,8 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingVertical="16dp">
         <ImageView
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_back_24px"/>
@@ -20,19 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/text_22"
-            android:text="Выбор отрасли"/>
+            android:text="@string/choose_industry"
+            android:layout_marginStart="20dp"/>
 
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp">
+        android:layout_marginVertical="12dp">
 
         <EditText
             android:id="@+id/editText"
             style="@style/editText"
-            android:hint="@string/enter_query"
+            android:hint="@string/enter_industry"
             android:imeOptions="actionDone"
             android:inputType="text|textNoSuggestions"
             android:singleLine="true" />
@@ -59,7 +62,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/industryList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:visibility="visible" />
 
     <ProgressBar
@@ -99,11 +103,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageMessage" />
+            app:layout_constraintTop_toBottomOf="@id/imageMessage"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
+     <Button
+         android:id="@+id/buttonApply"
+         style="@style/blueButton"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="@string/apply"
+         android:layout_marginBottom="24dp"
+         android:visibility="gone"/>
 
 </LinearLayout>
