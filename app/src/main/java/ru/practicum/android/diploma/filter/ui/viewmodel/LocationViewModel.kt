@@ -30,31 +30,19 @@ class LocationViewModel : ViewModel() {
 
     private fun loadCountries() {
         viewModelScope.launch {
-            try {
-                val countries = listOf("Russia", "China")
-                _countries.postValue(countries)
-            } catch (e: IOException) {
-                _errorState.postValue("Error loading countries: ${e.message}")
-            } catch (e: NetworkOnMainThreadException) {
-                _errorState.postValue("Network operation on main thread: ${e.message}")
-            } catch (e: Throwable) {
-                _errorState.postValue("Unexpected error: ${e.message}")
-            }
+//            val countries = listOf("Russia", "China", "USA")
+//            _countries.postValue(countries)
         }
     }
 
     fun loadRegions(countryId: String) {
         viewModelScope.launch {
-            try {
-                val regions = listOf("Ural", "Moscow")
-                _regions.postValue(regions)
-            } catch (e: IOException) {
-                _errorState.postValue("Error loading regions: ${e.message}")
-            } catch (e: IllegalArgumentException) {
-                _errorState.postValue("Invalid country ID: ${e.message}")
-            } catch (e: Throwable) {
-                _errorState.postValue("Unexpected error: ${e.message}")
-            }
+//            val regions = when (countryId) {
+//                "Russia" -> listOf("Ural", "Moscow", "Siberia")
+//                "China" -> listOf("Shanghai", "Beijing", "Guangzhou")
+//                "USA" -> listOf("California", "New York", "Texas")
+//                else -> emptyList()
+//            }
         }
     }
 
