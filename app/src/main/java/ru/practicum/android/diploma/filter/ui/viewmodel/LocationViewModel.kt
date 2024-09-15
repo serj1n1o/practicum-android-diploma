@@ -1,10 +1,12 @@
 package ru.practicum.android.diploma.filter.ui.viewmodel
 
+import android.os.NetworkOnMainThreadException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class LocationViewModel : ViewModel() {
     private val _selectedCountry = MutableLiveData<String>()
@@ -29,11 +31,14 @@ class LocationViewModel : ViewModel() {
     private fun loadCountries() {
         viewModelScope.launch {
             try {
-                // Здесь загружаем список стран и обновляем _countries
-                val countries = listOf("Russia")
+                val countries = listOf("Russia", "China")
                 _countries.postValue(countries)
-            } catch (e: Exception) {
-                _errorState.postValue(e.message)
+            } catch (e: IOException) {
+                _errorState.postValue("Error loading countries: ${e.message}")
+            } catch (e: NetworkOnMainThreadException) {
+                _errorState.postValue("Network operation on main thread: ${e.message}")
+            } catch (e: Throwable) {
+                _errorState.postValue("Unexpected error: ${e.message}")
             }
         }
     }
@@ -41,10 +46,14 @@ class LocationViewModel : ViewModel() {
     fun loadRegions(countryId: String) {
         viewModelScope.launch {
             try {
-                val regions = listOf("Ural")
+                val regions = listOf("Ural", "Moscow")
                 _regions.postValue(regions)
-            } catch (e: Exception) {
-                _errorState.postValue(e.message)
+            } catch (e: IOException) {
+                _errorState.postValue("Error loading regions: ${e.message}")
+            } catch (e: IllegalArgumentException) {
+                _errorState.postValue("Invalid country ID: ${e.message}")
+            } catch (e: Throwable) {
+                _errorState.postValue("Unexpected error: ${e.message}")
             }
         }
     }
