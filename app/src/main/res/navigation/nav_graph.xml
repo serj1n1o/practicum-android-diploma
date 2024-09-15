@@ -51,6 +51,10 @@
         android:id="@+id/filterSettingsFragment"
         android:name="ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsFragment"
         android:label="fragment_filter_settings"
-        tools:layout="@layout/fragment_filter_settings" />
+        tools:layout="@layout/fragment_filter_settings" >
+        <action
+            android:id="@+id/action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment"
+            app:destination="@id/choosingAPlaceOfWorkFragment" />
+    </fragment>
 
 </navigation>

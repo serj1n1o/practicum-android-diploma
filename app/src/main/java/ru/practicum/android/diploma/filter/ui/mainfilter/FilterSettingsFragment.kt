@@ -65,7 +65,9 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.btnArrowForwardPlace.setOnClickListener {}
+        binding.btnArrowForwardPlace.setOnClickListener {
+            findNavController().navigate(R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment)
+        }
 
         binding.btnArrowForwardIndustry.setOnClickListener {}
 

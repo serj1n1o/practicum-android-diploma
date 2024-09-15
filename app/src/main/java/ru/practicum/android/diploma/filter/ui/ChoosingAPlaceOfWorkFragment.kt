@@ -6,18 +6,17 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentChoosingAPlaceOfWorkBinding
 import ru.practicum.android.diploma.filter.ui.viewmodel.LocationViewModel
 import ru.practicum.android.diploma.global.util.CustomFragment
-import ru.practicum.android.diploma.global.util.HideKeyboardUtil
 
 class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWorkBinding>() {
 
-    private val viewModel by viewModel<LocationViewModel>()
+    private val locationViewModel: LocationViewModel by viewModel()
     private var isCountryInputFilled = false
+    private var isRegionInputFilled = false
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChoosingAPlaceOfWorkBinding {
         return FragmentChoosingAPlaceOfWorkBinding.inflate(inflater, container, false)
@@ -30,46 +29,82 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
             findNavController().popBackStack()
         }
 
-        binding.arrowForwardCountry.setOnClickListener { }
-
-        binding.arrowForwardRegion.setOnClickListener { }
-
-        binding.edNameCountry.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                HideKeyboardUtil.hideKeyboard(binding.edNameCountry)
-                binding.edNameCountry.clearFocus()
-                true
-            } else {
-                false
-            }
+        binding.arrowForwardCountry.setOnClickListener {
+//            val action = переход на экран выбора стран
+//            findNavController().navigate(action)
         }
 
-        binding.edNameCountry.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // пока пусто
-            }
+        binding.arrowForwardRegion.setOnClickListener {
+//            val action = переход на экран выбора регионов
+//            findNavController().navigate(action)
+        }
+
+        binding.edCountry.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                updateCountryInputUi(s.toString())
+                updateCountryInputUi(s?.toString() ?: "")
             }
 
-            override fun afterTextChanged(s: Editable?) {
-                // пока пусто
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
 
-        binding.crossCountry.setOnClickListener {
-            binding.edNameCountry.setText("")
-            // KeyboardUtils.hideKeyboard(binding.edNameCountry)
+        binding.edRegion.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateRegionInputUi(s?.toString() ?: "")
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        locationViewModel.selectedCountry.observe(viewLifecycleOwner) { country ->
+            binding.edCountry.setText(country)
+            binding.edCountry.hint = ""
+            binding.tvCountry.visibility = View.VISIBLE
+            isCountryInputFilled = true
+            updateChooseBtnVisibility()
         }
 
-        binding.btChoose.setOnClickListener { }
+        locationViewModel.selectedRegion.observe(viewLifecycleOwner) { region ->
+            binding.edRegion.setText(region)
+            binding.edRegion.hint = ""
+            binding.tvRegion.visibility = View.VISIBLE
+            isRegionInputFilled = true
+            updateChooseBtnVisibility()
+        }
+
+        binding.crossCountry.setOnClickListener {
+            binding.edCountry.setText("")
+        }
+
+        binding.crossRegion.setOnClickListener {
+            binding.edRegion.setText("")
+        }
+
+        binding.btChoose.setOnClickListener {
+            // кнопка выбора-логика подтверждения
+        }
     }
 
-    private fun updateCountryInputUi(text: String) {
-        isCountryInputFilled = text.isNotEmpty()
+    private fun updateCountryInputUi(countryText: String) {
+        isCountryInputFilled = countryText.isNotEmpty()
         binding.arrowForwardCountry.visibility = if (isCountryInputFilled) View.GONE else View.VISIBLE
         binding.crossCountry.visibility = if (isCountryInputFilled) View.VISIBLE else View.GONE
-        binding.btChoose.visibility = if (isCountryInputFilled) View.VISIBLE else View.GONE
+        binding.tvCountry.visibility = if (isCountryInputFilled) View.VISIBLE else View.GONE
+        updateChooseBtnVisibility()
+    }
+
+    private fun updateRegionInputUi(regionText: String) {
+        isRegionInputFilled = regionText.isNotEmpty()
+        binding.arrowForwardRegion.visibility = if (isRegionInputFilled) View.GONE else View.VISIBLE
+        binding.crossRegion.visibility = if (isRegionInputFilled) View.VISIBLE else View.GONE
+        binding.tvRegion.visibility = if (isRegionInputFilled) View.VISIBLE else View.GONE
+        // updateChooseBtnVisibility()
+    }
+
+    private fun updateChooseBtnVisibility() {
+        binding.btChoose.visibility = if (isCountryInputFilled && isRegionInputFilled) View.VISIBLE else View.GONE
     }
 }
