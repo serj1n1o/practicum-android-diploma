@@ -1,12 +1,10 @@
 package ru.practicum.android.diploma.filter.ui.viewmodel
 
-import android.os.NetworkOnMainThreadException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 class LocationViewModel : ViewModel() {
     private val _selectedCountry = MutableLiveData<String>()
