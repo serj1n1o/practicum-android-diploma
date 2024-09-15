@@ -28,8 +28,8 @@ val viewModelModule = module {
 
     viewModel<AreaSelectViewModel> {
         AreaSelectViewModel(filterInteractor = get())
-
-      viewModel<FilterSettingsViewModel> {
+    }
+    viewModel<FilterSettingsViewModel> {
         FilterSettingsViewModel()
     }
 }
