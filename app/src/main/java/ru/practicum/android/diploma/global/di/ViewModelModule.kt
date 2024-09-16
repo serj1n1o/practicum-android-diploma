@@ -28,7 +28,6 @@ val viewModelModule = module {
         FavoriteVacancyFragmentViewModel(favoriteInteractor = get())
     }
 
-
     viewModel<LocationViewModel> {
         LocationViewModel()
     }
