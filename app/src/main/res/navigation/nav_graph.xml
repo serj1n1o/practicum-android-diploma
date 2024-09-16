@@ -28,8 +28,8 @@
             android:id="@+id/action_searchFragment_to_vacancyFragment"
             app:destination="@id/vacancyFragment" />
         <action
-            android:id="@+id/action_searchFragment_to_filterIndustryFragment"
-            app:destination="@id/filterIndustryFragment" />
+            android:id="@+id/action_searchFragment_to_filterSettingsFragment"
+            app:destination="@id/filterSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/vacancyFragment"
@@ -47,5 +47,23 @@
         android:name="ru.practicum.android.diploma.filter.ui.industry.FilterIndustryFragment"
         android:label="FilterIndustryFragment"
         tools:layout="@layout/fragment_filter_industry"/>
+  <fragment
+        android:id="@+id/choosingAPlaceOfWorkFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.ChoosingAPlaceOfWorkFragment"
+        android:label="ChoosingAPlaceOfWorkFragment"
+        tools:layout="@layout/fragment_choosing_a_place_of_work"/>
+    <fragment
+        android:id="@+id/areaSelectFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.area.AreaSelectFragment"
+        android:label="AreaSelectFragment" />
+    <fragment
+        android:id="@+id/filterSettingsFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsFragment"
+        android:label="fragment_filter_settings"
+        tools:layout="@layout/fragment_filter_settings" >
+        <action
+            android:id="@+id/action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment"
+            app:destination="@id/choosingAPlaceOfWorkFragment" />
+    </fragment>
 
 </navigation>
