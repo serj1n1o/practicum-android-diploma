@@ -22,13 +22,10 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
     private val viewModel by viewModel<FilterIndustryViewModel>()
     private val industries = mutableListOf<Industry>()
     private var onVacancyClickDebounce: ((Industry) -> Unit)? = null
-
-    private var selectIndustrie: Industry? = null
-
-    private val adapter = RadioAdapter(industries) {
-        onVacancyClickDebounce
+    private var selectIndustry: Industry? = null
+    private val adapter = IndustryAdapter(industries) { industry ->
+        onVacancyClickDebounce?.let { it(industry) }
     }
-
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterIndustryBinding {
         return FragmentFilterIndustryBinding.inflate(inflater, container, false)
@@ -54,8 +51,13 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
             findNavController().navigateUp()
         }
         onVacancyClickDebounce = { industry ->
-            selectIndustrie = industry
+            selectIndustry = industry
             binding.buttonApply.isVisible = true
+        }
+        binding.buttonApply.setOnClickListener {
+            viewModel.setIndustry(selectIndustry)
+            binding.buttonApply.isVisible = false
+            findNavController().navigateUp()
         }
         viewModel.fillData()
     }
