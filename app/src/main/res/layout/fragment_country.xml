@@ -37,6 +37,25 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/llCountiresNothingFoundPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm_172dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dm_328dp"
+            android:layout_height="@dimen/dm_223dp"
+            android:layout_gravity="center"
+            android:background="@drawable/image_no_list_vacancy" />
+
+        <TextView
+            style="@style/placeHolderText"
+            android:text="@string/unable_to_retrieve_countires" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCountry"
         android:layout_width="match_parent"
