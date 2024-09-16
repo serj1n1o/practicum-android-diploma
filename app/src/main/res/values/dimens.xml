@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="size_divider">1dp</dimen>
-    <dimen name="size_bottomMenuIcon">24dp</dimen>
+    <dimen name="size_Icon">24dp</dimen>
     <dimen name="size_bottomPanelHeight">56dp</dimen>
     <dimen name="margin_4dp">4dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
@@ -13,4 +13,27 @@
     <dimen name="dm_about_item_text_size">16sp</dimen>
     <dimen name="dm_about_header_margin_top">24dp</dimen>
     <dimen name="dm_about_header_text_size">32sp</dimen>
+    <dimen name="top_bar_height_size">64dp</dimen>
+    <dimen name="size_20dp">20dp</dimen>
+    <dimen name="size_48dp">48dp</dimen>
+    <dimen name="size_26dp">26dp</dimen>
+    <dimen name="size_32dp">32dp</dimen>
+    <dimen name="size_108dp">108dp</dimen>
+    <dimen name="size_52dp">52dp</dimen>
+    <dimen name="size_12dp">12dp</dimen>
+    <dimen name="text_size_22dp">22sp</dimen>
+    <dimen name="dm_172dp">172dp</dimen>
+    <dimen name="dm_223dp">223dp</dimen>
+    <dimen name="dm_328dp">328dp</dimen>
+    <dimen name="dm_placeholder_text_size">22sp</dimen>
+    <dimen name="dm_12dp">12dp</dimen>
+    <dimen name="dm_1dp">1dp</dimen>
+    <dimen name="dm_48dp">48dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="size_24dp">24dp</dimen>
+    <dimen name="margin_40dp">40dp</dimen>
+    <dimen name="margin_88dp">88dp</dimen>
+    <dimen name="margin_30dp">30dp</dimen>
+    <dimen name="margin_24dp">24dp</dimen>
+    <dimen name="progress_bar_36dp">36dp</dimen>
 </resources>

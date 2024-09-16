@@ -1,16 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:id="@+id/buildConfigReadExampleTextView"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/titleVacancy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btBackArrow"
+            style="@style/imageButton"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_24px" />
+
+        <TextView
+            android:id="@+id/txtVacancy"
+            style="@style/text_22"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_26dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_weight="1"
+            android:text="@string/vacancy" />
+
+        <ImageButton
+            android:id="@+id/icSharing"
+            style="@style/imageButton"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
+            android:layout_marginEnd="@dimen/margin_30dp"
+            android:src="@drawable/ic_sharing_24px" />
+
+        <ImageButton
+            android:id="@+id/icFavorite"
+            android:backgroundTint="@color/background"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
+            android:src="@drawable/ic_favorites_off__24px" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/progress_bar_36dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/vacancy"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dm_328dp"
+            tools:src="@drawable/image_no_vacancy" />
+
+        <TextView
+            android:id="@+id/txtPlaceholder"
+            style="@style/text_22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/size_48dp"
+            android:gravity="center"
+            tools:text="@string/no_internet" />
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_88dp"
+        android:paddingBottom="@dimen/margin_16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vacancyInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16dp">
+
+            <TextView
+                android:id="@+id/tvNameVacancy"
+                style="@style/text_32"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Android-разработчик на платформу прогноза погоды" />
+
+            <TextView
+                android:id="@+id/salary"
+                style="@style/text_22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvNameVacancy"
+                tools:text="от 100 000 Р" />
+
+            <LinearLayout
+                android:id="@+id/cardVacancy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20dp"
+                android:background="@drawable/rectangle_12"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/salary">
+
+                <ImageView
+                    android:id="@+id/ic_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dm_about_item_margin_top"
+                    tools:src="@drawable/ic_yandex_eat" />
+
+                <LinearLayout
+                    android:id="@+id/tvNameCompanyAndArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvNameCompany"
+                        style="@style/text_22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dm_about_item_margin_top"
+                        android:textColor="@color/black"
+                        tools:text="Еда" />
+
+                    <TextView
+                        android:id="@+id/tvAreaCompany"
+                        style="@style/text_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_16dp"
+                        android:textColor="@color/black"
+                        tools:text="Москва" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/requiredExperience"
+                style="@style/text_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:tag="experience"
+                android:text="@string/txt_experience"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardVacancy" />
+
+            <TextView
+                android:id="@+id/experienceContent"
+                style="@style/text_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_4dp"
+                android:lineSpacingExtra="@dimen/margin_8dp"
+                android:tag="experience"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/requiredExperience"
+                tools:text="@string/experience_employment_schedule" />
+
+            <TextView
+                android:id="@+id/jobDescription"
+                style="@style/text_22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_32dp"
+                android:tag="description"
+                android:text="@string/txt_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/experienceContent" />
+
+            <TextView
+                android:id="@+id/descriptionContent"
+                style="@style/text_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jobDescription"
+                tools:text="и сниться нам не рокот космодрома, не эта ледяная синева, а снится нам трава , трава удома, зеленая , зеленая трава " />
+
+            <TextView
+                android:id="@+id/keySkills"
+                style="@style/text_22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_32dp"
+                android:tag="skills"
+                android:text="@string/txt_key_skills"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionContent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/keySkillsContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:tag="skills"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/keySkills" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
