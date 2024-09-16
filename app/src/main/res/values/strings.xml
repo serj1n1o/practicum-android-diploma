@@ -11,6 +11,7 @@
     <string name="select_place">Выбор места работы</string>
     <string name="select_Industry">Настройка фильтрации</string>
     <string name="setup_filter">Настройка фильтрации</string>
+    <string name="settings_filter">Настройки фильтрации</string>
 
     <!--Остальные строки-->
     <string name="no_such_vacancies">Таких вакансий нет</string>

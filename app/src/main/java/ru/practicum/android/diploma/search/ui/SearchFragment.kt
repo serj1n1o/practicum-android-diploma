@@ -76,37 +76,27 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 }
             }
         })
+
+        binding.filter.setOnClickListener {
+            findNavController().navigate(R.id.action_searchFragment_to_filterSettingsFragment)
+        }
     }
 
     private fun render(state: SearchState, newSearch: Boolean = false) {
         when (state) {
-            is SearchState.EmptyEditText -> {
-                setStateEmptyEditText()
-            }
+            is SearchState.EmptyEditText -> setStateEmptyEditText()
 
-            is SearchState.Content -> {
-                setStateContent(state.vacancies)
-            }
+            is SearchState.Content -> setStateContent(state.vacancies)
 
-            is SearchState.NotFound -> {
-                setStateNotFound()
-            }
+            is SearchState.NotFound -> setStateNotFound()
 
-            is SearchState.Error -> {
-                setStateError(state.error, state.currentPage)
-            }
+            is SearchState.Error -> setStateError(state.error, state.currentPage)
 
-            is SearchState.Loading -> {
-                setStateLoading()
-            }
+            is SearchState.Loading -> setStateLoading()
 
-            is SearchState.LoadingNewPage -> {
-                setStateLoadingNewPage()
-            }
+            is SearchState.LoadingNewPage -> setStateLoadingNewPage()
 
-            is SearchState.EmptyEditTextInFocus -> {
-                setStateEmptyTextInFocus()
-            }
+            is SearchState.EmptyEditTextInFocus -> setStateEmptyTextInFocus()
         }
     }
 
