@@ -25,7 +25,7 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
 
     private var selectIndustrie: Industry? = null
 
-    private val adapter = _IndustryAdapter(industries) {
+    private val adapter = RadioAdapter(industries) {
         onVacancyClickDebounce
     }
 

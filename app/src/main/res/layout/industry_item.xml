@@ -13,10 +13,8 @@
         android:layout_weight="1"
         style="@style/text_16"
         tools:text="[DIRECTOR]"/>
-
     <RadioButton
         android:id="@+id/industryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
 </LinearLayout>
