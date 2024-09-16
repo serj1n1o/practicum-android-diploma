@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment"
             app:destination="@id/choosingAPlaceOfWorkFragment" />
+        <action
+            android:id="@+id/action_filterSettingsFragment_to_filterIndustryFragment"
+            app:destination="@id/filterIndustryFragment" />
     </fragment>
 
 </navigation>
