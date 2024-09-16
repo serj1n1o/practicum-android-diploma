@@ -34,17 +34,17 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getStateAreaAndIndustry()
-
+        // viewModel.getStateAreaAndIndustry()  затирает данные из SharedPreferences
         viewModel.getFilterState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is FilterState.Content -> renderState(state)
-
-                FilterState.Empty -> renderStateReset()
+                is FilterState.Empty -> renderStateReset()
             }
         }
+        initBinding()
+    }
 
+    private fun initBinding() {
         binding.salaryEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 hideKeyboard()
@@ -82,7 +82,6 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         binding.btnReset.setOnClickListener {
             viewModel.resetSettings()
         }
-
     }
 
     private fun renderStateReset() {
@@ -98,25 +97,18 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
     private fun renderState(data: FilterState.Content) {
         with(binding) {
-            checkOnlySalary.isChecked = data.onlyWithSalary ?: false
+            checkOnlySalary.isChecked = data.filterStatus.onlyWithSalary ?: false
 
-            data.salary?.let { salaryEditText.setText(it) }
+            data.filterStatus.salary?.let { salaryEditText.setText(it.toString()) }
 
-            data.industry?.let { setTextIndustry(it) }
+            data.filterStatus.industry?.name?.let { setTextIndustry(it) }
 
-            if (data.city != null || data.country != null) {
-                setTextPlaceWork(data.country, data.city)
+            if (data.filterStatus.area != null || data.filterStatus.country != null) {
+                setTextPlaceWork(data.filterStatus.country?.name, data.filterStatus.area?.name)
             }
 
-            val isFilterSet = listOf(
-                data.onlyWithSalary,
-                data.salary,
-                data.city,
-                data.country,
-                data.industry
-            ).any { it != null }
-            btnReset.isVisible = isFilterSet
-            btnApply.isVisible = isFilterSet
+            btnReset.isVisible = !data.filterStatus.isDefaultParams()
+            btnApply.isVisible = !data.filterStatus.isDefaultParams()
         }
     }
 

@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.global.di
 
+import android.content.Context
 import androidx.room.Room
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -19,6 +21,9 @@ import ru.practicum.android.diploma.global.data.network.HhApi
 import ru.practicum.android.diploma.global.data.network.NetworkClient
 import ru.practicum.android.diploma.global.data.network.dto.RetrofitNetworkClient
 import ru.practicum.android.diploma.global.db.AppDatabase
+import ru.practicum.android.diploma.global.sharedpreferences.SharedPreferencesFilter
+import ru.practicum.android.diploma.global.sharedpreferences.SharedPreferencesFilterImpl
+import ru.practicum.android.diploma.global.sharedpreferences.SharedPreferencesFilterImpl.Companion.FILTER_STATE
 import ru.practicum.android.diploma.global.util.HeaderInterceptor
 import ru.practicum.android.diploma.global.util.NetworkUtil
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
@@ -80,9 +85,24 @@ val dataModule = module {
     }
 
     single<FilterRepository> {
-        FilterRepositoryImpl()
+        FilterRepositoryImpl(get(), get())
     }
     single<CountryRepository> {
         CountryRepositoryImpl(get())
+    }
+
+    single {
+        androidContext().getSharedPreferences(
+            FILTER_STATE,
+            Context.MODE_PRIVATE
+        )
+    }
+
+    factory {
+        Gson()
+    }
+
+    single<SharedPreferencesFilter> {
+        SharedPreferencesFilterImpl(sharedPrefs = get(), gson = get())
     }
 }

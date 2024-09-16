@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
+import ru.practicum.android.diploma.filter.domain.model.FilterStatus
 import ru.practicum.android.diploma.filter.domain.model.Location
 import ru.practicum.android.diploma.global.util.debounce
 
@@ -59,8 +60,11 @@ class AreaSelectViewModel(private val filterInteractor: FilterInteractor) : View
     }
 
     fun saveSelection(location: Location) {
-        filterInteractor.setArea(location.area)
-        filterInteractor.setCountry(location.country)
+        var state = filterInteractor.getFilterState()
+        val filterStatus =
+            FilterStatus(location.country, location.area, state.industry, state.salary, state.onlyWithSalary)
+
+        filterInteractor.setFilterState(filterStatus)
     }
 
     private fun renderState(state: AreaSelectState) {
