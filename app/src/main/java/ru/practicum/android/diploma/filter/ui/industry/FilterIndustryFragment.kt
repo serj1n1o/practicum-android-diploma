@@ -47,7 +47,7 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
         onVacancyClickDebounce = { industry ->
@@ -99,7 +99,7 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
     }
 
     private fun showErrorPlaceHolder(errorCode: Int) {
-        when(errorCode) {
+        when (errorCode) {
             ResponseCodes.CODE_BAD_REQUEST -> {
                 binding.imageMessage.setImageResource(R.drawable.image_error_server_cat)
                 binding.textMessage.text = getString(R.string.server_error)
