@@ -25,10 +25,10 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
 
     private var selectIndustrie: Industry? = null
 
-    private val adapter = IndustryAdapter(industries)
-{ industry ->
-        onVacancyClickDebounce?.let { industry }
+    private val adapter = _IndustryAdapter(industries) {
+        onVacancyClickDebounce
     }
+
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterIndustryBinding {
         return FragmentFilterIndustryBinding.inflate(inflater, container, false)

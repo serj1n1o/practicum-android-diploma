@@ -9,6 +9,8 @@ import ru.practicum.android.diploma.filter.domain.model.Industry
 
 class IndustryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+
+
     private val industryName: TextView = itemView.findViewById(R.id.nameIndustry)
     private val industryButton: RadioButton = itemView.findViewById(R.id.industryButton)
 
@@ -18,7 +20,6 @@ class IndustryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         industryButton.setOnClickListener{
             itemClickListener.onVacancyClick(industry)
         }
-
 
     }
 }
