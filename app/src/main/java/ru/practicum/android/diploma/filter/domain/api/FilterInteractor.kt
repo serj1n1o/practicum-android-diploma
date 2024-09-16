@@ -5,8 +5,8 @@ import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.Industry
 
 interface FilterInteractor {
-    fun getCity(): Country?
-    fun setCity(city: Country?)
+    fun getCountry(): Country?
+    fun setCountry(country: Country?)
 
     fun getArea(): Area?
     fun setArea(area: Area?)
