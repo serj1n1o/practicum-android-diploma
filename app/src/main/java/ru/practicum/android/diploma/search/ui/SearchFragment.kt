@@ -77,11 +77,6 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 }
             }
         })
-
-        binding.filter.setOnClickListener {
-            findNavController().navigate(R.id.action_searchFragment_to_filterIndustryFragment)
-            FilterIndustryFragment()
-        }
     }
 
     private fun render(state: SearchState, newSearch: Boolean = false) {
