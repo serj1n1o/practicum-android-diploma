@@ -48,12 +48,6 @@ object Mapper {
             else -> ""
         }
 
-        fun formatNumber(value: Int?): String? {
-            return value?.let {
-                val format = NumberFormat.getNumberInstance(Locale("ru", "RU"))
-                format.format(it)
-            }
-        }
         val from = formatNumber(salary?.from)
         val to = formatNumber(salary?.to)
 
@@ -62,6 +56,13 @@ object Mapper {
             from != null -> "От $from $currencySymbol"
             to != null -> "До $to $currencySymbol"
             else -> "Зарплата не указана"
+        }
+    }
+
+    private fun formatNumber(value: Int?): String? {
+        return value?.let {
+            val format = NumberFormat.getNumberInstance(Locale("ru", "RU"))
+            format.format(it)
         }
     }
 
