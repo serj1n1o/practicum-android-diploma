@@ -54,7 +54,6 @@ class CountryViewModel(
         stateLiveData.postValue(countryState)
     }
 
-
     fun setCountryInfo(country: ShareCountry) {
         TODO("Доработать")
     }
