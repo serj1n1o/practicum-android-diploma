@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.filter.ui.area.AreaSelectViewModel
 import ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsViewModel
 import ru.practicum.android.diploma.search.ui.SearchViewModel
 import ru.practicum.android.diploma.vacancy.ui.viewmodel.DetailsVacancyViewModel
+import ru.practicum.android.diploma.filter.ui.country.CountryViewModel
 
 val viewModelModule = module {
 
@@ -31,5 +32,8 @@ val viewModelModule = module {
     }
     viewModel<FilterSettingsViewModel> {
         FilterSettingsViewModel()
+    }
+    viewModel {
+        CountryViewModel(get())
     }
 }
