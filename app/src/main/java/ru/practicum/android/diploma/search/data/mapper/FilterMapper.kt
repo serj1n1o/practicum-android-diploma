@@ -6,6 +6,7 @@ import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.filter.domain.model.Location
 import ru.practicum.android.diploma.search.data.dto.industries.IndustriesDto
 import ru.practicum.android.diploma.search.data.dto.regions.AreasResponse
+import ru.practicum.android.diploma.search.data.dto.regions.AreasResponseCountry
 
 class FilterMapper {
 
@@ -43,46 +44,47 @@ class FilterMapper {
         val locations = mutableListOf<Location>()
 
         areasResponse.forEach { areaResponseCountry ->
-            val country = Country(
-                id = areaResponseCountry.id,
-                name = areaResponseCountry.name
-            )
+            val country = mapToCountry(areaResponseCountry)
+            val areas = mapToAreas(areaResponseCountry)
 
-            areaResponseCountry.areas.forEach { areaRegion ->
-                val area = Area(
+            areas.forEach { area ->
+                locations.add(Location(country, area))
+            }
+        }
+
+        return locations
+    }
+
+    private fun mapToCountry(areaResponseCountry: AreasResponseCountry): Country {
+        return Country(
+            id = areaResponseCountry.id,
+            name = areaResponseCountry.name
+        )
+    }
+
+    private fun mapToAreas(areaResponseCountry: AreasResponseCountry): List<Area> {
+        val areas = mutableListOf<Area>()
+
+        areaResponseCountry.areas.forEach { areaRegion ->
+            areas.add(
+                Area(
                     id = areaRegion.id,
                     name = areaRegion.name,
                     parentId = areaRegion.parentId
                 )
+            )
 
-                locations.add(
-                    Location(
-                        country = country,
-                        area = area
+            areaRegion.areas.forEach { areaRegionChild ->
+                areas.add(
+                    Area(
+                        id = areaRegionChild.id,
+                        name = areaRegionChild.name,
+                        parentId = areaRegionChild.parentId
                     )
                 )
-
-                areaRegion.areas.forEach { areaRegionChild ->
-                    if (areaRegionChild.areas.isEmpty()) {
-                        val childArea = Area(
-                            id = areaRegionChild.id,
-                            name = areaRegionChild.name,
-                            parentId = areaRegionChild.parentId
-                        )
-
-                        locations.add(
-                            Location(
-                                country = country,
-                                area = childArea
-                            )
-                        )
-                    }
-                }
             }
         }
-
-        return locations.sortedBy { it.area.name }
+        return areas
     }
-
 
 }
