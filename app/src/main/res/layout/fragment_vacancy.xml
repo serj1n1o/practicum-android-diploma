@@ -40,6 +40,7 @@
             android:layout_width="@dimen/size_Icon"
             android:layout_height="@dimen/size_Icon"
             android:layout_marginEnd="@dimen/margin_30dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_sharing_24px" />
 
         <ImageButton
@@ -47,6 +48,7 @@
             android:backgroundTint="@color/background"
             android:layout_width="@dimen/size_Icon"
             android:layout_height="@dimen/size_Icon"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_favorites_off__24px" />
     </LinearLayout>
 

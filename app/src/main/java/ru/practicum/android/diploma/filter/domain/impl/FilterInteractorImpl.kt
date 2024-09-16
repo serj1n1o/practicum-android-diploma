@@ -7,11 +7,11 @@ import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.Industry
 
 class FilterInteractorImpl(private val repository: FilterRepository) : FilterInteractor {
-    override fun getCity(): Country? {
+    override fun getCountry(): Country? {
         return repository.getCountry()
     }
 
-    override fun setCity(country: Country?) {
+    override fun setCountry(country: Country?) {
         repository.setCountry(country)
     }
 
