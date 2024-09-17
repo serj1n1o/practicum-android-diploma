@@ -14,7 +14,6 @@ import ru.practicum.android.diploma.favorites.data.VacancyDbConvertor
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteRepository
 import ru.practicum.android.diploma.filter.data.CountryRepositoryImpl
 import ru.practicum.android.diploma.filter.data.FilterRepositoryImpl
-import ru.practicum.android.diploma.filter.data.mapper.FilterMapper
 import ru.practicum.android.diploma.filter.domain.api.CountryRepository
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.global.data.network.HhApi
@@ -64,10 +63,6 @@ val dataModule = module {
         VacancyMapper()
     }
 
-    factory {
-        FilterMapper()
-    }
-
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db").build()
     }
@@ -85,7 +80,7 @@ val dataModule = module {
     }
 
     single<FilterRepository> {
-        FilterRepositoryImpl(get(), get())
+        FilterRepositoryImpl(get())
     }
     single<CountryRepository> {
         CountryRepositoryImpl(get())

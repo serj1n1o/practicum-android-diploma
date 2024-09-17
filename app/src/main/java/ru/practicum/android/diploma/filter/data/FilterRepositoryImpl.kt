@@ -1,11 +1,10 @@
 package ru.practicum.android.diploma.filter.data
 
-import ru.practicum.android.diploma.filter.data.mapper.FilterMapper
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.filter.domain.model.FilterStatus
 import ru.practicum.android.diploma.global.sharedpreferences.SharedPreferencesFilter
 
-class FilterRepositoryImpl(val sharedPreferencesFilter: SharedPreferencesFilter, val mapper: FilterMapper) :
+class FilterRepositoryImpl(private val sharedPreferencesFilter: SharedPreferencesFilter) :
     FilterRepository {
     private var filterStatus: FilterStatus = FilterStatus(null, null, null, null, false)
 
@@ -30,11 +29,11 @@ class FilterRepositoryImpl(val sharedPreferencesFilter: SharedPreferencesFilter,
     }
 
     override fun saveFilterToSharedPreferences(filterStatus: FilterStatus) {
-        sharedPreferencesFilter.saveFilterState(mapper.filterToFilterDto(filterStatus))
+        sharedPreferencesFilter.saveFilterState(filterStatus)
     }
 
     override fun loadFilterFromSharedPreferences(): FilterStatus {
-        return mapper.filterDtoToFilter(sharedPreferencesFilter.getFilterState())
+        return sharedPreferencesFilter.getFilterState()
     }
 
 }
