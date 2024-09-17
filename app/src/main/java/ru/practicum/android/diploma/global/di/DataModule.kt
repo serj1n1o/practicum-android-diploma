@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.favorites.data.VacancyDbConvertor
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteRepository
 import ru.practicum.android.diploma.filter.data.CountryRepositoryImpl
 import ru.practicum.android.diploma.filter.data.FilterRepositoryImpl
-import ru.practicum.android.diploma.filter.data.mapper.FilterMapper
 import ru.practicum.android.diploma.filter.domain.api.CountryRepository
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.global.data.network.HhApi
@@ -21,6 +20,7 @@ import ru.practicum.android.diploma.global.data.network.dto.RetrofitNetworkClien
 import ru.practicum.android.diploma.global.db.AppDatabase
 import ru.practicum.android.diploma.global.util.HeaderInterceptor
 import ru.practicum.android.diploma.global.util.NetworkUtil
+import ru.practicum.android.diploma.search.data.mapper.FilterMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.data.repository.SearchRepositoryImpl
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
@@ -52,7 +52,13 @@ val dataModule = module {
     }
 
     factory<SearchRepository> {
-        SearchRepositoryImpl(networkClient = get(), vacancyMapper = get(), database = get(), vacancyDbConvertor = get())
+        SearchRepositoryImpl(
+            networkClient = get(),
+            vacancyMapper = get(),
+            filterMapper = get(),
+            database = get(),
+            vacancyDbConvertor = get()
+        )
     }
 
     factory {
