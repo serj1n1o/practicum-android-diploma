@@ -69,7 +69,9 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             findNavController().navigate(R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment)
         }
 
-        binding.btnArrowForwardIndustry.setOnClickListener {}
+        binding.btnArrowForwardIndustry.setOnClickListener {
+            findNavController().navigate(R.id.action_filterSettingsFragment_to_filterIndustryFragment)
+        }
 
         binding.checkOnlySalary.setOnClickListener {
             viewModel.setOnlyWithSalary(binding.checkOnlySalary.isChecked)

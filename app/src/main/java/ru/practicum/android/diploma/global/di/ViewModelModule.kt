@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.global.di
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.practicum.android.diploma.favorites.ui.viewmodel.FavoriteVacancyFragmentViewModel
+import ru.practicum.android.diploma.filter.ui.industry.FilterIndustryViewModel
 import ru.practicum.android.diploma.filter.ui.area.AreaSelectViewModel
 import ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsViewModel
 import ru.practicum.android.diploma.filter.ui.viewmodel.LocationViewModel
@@ -26,6 +27,10 @@ val viewModelModule = module {
 
     viewModel<FavoriteVacancyFragmentViewModel> {
         FavoriteVacancyFragmentViewModel(favoriteInteractor = get())
+    }
+
+    viewModel<FilterIndustryViewModel> {
+        FilterIndustryViewModel(get(), get())
     }
 
     viewModel<LocationViewModel> {
