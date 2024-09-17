@@ -52,6 +52,7 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
         }
         onVacancyClickDebounce = { industry ->
             selectIndustry = industry
+            hideKeyboard()
             binding.buttonApply.isVisible = true
         }
         binding.buttonApply.setOnClickListener {
