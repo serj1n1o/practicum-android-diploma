@@ -21,6 +21,7 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
             area = status.area,
             onlyWithSalary = status.onlyWithSalary
         )
+        filterInteractor.setFilterState(filterState)
         filterSettingsState.postValue(FilterState.Content(filterState))
     }
 
@@ -33,6 +34,7 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
             area = status.area,
             onlyWithSalary = onlySalary
         )
+        filterInteractor.setFilterState(filterState)
         filterSettingsState.postValue(FilterState.Content(filterState))
     }
 
@@ -45,6 +47,7 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
 
     fun getSettingsFilter() {
         val prefs = filterInteractor.loadFilterFromSharedPreferences()
+        filterInteractor.setFilterState(prefs)
         filterSettingsState.postValue(
             FilterState.Content(prefs)
         )

@@ -81,6 +81,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
         binding.btnApply.setOnClickListener {
             viewModel.saveSettingsFilter()
+            findNavController().popBackStack()
         }
 
         binding.btnReset.setOnClickListener {
