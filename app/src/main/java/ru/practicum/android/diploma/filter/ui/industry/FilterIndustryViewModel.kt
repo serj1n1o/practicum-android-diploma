@@ -29,7 +29,7 @@ class FilterIndustryViewModel(
     fun fillData() {
         renderState(ScreenState.Loading)
         viewModelScope.launch {
-            searchInteractor.getIndustries().collect{
+            searchInteractor.getIndustries().collect {
                 processResult(it)
             }
         }
@@ -39,7 +39,7 @@ class FilterIndustryViewModel(
         when (result) {
             is RequestResult.Success -> {
                 val preparedData = result.data!!
-                industries.addAll(preparedData.sortedBy { it.name})
+                industries.addAll(preparedData.sortedBy { it.name} )
                 renderState(ScreenState.Content(industries))
             }
             is RequestResult.Error -> {
@@ -64,7 +64,7 @@ class FilterIndustryViewModel(
 
     fun setIndustry(newIndustry: Industry?) {
         val tempFilter = filterInteractor.getFilterState()
-        with(tempFilter){
+        with(tempFilter) {
             val newFilterStatus = FilterStatus(
                 country = country,
                 area = area,
