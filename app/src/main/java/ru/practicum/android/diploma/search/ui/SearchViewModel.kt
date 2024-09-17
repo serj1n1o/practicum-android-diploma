@@ -48,7 +48,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
     }
 
     private fun getSearchQuery(input: String, page: Int): SearchQuery {
-        val isFilterNeed = prefs.isFilterActive && !prefs.isDefaultParams()
+        val isFilterNeed = !prefs.isDefaultParams()
         return SearchQuery(
             areaId = if (isFilterNeed) prefs.area?.id else null,
             industryId = if (isFilterNeed) prefs.industry?.id else null,
