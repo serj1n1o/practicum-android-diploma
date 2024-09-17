@@ -43,6 +43,11 @@
             app:nullable="false" />
     </fragment>
     <fragment
+        android:id="@+id/filterIndustryFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.industry.FilterIndustryFragment"
+        android:label="FilterIndustryFragment"
+        tools:layout="@layout/fragment_filter_industry"/>
+  <fragment
         android:id="@+id/choosingAPlaceOfWorkFragment"
         android:name="ru.practicum.android.diploma.filter.ui.ChoosingAPlaceOfWorkFragment"
         android:label="ChoosingAPlaceOfWorkFragment"
@@ -59,6 +64,9 @@
         <action
             android:id="@+id/action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment"
             app:destination="@id/choosingAPlaceOfWorkFragment" />
+        <action
+            android:id="@+id/action_filterSettingsFragment_to_filterIndustryFragment"
+            app:destination="@id/filterIndustryFragment" />
     </fragment>
 
 </navigation>

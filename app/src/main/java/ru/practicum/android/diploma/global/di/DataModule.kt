@@ -57,7 +57,13 @@ val dataModule = module {
     }
 
     factory<SearchRepository> {
-        SearchRepositoryImpl(networkClient = get(), vacancyMapper = get(), database = get(), vacancyDbConvertor = get())
+        SearchRepositoryImpl(
+            networkClient = get(),
+            vacancyMapper = get(),
+            filterMapper = get(),
+            database = get(),
+            vacancyDbConvertor = get()
+        )
     }
 
     factory {
