@@ -63,22 +63,25 @@ class AreaSelectFragment : CustomFragment<FragmentAreaSelectBinding>() {
             is AreaSelectState.Content -> {
                 setStateContent(state.locations)
             }
+
             is AreaSelectState.NotFound -> {
                 setStateNotFound()
             }
+
             is AreaSelectState.Error -> {
                 setStateError()
             }
+
             is AreaSelectState.Loading -> {
                 setStateLoading()
             }
         }
     }
 
-    private fun setStateContent(areasFromVM: MutableList<Location>) {
+    private fun setStateContent(areasFromVM: List<Location>) {
         locations.clear()
         locations.addAll(areasFromVM)
-
+        locations.sortBy { it.area.name }
         binding.areaList.isVisible = true
         binding.progressBar.isVisible = false
         binding.windowMessage.isVisible = false

@@ -6,8 +6,8 @@ import ru.practicum.android.diploma.favorites.ui.viewmodel.FavoriteVacancyFragme
 import ru.practicum.android.diploma.filter.ui.area.AreaSelectViewModel
 import ru.practicum.android.diploma.filter.ui.country.CountryViewModel
 import ru.practicum.android.diploma.filter.ui.industry.FilterIndustryViewModel
+import ru.practicum.android.diploma.filter.ui.location.LocationViewModel
 import ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsViewModel
-import ru.practicum.android.diploma.filter.ui.viewmodel.LocationViewModel
 import ru.practicum.android.diploma.search.ui.SearchViewModel
 import ru.practicum.android.diploma.vacancy.ui.viewmodel.DetailsVacancyViewModel
 
@@ -34,15 +34,15 @@ val viewModelModule = module {
     }
 
     viewModel<LocationViewModel> {
-        LocationViewModel()
+        LocationViewModel(filterInteractor = get())
     }
     viewModel<AreaSelectViewModel> {
-        AreaSelectViewModel(filterInteractor = get())
+        AreaSelectViewModel(filterInteractor = get(), searchInteractor = get())
     }
     viewModel<FilterSettingsViewModel> {
         FilterSettingsViewModel(get())
     }
     viewModel {
-        CountryViewModel(get())
+        CountryViewModel(searchInteractor = get(), filterInteractor = get())
     }
 }

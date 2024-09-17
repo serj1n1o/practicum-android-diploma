@@ -13,29 +13,37 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
     fun getFilterState(): LiveData<FilterState> = filterSettingsState
 
     fun setSalary(salary: Int?) {
-        var status = filterInteractor.getFilterState()
-        val filterState = FilterStatus(status.country, status.area, status.industry, salary, status.onlyWithSalary)
+        val status = filterInteractor.getFilterState()
+        val filterState = FilterStatus(
+            salary = salary,
+            industry = status.industry,
+            country = status.country,
+            area = status.area,
+            onlyWithSalary = status.onlyWithSalary
+        )
         filterSettingsState.postValue(FilterState.Content(filterState))
     }
 
-    fun setOnlyWithSalary(onlySalary: Boolean?) {
-        var status = filterInteractor.getFilterState()
-        val filterState = FilterStatus(status.country, status.area, status.industry, status.salary, onlySalary ?: false)
+    fun setOnlyWithSalary(onlySalary: Boolean) {
+        val status = filterInteractor.getFilterState()
+        val filterState = FilterStatus(
+            salary = status.salary,
+            industry = status.industry,
+            country = status.country,
+            area = status.area,
+            onlyWithSalary = onlySalary
+        )
         filterSettingsState.postValue(FilterState.Content(filterState))
     }
 
     fun getStateAreaAndIndustry() {
         val data = filterInteractor.getFilterState()
-        filterSettingsState.postValue(FilterState.Content(data))
-        /*
-        получаем тут страну город и отрасль, каждый может быть null
-        filterSettingsState.postValue(FilterState.Content(country = country, city = city, industry = industry))
-        вызываем каждый раз при возврате с экрана выбора места работы и выбора отрасли
-         */
+        if (!data.isDefaultParams()) {
+            filterSettingsState.postValue(FilterState.Content(data))
+        }
     }
 
     fun getSettingsFilter() {
-        // запрос сохраненных данных из sharedPreferences и устанвока в FilterState
         val prefs = filterInteractor.loadFilterFromSharedPreferences()
         filterSettingsState.postValue(
             FilterState.Content(prefs)
@@ -43,7 +51,6 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
     }
 
     fun saveSettingsFilter() {
-        // отправляем настройки в sharedPreferences
         filterInteractor.saveFilterToSharedPreferences(filterInteractor.getFilterState())
     }
 
@@ -51,5 +58,6 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
         filterSettingsState.postValue(
             FilterState.Empty
         )
+        filterInteractor.clearFilters()
     }
 }
