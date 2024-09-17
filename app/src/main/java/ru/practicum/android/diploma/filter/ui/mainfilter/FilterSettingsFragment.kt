@@ -28,13 +28,12 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // здесь будем запрашивать данные из sharedPreferences при новом открытии фрагмента
         viewModel.getSettingsFilter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // viewModel.getStateAreaAndIndustry()  затирает данные из SharedPreferences
+        viewModel.getStateAreaAndIndustry()
         viewModel.getFilterState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is FilterState.Content -> renderState(state)
@@ -57,7 +56,10 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
 
         binding.salaryEditText.doOnTextChanged { text, _, _, _ ->
-            salary = text.toString().toInt()
+            val salaryStr = text.toString()
+            if (salaryStr.isNotEmpty()) {
+                salary = salaryStr.toInt()
+            }
             val hasText = text?.isNotBlank() == true
             binding.salaryInputLayout.defaultHintTextColor = setColorState(hasText)
         }
@@ -91,6 +93,8 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             setTextPlaceWork(country = null, city = null)
             setTextIndustry(industry = null)
             salaryEditText.text = null
+            editTextPlaceWork.isActivated = false
+            editTextIndustry.isActivated = false
             checkOnlySalary.isChecked = false
             btnReset.isVisible = false
             btnApply.isVisible = false
@@ -99,7 +103,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
     private fun renderState(data: FilterState.Content) {
         with(binding) {
-            checkOnlySalary.isChecked = data.filterStatus.onlyWithSalary ?: false
+            checkOnlySalary.isChecked = data.filterStatus.onlyWithSalary
 
             data.filterStatus.salary?.let { salaryEditText.setText(it.toString()) }
 
@@ -122,8 +126,8 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 !city.isNullOrEmpty() -> city
                 else -> null
             }
-            editTextIndustry.setText(placeWorkText)
-            editTextIndustry.isActivated = true
+            editTextPlaceWork.setText(placeWorkText)
+            editTextPlaceWork.isActivated = true
         }
     }
 

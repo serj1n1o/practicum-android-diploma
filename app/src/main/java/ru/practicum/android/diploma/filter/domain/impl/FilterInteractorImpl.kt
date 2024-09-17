@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.filter.domain.impl
 import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.filter.domain.model.FilterStatus
+import ru.practicum.android.diploma.filter.domain.model.PlaceWork
 import ru.practicum.android.diploma.global.sharedpreferences.SharedPreferencesFilter
 
 class FilterInteractorImpl(
@@ -28,5 +29,13 @@ class FilterInteractorImpl(
 
     override fun loadFilterFromSharedPreferences(): FilterStatus {
         return sharedPreferencesFilter.getFilterState()
+    }
+
+    override fun setListPlaceWork(listPlaceWork: PlaceWork) {
+        repository.setListPlaceWork(listPlaceWork)
+    }
+
+    override fun getListPlaceWork(): PlaceWork {
+        return repository.getListPlaceWork()
     }
 }
