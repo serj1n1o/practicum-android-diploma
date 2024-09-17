@@ -25,6 +25,7 @@ import ru.practicum.android.diploma.global.sharedpreferences.SharedPreferencesFi
 import ru.practicum.android.diploma.global.sharedpreferences.SharedPreferencesFilterImpl.Companion.FILTER_STATE
 import ru.practicum.android.diploma.global.util.HeaderInterceptor
 import ru.practicum.android.diploma.global.util.NetworkUtil
+import ru.practicum.android.diploma.search.data.mapper.FilterMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.data.repository.SearchRepositoryImpl
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
@@ -61,6 +62,10 @@ val dataModule = module {
 
     factory {
         VacancyMapper()
+    }
+
+    factory {
+        FilterMapper()
     }
 
     single {
