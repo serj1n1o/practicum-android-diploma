@@ -7,4 +7,3 @@ interface ScreenState {
     data class Content(val industries: List<Industry>) : ScreenState
     data class Error(val errorCode: Int) : ScreenState
 }
-
