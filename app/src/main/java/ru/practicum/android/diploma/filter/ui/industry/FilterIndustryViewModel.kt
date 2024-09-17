@@ -62,8 +62,6 @@ class FilterIndustryViewModel(
         renderState(ScreenState.Content(filteredIndustries))
     }
 
-    fun setIndustry(industry: Industry?) {
-        filterInteractor.setIndustry(industry)
-    }
+    fun setIndustry(industry: Industry?) {}
 
 }
