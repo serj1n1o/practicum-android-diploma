@@ -111,6 +111,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingTop="@dimen/size_24dp"
+            android:paddingBottom="@dimen/size_80dp"
             android:clipToPadding="false"
             tools:listitem="@layout/vacancy_list_item" />
 
