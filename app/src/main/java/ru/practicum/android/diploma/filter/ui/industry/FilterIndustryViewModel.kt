@@ -63,7 +63,7 @@ class FilterIndustryViewModel(
     }
 
     fun setIndustry(industry: Industry?) {
-        filterInteractor.setIndustry(industry)
+        // to do
     }
 
 }

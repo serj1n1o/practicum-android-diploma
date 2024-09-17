@@ -63,15 +63,12 @@ class AreaSelectFragment : CustomFragment<FragmentAreaSelectBinding>() {
             is AreaSelectState.Content -> {
                 setStateContent(state.locations)
             }
-
             is AreaSelectState.NotFound -> {
                 setStateNotFound()
             }
-
             is AreaSelectState.Error -> {
                 setStateError()
             }
-
             is AreaSelectState.Loading -> {
                 setStateLoading()
             }
