@@ -116,16 +116,16 @@ class SearchRepositoryImpl(
         body["page"] = searchQuery.page.toString()
         body["per_page"] = searchQuery.perPage.toString()
         if (searchQuery.areaId != null) {
-            body["area"]
+            body["area"] = searchQuery.areaId
         }
         if (searchQuery.industryId != null) {
-            body["industry"]
+            body["industry"] = searchQuery.industryId
         }
         if (searchQuery.salary != null) {
-            body["salary"]
+            body["salary"] = searchQuery.salary.toString()
         }
         if (searchQuery.onlyWithSalary != null) {
-            body["only_with_salary"]
+            body["only_with_salary"] = "true"
         }
         return body
     }

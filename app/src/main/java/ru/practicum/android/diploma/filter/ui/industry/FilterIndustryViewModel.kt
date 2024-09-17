@@ -3,8 +3,12 @@ package ru.practicum.android.diploma.filter.ui.industry
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
+import ru.practicum.android.diploma.filter.domain.model.FilterStatus
 import ru.practicum.android.diploma.filter.domain.model.Industry
+import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 
 class FilterIndustryViewModel(
@@ -24,28 +28,24 @@ class FilterIndustryViewModel(
 
     fun fillData() {
         renderState(ScreenState.Loading)
-//        industriesList = searchInteractor.getIndustries() ...
-        industries.addAll(
-            mutableListOf(
-                Industry("01", "Директор"),
-                Industry("02", "Официант"),
-                Industry("03", "Повар"),
-                Industry("04", "Русский репер"),
-                Industry("05", "Блогер"),
-                Industry("06", "Дегустатор пива"),
-                Industry("07", "Создатель многострочных комментариев, в разветвленных пользовательских сетях"),
-                Industry("08", "Официант1 Официант1 Официант1 Официант1 Официант1 Официант1 Официант1 Официант1"),
-                Industry("09", "Официант2"),
-                Industry("10", "Официант3"),
-                Industry("11", "aaaa111"),
-                Industry("12", "aaaa222"),
-                Industry("13", "aaaa123"),
-                Industry("14", "bbbbbbbb"),
-                Industry("15", "Официант78"),
-                Industry("16", "йййййййй"),
-            )
-        )
-        renderState(ScreenState.Content(industries))
+        viewModelScope.launch {
+            searchInteractor.getIndustries().collect {
+                processResult(it)
+            }
+        }
+    }
+
+    private fun processResult(result: RequestResult<List<Industry>>) {
+        when (result) {
+            is RequestResult.Success -> {
+                val preparedData = result.data!!
+                industries.addAll(preparedData.sortedBy { it.name })
+                renderState(ScreenState.Content(industries))
+            }
+            is RequestResult.Error -> {
+                renderState(ScreenState.Error(result.error!!))
+            }
+        }
     }
 
     fun searchDebounce(changedText: String) {
@@ -62,8 +62,17 @@ class FilterIndustryViewModel(
         renderState(ScreenState.Content(filteredIndustries))
     }
 
-    fun setIndustry(industry: Industry?) {
-        // to do
+    fun setIndustry(newIndustry: Industry?) {
+        val tempFilter = filterInteractor.getFilterState()
+        with(tempFilter) {
+            val newFilterStatus = FilterStatus(
+                country = country,
+                area = area,
+                industry = newIndustry,
+                salary = salary,
+                onlyWithSalary = onlyWithSalary
+            )
+            filterInteractor.setFilterState(newFilterStatus)
+        }
     }
-
 }
