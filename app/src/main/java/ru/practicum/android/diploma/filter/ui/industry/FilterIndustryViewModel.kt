@@ -39,7 +39,7 @@ class FilterIndustryViewModel(
         when (result) {
             is RequestResult.Success -> {
                 val preparedData = result.data!!
-                industries.addAll(preparedData.sortedBy { it.name} )
+                industries.addAll(preparedData.sortedBy { it.name })
                 renderState(ScreenState.Content(industries))
             }
             is RequestResult.Error -> {
