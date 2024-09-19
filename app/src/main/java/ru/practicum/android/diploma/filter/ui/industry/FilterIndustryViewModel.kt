@@ -40,8 +40,13 @@ class FilterIndustryViewModel(
             is RequestResult.Success -> {
                 val preparedData = result.data!!
                 industries.addAll(preparedData.sortedBy { it.name })
-                renderState(ScreenState.Content(industries))
+                if (industries.size > 0) {
+                    renderState(ScreenState.Content(industries))
+                } else {
+                    renderState(ScreenState.Error(result.error!!))
+                }
             }
+
             is RequestResult.Error -> {
                 renderState(ScreenState.Error(result.error!!))
             }
@@ -59,7 +64,16 @@ class FilterIndustryViewModel(
         val filteredIndustries = industries.filter {
             it.name.lowercase().startsWith(input.lowercase())
         }
-        renderState(ScreenState.Content(filteredIndustries))
+        if (filteredIndustries.isNotEmpty()) {
+            renderState(ScreenState.Content(filteredIndustries))
+        } else {
+            renderState(ScreenState.NotFound)
+        }
+    }
+
+    fun getSelectedIndustry(): Industry? {
+        val tempFilter = filterInteractor.getFilterState()
+        return tempFilter.industry
     }
 
     fun setIndustry(newIndustry: Industry?) {

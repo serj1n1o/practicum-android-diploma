@@ -6,4 +6,5 @@ interface ScreenState {
     data object Loading : ScreenState
     data class Content(val industries: List<Industry>) : ScreenState
     data class Error(val errorCode: Int) : ScreenState
+    data object NotFound : ScreenState
 }

@@ -33,6 +33,10 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val industry = viewModel.getSelectedIndustry()
+        if (industry != null) {
+            adapter.setSelectedVacancyId(industry.id)
+        }
         binding.industryList.adapter = adapter
         binding.industryList.layoutManager = LinearLayoutManager(requireContext())
         binding.clearButton.setOnClickListener {
@@ -83,11 +87,17 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
             is ScreenState.Content -> {
                 showContent(state.industries)
             }
+
             is ScreenState.Loading -> {
                 binding.windowProgressBar.isVisible = true
             }
+
             is ScreenState.Error -> {
                 showErrorPlaceHolder(state.errorCode)
+            }
+
+            is ScreenState.NotFound -> {
+                setStateNotFound()
             }
         }
     }
@@ -102,13 +112,24 @@ class FilterIndustryFragment : CustomFragment<FragmentFilterIndustryBinding>() {
     private fun showErrorPlaceHolder(errorCode: Int) {
         when (errorCode) {
             ResponseCodes.CODE_BAD_REQUEST -> {
-                binding.imageMessage.setImageResource(R.drawable.image_error_server_cat)
-                binding.textMessage.text = getString(R.string.server_error)
+                binding.imageMessage.setImageResource(R.drawable.image_magic_carpet)
+                binding.textMessage.text = getString(R.string.failed_to_get_list)
             }
+
             ResponseCodes.CODE_NO_CONNECT -> {
                 binding.imageMessage.setImageResource(R.drawable.image_no_internet)
                 binding.textMessage.text = getString(R.string.no_internet)
             }
+        }
+        binding.errorPlaceholder.isVisible = true
+    }
+
+    private fun setStateNotFound() {
+        hideKeyboard()
+        with(binding) {
+            textMessage.setText(R.string.there_is_no_such_industry)
+            textMessage.isVisible = true
+            imageMessage.setImageResource(R.drawable.image_no_list_vacancy)
         }
         binding.errorPlaceholder.isVisible = true
     }
