@@ -66,7 +66,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edCountry"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_60dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:clickable="false"
             android:cursorVisible="false"
@@ -109,7 +109,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/boxRegion"
         android:layout_width="0dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         android:hint="@string/region"
         android:textColorHint="@color/text_hint_for_text_input_layout"
         app:boxStrokeWidth="0dp"
@@ -121,7 +121,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edRegion"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_60dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:clickable="false"
             android:cursorVisible="false"

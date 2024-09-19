@@ -43,8 +43,8 @@ class FilterRepositoryImpl(private val sharedPreferencesFilter: SharedPreference
     }
 
     override fun setListPlaceWork(listPlaceWork: PlaceWork) {
-        listPlaceWork.areas?.let { listLocation.addAll(it) }
-        listPlaceWork.countries?.let { listCountries.addAll(it) }
+        listPlaceWork.areas?.let { listLocation.addAll(it) } ?: listLocation.clear()
+        listPlaceWork.countries?.let { listCountries.addAll(it) } ?: listCountries.clear()
     }
 
     override fun getListPlaceWork(): PlaceWork {
