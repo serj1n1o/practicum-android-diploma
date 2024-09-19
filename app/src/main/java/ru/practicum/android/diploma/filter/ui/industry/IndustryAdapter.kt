@@ -13,10 +13,12 @@ open class IndustryAdapter(
 ) : RecyclerView.Adapter<IndustryAdapter.RadioViewHolder>() {
 
     private var selectedPosition = -1
+    private var selectedId = "-1"
 
     inner class RadioViewHolder(val binding: IndustryItemBinding) : RecyclerView.ViewHolder(binding.root) {
         private val clickHandler: (View) -> Unit = {
             selectedPosition = adapterPosition
+            selectedId = items[selectedPosition].id
             itemClickListener.onClick(items[selectedPosition])
             notifyDataSetChanged()
         }
@@ -29,6 +31,10 @@ open class IndustryAdapter(
         }
     }
 
+    fun setSelectedVacancyId(id: String) {
+        selectedId = id
+    }
+
     override fun getItemCount() = items.size
 
     operator fun get(position: Int): Industry = items[position]
@@ -39,7 +45,7 @@ open class IndustryAdapter(
     }
 
     override fun onBindViewHolder(holder: RadioViewHolder, position: Int) {
-        holder.binding.industryButton.isChecked = position == selectedPosition
+        holder.binding.industryButton.isChecked = items[position].id == selectedId
         holder.binding.nameIndustry.text = items[position].name
     }
 
