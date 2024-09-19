@@ -116,11 +116,23 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/salaryEditText"
             style="@style/inputEditText"
+            android:maxLength="9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/enter_the_amount"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/btnResetSalary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:src="@drawable/ic_close_24px"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        app:layout_constraintEnd_toEndOf="@id/salaryInputLayout"
+        app:layout_constraintTop_toTopOf="@id/salaryInputLayout"
+        app:layout_constraintBottom_toBottomOf="@id/salaryInputLayout" />
 
     <TextView
         android:id="@+id/txtOnlySalary"

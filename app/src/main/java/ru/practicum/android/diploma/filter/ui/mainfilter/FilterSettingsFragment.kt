@@ -10,16 +10,17 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterSettingsBinding
 import ru.practicum.android.diploma.global.util.CustomFragment
+import ru.practicum.android.diploma.global.util.debounce
 
 class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
     private val viewModel by viewModel<FilterSettingsViewModel>()
-
     private var salary: Int? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterSettingsBinding {
@@ -40,30 +41,44 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 is FilterState.Empty -> renderStateReset()
             }
         }
+
         initBinding()
+        initSalaryEditText()
     }
 
-    private fun initBinding() {
+    private fun initSalaryEditText() {
+        binding.salaryEditText.doOnTextChanged { text, _, _, _ ->
+            val salaryStr = text.toString()
+            if (salaryStr.isNotEmpty()) {
+                salary = salaryStr.toInt()
+                setSalaryDebounce(salary!!)
+            } else {
+                setSalaryDebounce(null)
+            }
+
+            val hasText = text?.isNotBlank() == true
+            binding.btnResetSalary.isVisible = hasText
+            binding.salaryInputLayout.defaultHintTextColor = setColorState(hasText)
+        }
+
         binding.salaryEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 hideKeyboard()
                 binding.salaryInputLayout.clearFocus()
-                viewModel.setSalary(salary)
                 true
             } else {
                 false
             }
         }
 
-        binding.salaryEditText.doOnTextChanged { text, _, _, _ ->
-            val salaryStr = text.toString()
-            if (salaryStr.isNotEmpty()) {
-                salary = salaryStr.toInt()
-            }
-            val hasText = text?.isNotBlank() == true
-            binding.salaryInputLayout.defaultHintTextColor = setColorState(hasText)
+        binding.btnResetSalary.setOnClickListener {
+            viewModel.setSalary(null)
+            binding.salaryEditText.clearFocus()
+            hideKeyboard()
         }
+    }
 
+    private fun initBinding() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -89,6 +104,10 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
     }
 
+    private val setSalaryDebounce = debounce<Int?>(DELAY_SET, lifecycleScope, true) { salary ->
+        viewModel.setSalary(salary)
+    }
+
     private fun renderStateReset() {
         with(binding) {
             setTextPlaceWork(country = null, city = null)
@@ -106,7 +125,9 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         with(binding) {
             checkOnlySalary.isChecked = data.filterStatus.onlyWithSalary
 
-            data.filterStatus.salary?.let { salaryEditText.setText(it.toString()) }
+            if (data.filterStatus.salary != salary) {
+                salaryEditText.setText(data.filterStatus.salary?.toString())
+            }
 
             data.filterStatus.industry?.name?.let { setTextIndustry(it) }
 
@@ -170,6 +191,10 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 )
             }
         }
+    }
+
+    companion object {
+        private const val DELAY_SET = 500L
     }
 
 }
