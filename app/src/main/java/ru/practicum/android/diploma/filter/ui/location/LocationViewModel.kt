@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
 import ru.practicum.android.diploma.filter.domain.model.Area
 import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.FilterStatus
+import ru.practicum.android.diploma.filter.domain.model.PlaceWork
 import ru.practicum.android.diploma.global.util.Mapper
 
 class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewModel() {
@@ -23,12 +24,8 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
     fun getCountryAndRegion() {
         val country = filterInteractor.getFilterState().country
         val area = filterInteractor.getFilterState().area
-        if (country != null) {
-            _selectedCountry.postValue(country)
-        }
-        if (area != null) {
-            _selectedRegion.postValue(area)
-        }
+        _selectedCountry.postValue(country)
+        _selectedRegion.postValue(area)
     }
 
     private fun getFilterState() {
@@ -38,11 +35,17 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
     }
 
     fun resetCountry() {
-        _selectedCountry.postValue(null)
+        _selectedCountry.value = null
+        _selectedRegion.value = null
+        filterInteractor.setListPlaceWork(PlaceWork(countries = null, areas = null))
+        setPlaceWork()
     }
 
     fun resetRegion() {
-        _selectedRegion.postValue(null)
+        _selectedRegion.value = null
+        setPlaceWork()
+        val countries = filterInteractor.getListPlaceWork().countries
+        filterInteractor.setListPlaceWork(PlaceWork(countries = countries, areas = null))
     }
 
     fun setPlaceWork() {
@@ -50,8 +53,8 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
         val newFilterStatus = FilterStatus(
             salary = filterStatus.salary,
             industry = filterStatus.industry,
-            country = selectedCountry.value,
-            area = selectedRegion.value,
+            country = _selectedCountry.value,
+            area = _selectedRegion.value,
             onlyWithSalary = filterStatus.onlyWithSalary
         )
         filterInteractor.setFilterState(
