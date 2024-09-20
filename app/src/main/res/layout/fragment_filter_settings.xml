@@ -29,7 +29,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         android:hint="@string/place_of_work"
         android:textColorHint="@color/text_hint_for_text_input_layout"
         app:boxStrokeWidth="0dp"

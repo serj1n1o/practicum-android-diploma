@@ -86,7 +86,7 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
 
     private fun updateRegionInputUi(region: String?) {
         isRegionInputFilled = !region.isNullOrEmpty()
-        binding.edRegion.isActivated = isCountryInputFilled
+        binding.edRegion.isActivated = isRegionInputFilled
         binding.arrowForwardRegion.visibility = if (isRegionInputFilled) View.GONE else View.VISIBLE
         binding.crossRegion.visibility = if (isRegionInputFilled) View.VISIBLE else View.GONE
         updateChooseBtnVisibility()

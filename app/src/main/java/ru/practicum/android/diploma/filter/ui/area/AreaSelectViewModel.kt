@@ -68,7 +68,12 @@ class AreaSelectViewModel(
         when {
             listLocation.isEmpty() -> renderState(AreaSelectState.NotFound)
             else -> {
-                locations = listLocation.toMutableList()
+                val countryId = filterInteractor.getFilterState().country?.id
+                locations = if (countryId != null) {
+                    Mapper.getAreasByCountry(listLocation, countryId).toMutableList()
+                } else {
+                    listLocation.toMutableList()
+                }
                 renderState(AreaSelectState.Content(locations))
             }
         }
