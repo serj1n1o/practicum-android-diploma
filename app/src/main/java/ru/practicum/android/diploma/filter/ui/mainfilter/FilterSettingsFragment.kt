@@ -22,6 +22,9 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
     private val viewModel by viewModel<FilterSettingsViewModel>()
     private var salary: Int? = null
+    private var filterHasPlacework: Boolean = false
+    private var filterHasIndustry: Boolean = false
+    private var filterIsChanged: Boolean = false
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterSettingsBinding {
         return FragmentFilterSettingsBinding.inflate(inflater, container, false)
@@ -83,11 +86,27 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             findNavController().popBackStack()
         }
         binding.btnArrowForwardPlace.setOnClickListener {
-            findNavController().navigate(R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment)
+            if (!filterHasPlacework) {
+                findNavController().navigate(
+                    R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment
+                )
+            } else {
+                filterIsChanged = true
+                viewModel.resetPlaceWorkFilter()
+                renderStateResetPlacework()
+            }
         }
 
         binding.btnArrowForwardIndustry.setOnClickListener {
-            findNavController().navigate(R.id.action_filterSettingsFragment_to_filterIndustryFragment)
+            if (!filterHasIndustry) {
+                findNavController().navigate(
+                    R.id.action_filterSettingsFragment_to_filterIndustryFragment
+                )
+            } else {
+                filterIsChanged = true
+                viewModel.resetIndustryFilter()
+                renderStateResetIndustry()
+            }
         }
 
         binding.checkOnlySalary.setOnClickListener {
@@ -100,6 +119,10 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
 
         binding.btnReset.setOnClickListener {
+            filterHasPlacework = false
+            filterHasIndustry = false
+            binding.btnArrowForwardIndustry.setImageResource(R.drawable.ic_arrow_forward_24px)
+            binding.btnArrowForwardPlace.setImageResource(R.drawable.ic_arrow_forward_24px)
             viewModel.resetSettings()
         }
     }
@@ -121,6 +144,24 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
     }
 
+    private fun renderStateResetPlacework() {
+        with(binding) {
+            setTextPlaceWork(country = null, city = null)
+            filterHasPlacework = false
+            editTextPlaceWork.isActivated = false
+            btnArrowForwardPlace.setImageResource(R.drawable.ic_arrow_forward_24px)
+        }
+    }
+
+    private fun renderStateResetIndustry() {
+        with(binding) {
+            setTextIndustry(industry = null)
+            filterHasIndustry = false
+            editTextIndustry.isActivated = false
+            btnArrowForwardIndustry.setImageResource(R.drawable.ic_arrow_forward_24px)
+        }
+    }
+
     private fun renderState(data: FilterState.Content) {
         with(binding) {
             checkOnlySalary.isChecked = data.filterStatus.onlyWithSalary
@@ -129,14 +170,20 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 salaryEditText.setText(data.filterStatus.salary?.toString())
             }
 
-            data.filterStatus.industry?.name?.let { setTextIndustry(it) }
+            data.filterStatus.industry?.name?.let {
+                filterHasIndustry = true
+                btnArrowForwardIndustry.setImageResource(R.drawable.ic_close_24px)
+                setTextIndustry(it)
+            }
 
             if (data.filterStatus.area != null || data.filterStatus.country != null) {
+                filterHasPlacework = true
+                btnArrowForwardPlace.setImageResource(R.drawable.ic_close_24px)
                 setTextPlaceWork(data.filterStatus.country?.name, data.filterStatus.area?.name)
             }
 
-            btnReset.isVisible = !data.filterStatus.isDefaultParams()
-            btnApply.isVisible = !data.filterStatus.isDefaultParams()
+            btnReset.isVisible = !data.filterStatus.isDefaultParams() || filterIsChanged
+            btnApply.isVisible = !data.filterStatus.isDefaultParams() || filterIsChanged
         }
     }
 
@@ -161,8 +208,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
     }
 
     private fun hideKeyboard() {
-        val inputManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(binding.salaryInputLayout.windowToken, 0)
     }
 
@@ -177,17 +223,27 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                         intArrayOf(-android.R.attr.state_focused),
                         intArrayOf(android.R.attr.state_focused)
                     ),
-                    intArrayOf(colorBlack, colorBlue)
+                    intArrayOf(
+                        colorBlack,
+                        colorBlue
+                    )
                 )
             }
 
             false -> {
                 return ColorStateList(
                     arrayOf(
-                        intArrayOf(-android.R.attr.state_focused),
-                        intArrayOf(android.R.attr.state_focused)
+                        intArrayOf(
+                            -android.R.attr.state_focused
+                        ),
+                        intArrayOf(
+                            android.R.attr.state_focused
+                        )
                     ),
-                    intArrayOf(defColor, colorBlue)
+                    intArrayOf(
+                        defColor,
+                        colorBlue
+                    )
                 )
             }
         }

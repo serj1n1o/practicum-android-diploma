@@ -12,9 +12,7 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.favorites.data.FavoriteRepositoryImpl
 import ru.practicum.android.diploma.favorites.data.VacancyDbConvertor
 import ru.practicum.android.diploma.favorites.domain.api.FavoriteRepository
-import ru.practicum.android.diploma.filter.data.CountryRepositoryImpl
 import ru.practicum.android.diploma.filter.data.FilterRepositoryImpl
-import ru.practicum.android.diploma.filter.domain.api.CountryRepository
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.global.data.network.HhApi
 import ru.practicum.android.diploma.global.data.network.NetworkClient
@@ -92,9 +90,6 @@ val dataModule = module {
 
     single<FilterRepository> {
         FilterRepositoryImpl(get())
-    }
-    single<CountryRepository> {
-        CountryRepositoryImpl(get())
     }
 
     single {
