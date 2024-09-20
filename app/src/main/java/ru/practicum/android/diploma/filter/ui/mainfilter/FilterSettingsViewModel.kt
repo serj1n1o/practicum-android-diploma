@@ -64,4 +64,30 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
         filterInteractor.clearFilters()
         filterInteractor.saveFilterToSharedPreferences(filterInteractor.getFilterState())
     }
+
+    fun resetPlaceWorkFilter() {
+        val status = filterInteractor.getFilterState()
+        val filterState = FilterStatus(
+            salary = status.salary,
+            industry = status.industry,
+            country = null,
+            area = null,
+            onlyWithSalary = status.onlyWithSalary
+        )
+        filterInteractor.setFilterState(filterState)
+        filterSettingsState.postValue(FilterState.Content(filterState))
+    }
+
+    fun resetIndustryFilter() {
+        val status = filterInteractor.getFilterState()
+        val filterState = FilterStatus(
+            salary = status.salary,
+            industry = null,
+            country = status.country,
+            area = status.area,
+            onlyWithSalary = status.onlyWithSalary
+        )
+        filterInteractor.setFilterState(filterState)
+        filterSettingsState.postValue(FilterState.Content(filterState))
+    }
 }

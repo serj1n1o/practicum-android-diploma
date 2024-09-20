@@ -28,8 +28,9 @@
         app:layout_constraintTop_toTopOf="@id/btnBack" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/PlaceWorkLayout"
         android:layout_width="0dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         android:hint="@string/place_of_work"
         android:textColorHint="@color/text_hint_for_text_input_layout"
         app:boxStrokeWidth="0dp"
@@ -97,7 +98,7 @@
         android:paddingStart="@dimen/size_24dp"
         android:src="@drawable/ic_arrow_forward_24px"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnArrowForwardPlace"
+        app:layout_constraintTop_toBottomOf="@id/PlaceWorkLayout"
         app:tint="@color/background_reverse" />
 
     <com.google.android.material.textfield.TextInputLayout
