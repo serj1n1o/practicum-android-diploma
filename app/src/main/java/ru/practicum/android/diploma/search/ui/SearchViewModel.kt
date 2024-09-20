@@ -60,6 +60,20 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
         )
     }
 
+    fun updateSearchResult() {
+        if (!lastSearchText.isNullOrEmpty()) {
+            pages = 0
+            currentPage = -1
+            vacanciesFound = 0
+            vacanciesList.clear()
+            search(lastSearchText.toString(), 0)
+        }
+    }
+
+    fun getFilterStatus(): Boolean {
+        return !prefs.isDefaultParams()
+    }
+
     fun search(input: String, page: Int) {
         if (!input.isNullOrEmpty()) {
             if (page == 0) {

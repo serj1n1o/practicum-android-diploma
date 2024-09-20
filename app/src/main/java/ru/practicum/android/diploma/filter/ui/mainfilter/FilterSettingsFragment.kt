@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.filter.ui.mainfilter
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +44,14 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             }
         }
 
-        initBinding()
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        bindingArrowForwardPlace()
+        bindingArrowForwardIndustry()
+        bindingCheckOnlySalary()
+        bindingApply()
+        bindingReset()
         initSalaryEditText()
     }
 
@@ -61,7 +67,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
             val hasText = text?.isNotBlank() == true
             binding.btnResetSalary.isVisible = hasText
-            binding.salaryInputLayout.defaultHintTextColor = setColorState(hasText)
+            binding.salaryInputLayout.defaultHintTextColor = ColorState.getColorState(requireContext(), hasText)
         }
 
         binding.salaryEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -81,10 +87,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
     }
 
-    private fun initBinding() {
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+    private fun bindingArrowForwardPlace() {
         binding.btnArrowForwardPlace.setOnClickListener {
             if (!filterHasPlacework) {
                 findNavController().navigate(
@@ -96,7 +99,9 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 renderStateResetPlacework()
             }
         }
+    }
 
+    private fun bindingArrowForwardIndustry() {
         binding.btnArrowForwardIndustry.setOnClickListener {
             if (!filterHasIndustry) {
                 findNavController().navigate(
@@ -108,22 +113,28 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 renderStateResetIndustry()
             }
         }
+    }
 
-        binding.checkOnlySalary.setOnClickListener {
-            viewModel.setOnlyWithSalary(binding.checkOnlySalary.isChecked)
-        }
-
-        binding.btnApply.setOnClickListener {
-            viewModel.saveSettingsFilter()
-            findNavController().popBackStack()
-        }
-
+    private fun bindingReset() {
         binding.btnReset.setOnClickListener {
             filterHasPlacework = false
             filterHasIndustry = false
             binding.btnArrowForwardIndustry.setImageResource(R.drawable.ic_arrow_forward_24px)
             binding.btnArrowForwardPlace.setImageResource(R.drawable.ic_arrow_forward_24px)
             viewModel.resetSettings()
+        }
+    }
+
+    private fun bindingApply() {
+        binding.btnApply.setOnClickListener {
+            viewModel.saveSettingsFilter()
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun bindingCheckOnlySalary() {
+        binding.checkOnlySalary.setOnClickListener {
+            viewModel.setOnlyWithSalary(binding.checkOnlySalary.isChecked)
         }
     }
 
@@ -212,45 +223,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         inputManager.hideSoftInputFromWindow(binding.salaryInputLayout.windowToken, 0)
     }
 
-    private fun setColorState(hasText: Boolean): ColorStateList {
-        val colorBlue = requireContext().getColor(R.color.blue)
-        val defColor = requireContext().getColor(R.color.editText_text_hint)
-        val colorBlack = requireContext().getColor(R.color.black)
-        when (hasText) {
-            true -> {
-                return ColorStateList(
-                    arrayOf(
-                        intArrayOf(-android.R.attr.state_focused),
-                        intArrayOf(android.R.attr.state_focused)
-                    ),
-                    intArrayOf(
-                        colorBlack,
-                        colorBlue
-                    )
-                )
-            }
-
-            false -> {
-                return ColorStateList(
-                    arrayOf(
-                        intArrayOf(
-                            -android.R.attr.state_focused
-                        ),
-                        intArrayOf(
-                            android.R.attr.state_focused
-                        )
-                    ),
-                    intArrayOf(
-                        defColor,
-                        colorBlue
-                    )
-                )
-            }
-        }
-    }
-
     companion object {
         private const val DELAY_SET = 500L
     }
-
 }
