@@ -90,8 +90,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 findNavController().navigate(
                     R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment
                 )
-            }
-            else {
+            } else {
                 filterIsChanged = true
                 viewModel.resetPlaceWorkFilter()
                 renderStateResetPlacework()
@@ -103,8 +102,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 findNavController().navigate(
                     R.id.action_filterSettingsFragment_to_filterIndustryFragment
                 )
-            }
-            else {
+            } else {
                 filterIsChanged = true
                 viewModel.resetIndustryFilter()
                 renderStateResetIndustry()
@@ -224,15 +222,28 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                     arrayOf(
                         intArrayOf(-android.R.attr.state_focused),
                         intArrayOf(android.R.attr.state_focused)
-                    ), intArrayOf(colorBlack, colorBlue)
+                    ),
+                    intArrayOf(
+                        colorBlack,
+                        colorBlue
+                    )
                 )
             }
 
             false -> {
                 return ColorStateList(
                     arrayOf(
-                        intArrayOf(-android.R.attr.state_focused), intArrayOf(android.R.attr.state_focused)
-                    ), intArrayOf(defColor, colorBlue)
+                        intArrayOf(
+                            -android.R.attr.state_focused
+                        ),
+                        intArrayOf(
+                            android.R.attr.state_focused
+                        )
+                    ),
+                    intArrayOf(
+                        defColor,
+                        colorBlue
+                    )
                 )
             }
         }
