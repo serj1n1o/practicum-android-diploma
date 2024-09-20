@@ -86,7 +86,11 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             findNavController().popBackStack()
         }
         binding.btnArrowForwardPlace.setOnClickListener {
-            if (!filterHasPlacework) findNavController().navigate(R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment)
+            if (!filterHasPlacework) {
+                findNavController().navigate(
+                    R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment
+                )
+            }
             else {
                 filterIsChanged = true
                 viewModel.resetPlaceWorkFilter()
@@ -95,7 +99,11 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
 
         binding.btnArrowForwardIndustry.setOnClickListener {
-            if (!filterHasIndustry) findNavController().navigate(R.id.action_filterSettingsFragment_to_filterIndustryFragment)
+            if (!filterHasIndustry) {
+                findNavController().navigate(
+                    R.id.action_filterSettingsFragment_to_filterIndustryFragment
+                )
+            }
             else {
                 filterIsChanged = true
                 viewModel.resetIndustryFilter()
@@ -214,7 +222,8 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             true -> {
                 return ColorStateList(
                     arrayOf(
-                        intArrayOf(-android.R.attr.state_focused), intArrayOf(android.R.attr.state_focused)
+                        intArrayOf(-android.R.attr.state_focused),
+                        intArrayOf(android.R.attr.state_focused)
                     ), intArrayOf(colorBlack, colorBlue)
                 )
             }
