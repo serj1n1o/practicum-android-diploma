@@ -37,11 +37,11 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
             search(changedText, currentPage)
         }
 
-    fun resetLastSearchText(){
+    fun resetLastSearchText() {
         pages = 0
         currentPage = -1
         vacanciesFound = 0
-        lastSearchText=null
+        lastSearchText = null
         vacanciesList.clear()
     }
 
@@ -71,14 +71,14 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
 
     fun updateSearchResult() {
         if (!lastSearchText.isNullOrEmpty()) {
-            if(!prefs.equals(lastPrefs)){
-            pages = 0
-            currentPage = -1
-            vacanciesFound = 0
-            vacanciesList.clear()
-            search(lastSearchText.toString(), 0)
-                }
-        }else{
+            if (!prefs.equals(lastPrefs)) {
+                pages = 0
+                currentPage = -1
+                vacanciesFound = 0
+                vacanciesList.clear()
+                search(lastSearchText.toString(), 0)
+            }
+        } else {
             resetLastSearchText()
             renderState(SearchState.EmptyEditText)
         }
@@ -93,7 +93,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
             if (page == -1) {
                 renderState(SearchState.Loading)
             }
-            lastPrefs=prefs
+            lastPrefs = prefs
             viewModelScope.launch {
                 searchInteractor.getVacancies(
                     getSearchQuery(input, page)
