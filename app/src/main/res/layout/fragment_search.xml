@@ -98,7 +98,7 @@
         android:id="@+id/vacancyListLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        tools:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacancyList"
@@ -149,5 +149,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:indeterminateTint="@color/blue"
-        android:visibility="visible" />
+        tools:visibility="visible" />
 </LinearLayout>

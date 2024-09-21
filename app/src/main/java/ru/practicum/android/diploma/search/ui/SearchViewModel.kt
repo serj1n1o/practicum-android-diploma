@@ -138,7 +138,6 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
     }
 
     fun getSettingsFilter() {
-        // запрос сохраненных данных из sharedPreferences и устанвока в FilterState
         prefs = filterInteractor.loadFilterFromSharedPreferences()
     }
 
