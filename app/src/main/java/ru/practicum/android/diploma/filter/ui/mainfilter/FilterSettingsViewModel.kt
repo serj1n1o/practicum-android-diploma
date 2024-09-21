@@ -8,9 +8,39 @@ import ru.practicum.android.diploma.filter.domain.model.FilterStatus
 
 class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : ViewModel() {
 
-    private val filterSettingsState = MutableLiveData<FilterState>() // для примера сделал filter state
-
+    private val filterSettingsState = MutableLiveData<FilterState>()
     fun getFilterState(): LiveData<FilterState> = filterSettingsState
+
+    private val checkChangedState = MutableLiveData<Boolean>()
+    fun getCheckChangedState(): LiveData<Boolean> = checkChangedState
+
+    private var state: FilterStatus? = null
+    private var newState: FilterStatus? = null
+
+    fun setNewState(changedState: FilterState) {
+        newState = when (changedState) {
+            is FilterState.Content -> changedState.filterStatus
+            FilterState.Empty -> FilterStatus(
+                country = null,
+                area = null,
+                industry = null,
+                salary = null,
+                onlyWithSalary = false
+            )
+        }
+        checkChangedState.value = state != newState
+    }
+
+    private fun resetChangState() {
+        checkChangedState.value = false
+        state = FilterStatus(
+            country = null,
+            area = null,
+            industry = null,
+            salary = null,
+            onlyWithSalary = false
+        )
+    }
 
     fun setSalary(salary: Int?) {
         val status = filterInteractor.getFilterState()
@@ -51,6 +81,7 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
         filterSettingsState.postValue(
             FilterState.Content(prefs)
         )
+        state = prefs
     }
 
     fun saveSettingsFilter() {
@@ -61,6 +92,7 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
         filterSettingsState.postValue(
             FilterState.Empty
         )
+        resetChangState()
         filterInteractor.clearFilters()
         filterInteractor.saveFilterToSharedPreferences(filterInteractor.getFilterState())
     }

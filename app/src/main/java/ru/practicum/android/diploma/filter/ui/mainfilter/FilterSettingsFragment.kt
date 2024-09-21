@@ -1,12 +1,10 @@
 package ru.practicum.android.diploma.filter.ui.mainfilter
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterSettingsBinding
 import ru.practicum.android.diploma.global.util.CustomFragment
+import ru.practicum.android.diploma.global.util.HideKeyboardUtil
 import ru.practicum.android.diploma.global.util.debounce
 
 class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
@@ -23,7 +22,6 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
     private var salary: Int? = null
     private var filterHasPlacework: Boolean = false
     private var filterHasIndustry: Boolean = false
-    private var filterIsChanged: Boolean = false
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterSettingsBinding {
         return FragmentFilterSettingsBinding.inflate(inflater, container, false)
@@ -37,11 +35,17 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getStateAreaAndIndustry()
+
         viewModel.getFilterState().observe(viewLifecycleOwner) { state ->
+            viewModel.setNewState(state)
             when (state) {
                 is FilterState.Content -> renderState(state)
                 is FilterState.Empty -> renderStateReset()
             }
+        }
+
+        viewModel.getCheckChangedState().observe(viewLifecycleOwner) { changed ->
+            binding.btnApply.isVisible = changed
         }
 
         binding.btnBack.setOnClickListener {
@@ -72,7 +76,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
         binding.salaryEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideKeyboard()
+                HideKeyboardUtil.hideKeyboard(requireView())
                 binding.salaryInputLayout.clearFocus()
                 true
             } else {
@@ -83,7 +87,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         binding.btnResetSalary.setOnClickListener {
             viewModel.setSalary(null)
             binding.salaryEditText.clearFocus()
-            hideKeyboard()
+            HideKeyboardUtil.hideKeyboard(requireView())
         }
     }
 
@@ -94,7 +98,6 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                     R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment
                 )
             } else {
-                filterIsChanged = true
                 viewModel.resetPlaceWorkFilter()
                 renderStateResetPlacework()
             }
@@ -108,7 +111,6 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                     R.id.action_filterSettingsFragment_to_filterIndustryFragment
                 )
             } else {
-                filterIsChanged = true
                 viewModel.resetIndustryFilter()
                 renderStateResetIndustry()
             }
@@ -150,8 +152,6 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             editTextPlaceWork.isActivated = false
             editTextIndustry.isActivated = false
             checkOnlySalary.isChecked = false
-            btnReset.isVisible = false
-            btnApply.isVisible = false
         }
     }
 
@@ -193,8 +193,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 setTextPlaceWork(data.filterStatus.country?.name, data.filterStatus.area?.name)
             }
 
-            btnReset.isVisible = !data.filterStatus.isDefaultParams() || filterIsChanged
-            btnApply.isVisible = !data.filterStatus.isDefaultParams() || filterIsChanged
+            btnReset.isVisible = !data.filterStatus.isDefaultParams()
         }
     }
 
@@ -216,11 +215,6 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             editTextIndustry.setText(industry)
             editTextIndustry.isActivated = true
         }
-    }
-
-    private fun hideKeyboard() {
-        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(binding.salaryInputLayout.windowToken, 0)
     }
 
     companion object {
