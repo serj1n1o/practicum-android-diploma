@@ -40,7 +40,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         viewModel.getSettingsFilter()
         binding.vacancyList.adapter = adapter
         binding.vacancyList.setHasFixedSize(false)
-
+        viewModel.updateSearchResult()
         bindingEditTextFocusChange()
 
         bindingClearButton()
@@ -108,6 +108,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.clearButton.windowToken, 0)
             binding.editText.clearFocus()
+            viewModel.resetLastSearchText()
             render(SearchState.EmptyEditText)
         }
     }
