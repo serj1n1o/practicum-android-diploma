@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -39,23 +40,15 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         viewModel.getSettingsFilter()
         binding.vacancyList.adapter = adapter
         binding.vacancyList.setHasFixedSize(false)
-        binding.editText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && binding.editText.text.isNullOrEmpty()) {
-                render(SearchState.EmptyEditTextInFocus)
-            }
-        }
-        binding.clearButton.setOnClickListener {
-            binding.editText.setText("")
-            val inputMethodManager =
-                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(binding.clearButton.windowToken, 0)
-            binding.editText.clearFocus()
-            render(SearchState.EmptyEditText)
-        }
-        binding.editText.doOnTextChanged { text, start, before, count ->
-            renderEditTextIconsVisibility(text)
-            viewModel.searchDebounce(text.toString())
-        }
+        viewModel.updateSearchResult()
+        bindingEditTextFocusChange()
+
+        bindingClearButton()
+
+        bindingEditText()
+
+        bindingVacancyList()
+
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
@@ -65,6 +58,35 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 findNavController().navigate(direction)
             }
         }
+
+        binding.filter.setOnClickListener {
+            findNavController().navigate(R.id.action_searchFragment_to_filterSettingsFragment)
+        }
+
+        viewModel.updateSearchResult()
+        if (viewModel.getFilterStatus()) {
+            view.findViewById<ImageView>(R.id.filter).setImageResource(R.drawable.ic_filter_on__24px)
+        } else {
+            view.findViewById<ImageView>(R.id.filter).setImageResource(R.drawable.ic_filter_off__24px)
+        }
+    }
+
+    private fun bindingEditTextFocusChange() {
+        binding.editText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && binding.editText.text.isNullOrEmpty()) {
+                render(SearchState.EmptyEditTextInFocus)
+            }
+        }
+    }
+
+    private fun bindingEditText() {
+        binding.editText.doOnTextChanged { text, start, before, count ->
+            renderEditTextIconsVisibility(text)
+            viewModel.searchDebounce(text.toString())
+        }
+    }
+
+    private fun bindingVacancyList() {
         binding.vacancyList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -77,9 +99,17 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
                 }
             }
         })
+    }
 
-        binding.filter.setOnClickListener {
-            findNavController().navigate(R.id.action_searchFragment_to_filterSettingsFragment)
+    private fun bindingClearButton() {
+        binding.clearButton.setOnClickListener {
+            binding.editText.setText("")
+            val inputMethodManager =
+                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(binding.clearButton.windowToken, 0)
+            binding.editText.clearFocus()
+            viewModel.resetLastSearchText()
+            render(SearchState.EmptyEditText)
         }
     }
 
@@ -128,7 +158,7 @@ class SearchFragment : CustomFragment<FragmentSearchBinding>() {
         )
         binding.countVacancies.isVisible = true
         adapter.vacancyList = vacancies
-        if (vacanciesFromVM.page > 0 && countBeforeAdd < vacanciesFromVM.items.size) {
+        if (vacanciesFromVM.page > 0) {
             adapter.notifyItemRangeInserted(countBeforeAdd, vacanciesFromVM.items.size - countBeforeAdd)
         } else {
             adapter.notifyDataSetChanged()
