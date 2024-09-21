@@ -62,7 +62,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
 
     fun search(input: String, page: Int) {
         if (!input.isNullOrEmpty()) {
-            if (page == 0) {
+            if (page == -1) {
                 renderState(SearchState.Loading)
             }
 
@@ -110,7 +110,6 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
     }
 
     fun getSettingsFilter() {
-        // запрос сохраненных данных из sharedPreferences и устанвока в FilterState
         prefs = filterInteractor.loadFilterFromSharedPreferences()
     }
 
