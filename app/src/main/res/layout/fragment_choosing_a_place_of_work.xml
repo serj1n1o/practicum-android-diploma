@@ -72,6 +72,7 @@
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
+            android:inputType="textNoSuggestions|textMultiLine"
             android:paddingStart="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,6 +133,7 @@
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
+            android:inputType="textNoSuggestions|textMultiLine"
             android:paddingStart="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
