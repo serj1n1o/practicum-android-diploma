@@ -49,6 +49,7 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:minHeight="@dimen/size_60dp"
+            android:inputType="textNoSuggestions|textMultiLine"
             android:paddingStart="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,6 +87,7 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:minHeight="@dimen/size_60dp"
+            android:inputType="textNoSuggestions|textMultiLine"
             android:paddingStart="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
