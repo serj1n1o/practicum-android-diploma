@@ -14,6 +14,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentAreaSelectBinding
 import ru.practicum.android.diploma.filter.domain.model.Location
 import ru.practicum.android.diploma.global.util.CustomFragment
+import ru.practicum.android.diploma.global.util.ResponseCodes
 
 class AreaSelectFragment : CustomFragment<FragmentAreaSelectBinding>() {
     private val locations = mutableListOf<Location>()
@@ -69,7 +70,7 @@ class AreaSelectFragment : CustomFragment<FragmentAreaSelectBinding>() {
             }
 
             is AreaSelectState.Error -> {
-                setStateError()
+                setStateError(state.error)
             }
 
             is AreaSelectState.Loading -> {
@@ -98,15 +99,25 @@ class AreaSelectFragment : CustomFragment<FragmentAreaSelectBinding>() {
         }
     }
 
-    private fun setStateError() {
+    private fun setStateError(error: Int) {
         hideKeyboard()
         with(binding) {
             areaList.isVisible = false
             progressBar.isVisible = false
             windowMessage.isVisible = true
-            textMessage.setText(R.string.failed_to_get_list)
-            imageMessage.setImageResource(R.drawable.image_magic_carpet)
             textMessage.isVisible = true
+
+            when (error) {
+                ResponseCodes.CODE_NO_CONNECT -> {
+                    textMessage.setText(R.string.no_internet)
+                    imageMessage.setImageResource(R.drawable.image_no_internet)
+                }
+
+                ResponseCodes.CODE_BAD_REQUEST, ResponseCodes.CODE_REQUEST_EXCEPTION -> {
+                    textMessage.setText(R.string.failed_to_get_list)
+                    imageMessage.setImageResource(R.drawable.image_magic_carpet)
+                }
+            }
         }
     }
 
