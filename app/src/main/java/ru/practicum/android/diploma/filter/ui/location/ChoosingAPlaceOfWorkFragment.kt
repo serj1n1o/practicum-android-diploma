@@ -56,7 +56,15 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
             findNavController().navigate(R.id.action_choosingAPlaceOfWorkFragment_to_countryFragment)
         }
 
+        binding.edCountry.setOnClickListener {
+            findNavController().navigate(R.id.action_choosingAPlaceOfWorkFragment_to_countryFragment)
+        }
+
         binding.arrowForwardRegion.setOnClickListener {
+            findNavController().navigate(R.id.action_choosingAPlaceOfWorkFragment_to_areaSelectFragment)
+        }
+
+        binding.edRegion.setOnClickListener {
             findNavController().navigate(R.id.action_choosingAPlaceOfWorkFragment_to_areaSelectFragment)
         }
 
