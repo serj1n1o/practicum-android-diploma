@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_searchFragment_to_vacancyFragment"
             app:destination="@id/vacancyFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_filterSettingsFragment"
+            app:destination="@id/filterSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/vacancyFragment"
@@ -39,5 +42,43 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/filterIndustryFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.industry.FilterIndustryFragment"
+        android:label="FilterIndustryFragment"
+        tools:layout="@layout/fragment_filter_industry"/>
+  <fragment
+        android:id="@+id/choosingAPlaceOfWorkFragment"
+      android:name="ru.practicum.android.diploma.filter.ui.location.ChoosingAPlaceOfWorkFragment"
+        android:label="ChoosingAPlaceOfWorkFragment"
+      tools:layout="@layout/fragment_choosing_a_place_of_work">
+      <action
+          android:id="@+id/action_choosingAPlaceOfWorkFragment_to_areaSelectFragment"
+          app:destination="@id/areaSelectFragment" />
+      <action
+          android:id="@+id/action_choosingAPlaceOfWorkFragment_to_countryFragment"
+          app:destination="@id/countryFragment" />
+  </fragment>
+    <fragment
+        android:id="@+id/areaSelectFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.area.AreaSelectFragment"
+        android:label="AreaSelectFragment" />
+    <fragment
+        android:id="@+id/filterSettingsFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.mainfilter.FilterSettingsFragment"
+        android:label="fragment_filter_settings"
+        tools:layout="@layout/fragment_filter_settings" >
+        <action
+            android:id="@+id/action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment"
+            app:destination="@id/choosingAPlaceOfWorkFragment" />
+        <action
+            android:id="@+id/action_filterSettingsFragment_to_filterIndustryFragment"
+            app:destination="@id/filterIndustryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryFragment"
+        android:name="ru.practicum.android.diploma.filter.ui.country.CountryFragment"
+        android:label="fragment_country"
+        tools:layout="@layout/fragment_country" />
 
 </navigation>

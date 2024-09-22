@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".filter.ui.country.CountryFragment">
+
+    <LinearLayout
+        android:id="@+id/titleCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btBackArrow"
+            style="@style/imageButton"
+            android:layout_width="@dimen/size_Icon"
+            android:layout_height="@dimen/size_Icon"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_24px" />
+
+        <TextView
+            android:id="@+id/txtCountry"
+            style="@style/text_22"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_26dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_weight="1"
+            android:text="@string/select_country" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCountriesNothingFoundPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm_172dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dm_328dp"
+            android:layout_height="@dimen/dm_223dp"
+            android:layout_gravity="center"
+            android:background="@drawable/image_no_list_vacancy" />
+
+        <TextView
+            style="@style/placeHolderText"
+            android:text="@string/unable_to_retrieve_countires" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCountry"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/country_item" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/progress_bar_36dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone" />
+
+</LinearLayout>
