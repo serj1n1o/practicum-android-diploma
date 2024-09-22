@@ -10,4 +10,6 @@ sealed interface CountryState {
     ) : CountryState
 
     data class Error(val error: Int) : CountryState
+
+    data object Empty : CountryState
 }

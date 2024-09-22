@@ -40,9 +40,7 @@ class AreaSelectViewModel(
         if (filterInteractor.getFilterState().country != null) {
             val countryId = filterInteractor.getFilterState().country?.id
             val list = filterInteractor.getListPlaceWork().areas
-            if (list != null && countryId != null) {
-                locationList = Mapper.getAreasByCountry(locations = list, countryId = countryId)
-            }
+            locationList = Mapper.getAreasByCountry(locations = list, countryId = countryId)
         } else {
             locationList = filterInteractor.getListPlaceWork().areas
         }
@@ -51,9 +49,16 @@ class AreaSelectViewModel(
             viewModelScope.launch {
                 searchInteractor.getAreas().collect { result ->
                     when (result) {
-                        is RequestResult.Error -> renderState(AreaSelectState.Error)
+                        is RequestResult.Error -> {
+                            AreaSelectState.Error(result.error!!)
+                        }
+
                         is RequestResult.Success -> {
-                            processResult(result.data?.areas!!.toMutableList())
+                            if (result.data?.areas.isNullOrEmpty()) {
+                                renderState(AreaSelectState.NotFound)
+                            } else {
+                                processResult(result.data?.areas!!.toMutableList())
+                            }
                         }
                     }
                 }
@@ -85,7 +90,7 @@ class AreaSelectViewModel(
             filteredList.addAll(locations)
         } else {
             for (item in locations) {
-                if (item.area.name?.contains(text, ignoreCase = true) == true) {
+                if (item.area.name.contains(text, ignoreCase = true)) {
                     filteredList.add(item)
                 }
             }

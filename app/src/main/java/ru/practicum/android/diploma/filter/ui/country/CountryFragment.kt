@@ -8,9 +8,11 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentCountryBinding
 import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.global.util.CustomFragment
+import ru.practicum.android.diploma.global.util.ResponseCodes
 
 class CountryFragment : CustomFragment<FragmentCountryBinding>() {
 
@@ -44,8 +46,9 @@ class CountryFragment : CustomFragment<FragmentCountryBinding>() {
         viewModel.observeState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is CountryState.Content -> showContent(state)
-                is CountryState.Error -> showPlaceholder()
+                is CountryState.Error -> showPlaceholder(state.error)
                 is CountryState.Loading -> showLoading()
+                CountryState.Empty -> showPlaceholder(ResponseCodes.CODE_NO_FOUND)
             }
         }
     }
@@ -57,7 +60,7 @@ class CountryFragment : CustomFragment<FragmentCountryBinding>() {
             adapter.notifyDataSetChanged()
             rvCountry.isVisible = true
             progressBar.isVisible = false
-            llCountriesNothingFoundPlaceholder.isVisible = false
+            llCountriesPlaceholder.isVisible = false
         }
     }
 
@@ -65,15 +68,32 @@ class CountryFragment : CustomFragment<FragmentCountryBinding>() {
         with(binding) {
             rvCountry.isVisible = false
             progressBar.isVisible = true
-            llCountriesNothingFoundPlaceholder.isVisible = false
+            llCountriesPlaceholder.isVisible = false
         }
     }
 
-    private fun showPlaceholder() {
+    private fun showPlaceholder(error: Int) {
         with(binding) {
             rvCountry.isVisible = false
             progressBar.isVisible = false
-            llCountriesNothingFoundPlaceholder.isVisible = true
+            llCountriesPlaceholder.isVisible = true
+
+            when (error) {
+                ResponseCodes.CODE_NO_FOUND -> {
+                    imgPlaceholder.setImageResource(R.drawable.image_no_list_vacancy)
+                    txtPlaceholder.text = getString(R.string.unable_to_retrieve_countires)
+                }
+
+                ResponseCodes.CODE_NO_CONNECT -> {
+                    imgPlaceholder.setImageResource(R.drawable.image_no_internet)
+                    txtPlaceholder.text = getString(R.string.no_internet)
+                }
+
+                ResponseCodes.CODE_BAD_REQUEST, ResponseCodes.CODE_REQUEST_EXCEPTION -> {
+                    imgPlaceholder.setImageResource(R.drawable.ic_error_server)
+                    txtPlaceholder.text = getString(R.string.server_error)
+                }
+            }
         }
     }
 

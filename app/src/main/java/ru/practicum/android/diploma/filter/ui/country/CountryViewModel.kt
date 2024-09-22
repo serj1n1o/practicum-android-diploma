@@ -48,11 +48,15 @@ class CountryViewModel(
             }
 
             else -> {
-                renderState(
-                    CountryState.Content(
-                        region = countriesList!!
+                if (countriesList.isNullOrEmpty()) {
+                    renderState(CountryState.Empty)
+                } else {
+                    renderState(
+                        CountryState.Content(
+                            region = countriesList
+                        )
                     )
-                )
+                }
             }
         }
     }
