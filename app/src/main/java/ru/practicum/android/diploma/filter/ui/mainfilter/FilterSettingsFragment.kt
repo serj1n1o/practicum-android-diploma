@@ -102,6 +102,11 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 renderStateResetPlacework()
             }
         }
+        binding.editTextPlaceWork.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment
+            )
+        }
     }
 
     private fun bindingArrowForwardIndustry() {
@@ -114,6 +119,12 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 viewModel.resetIndustryFilter()
                 renderStateResetIndustry()
             }
+        }
+
+        binding.editTextIndustry.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filterSettingsFragment_to_filterIndustryFragment
+            )
         }
     }
 
