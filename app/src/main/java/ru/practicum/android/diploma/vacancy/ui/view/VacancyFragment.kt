@@ -10,13 +10,10 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
-import ru.practicum.android.diploma.global.util.Constants
 import ru.practicum.android.diploma.global.util.CustomFragment
-import ru.practicum.android.diploma.global.util.Mapper
 import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.vacancy.domain.model.VacancyDetails
 import ru.practicum.android.diploma.vacancy.ui.adapters.SkillsAdapter
@@ -123,7 +120,6 @@ class VacancyFragment : CustomFragment<FragmentVacancyBinding>() {
                 .load(vacancy.employerLogo)
                 .fitCenter()
                 .placeholder(R.drawable.ic_placeholder_32px)
-                .transform(RoundedCorners(Mapper.mapRadiusForGlide(requireContext(), Constants.CORNER_RADIUS_DP)))
                 .into(icCompany)
 
             if (vacancy.experience != null || vacancy.schedule != null || vacancy.employment != null) {
