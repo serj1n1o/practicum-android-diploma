@@ -37,6 +37,9 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
             if (locationViewModel.selectedCountry.value == null && region != null) {
                 locationViewModel.setCountryFromRegion(region.id)
             }
+            if (region == null) {
+                updateRegionInputUi(null)
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -58,6 +61,7 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
 
         binding.edCountry.setOnClickListener {
             findNavController().navigate(R.id.action_choosingAPlaceOfWorkFragment_to_countryFragment)
+            locationViewModel.resetRegion()
         }
 
         binding.arrowForwardRegion.setOnClickListener {
