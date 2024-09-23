@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
 import ru.practicum.android.diploma.filter.domain.model.FilterStatus
 import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.global.util.RequestResult
+import ru.practicum.android.diploma.global.util.debounce
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 
 class FilterIndustryViewModel(
@@ -56,9 +57,14 @@ class FilterIndustryViewModel(
     fun searchDebounce(changedText: String) {
         if (lastSearchText != changedText) {
             lastSearchText = changedText
-            search(changedText)
+            industrySearchDebounce(changedText)
         }
     }
+
+    private val industrySearchDebounce =
+        debounce<String>(SEARCH_DEBOUNCE_DELAY, viewModelScope, true) { changedText ->
+            search(changedText)
+        }
 
     fun search(input: String) {
         val filteredIndustries = industries.filter {
@@ -88,5 +94,9 @@ class FilterIndustryViewModel(
             )
             filterInteractor.setFilterState(newFilterStatus)
         }
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }
