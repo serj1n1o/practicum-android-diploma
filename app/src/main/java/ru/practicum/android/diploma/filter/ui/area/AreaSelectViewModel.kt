@@ -50,7 +50,7 @@ class AreaSelectViewModel(
                 searchInteractor.getAreas().collect { result ->
                     when (result) {
                         is RequestResult.Error -> {
-                            AreaSelectState.Error(result.error!!)
+                            renderState(AreaSelectState.Error(result.error!!))
                         }
 
                         is RequestResult.Success -> {
