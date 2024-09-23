@@ -76,7 +76,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
                 currentPage = -1
                 vacanciesFound = 0
                 vacanciesList.clear()
-                search(lastSearchText.toString(), 0)
+                search(lastSearchText.toString(), -1)
             }
         } else {
             resetLastSearchText()
