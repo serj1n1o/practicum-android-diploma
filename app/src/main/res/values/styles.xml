@@ -174,4 +174,9 @@
         <item name="cornerSize">12dp</item>
     </style>
 
+    <style name="CheckBoxCustom" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/blue</item>
+        <item name="android:checkMarkTint">@color/background</item>
+    </style>
+
 </resources>
