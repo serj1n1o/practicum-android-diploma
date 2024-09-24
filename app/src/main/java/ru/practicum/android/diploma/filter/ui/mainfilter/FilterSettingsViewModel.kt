@@ -31,7 +31,7 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
         checkChangedState.value = state != newState
     }
 
-    private fun resetChangState() {
+    private fun resetChangeState() {
         checkChangedState.value = false
         state = FilterStatus(
             country = null,
@@ -92,7 +92,7 @@ class FilterSettingsViewModel(private val filterInteractor: FilterInteractor) : 
         filterSettingsState.postValue(
             FilterState.Empty
         )
-        resetChangState()
+        resetChangeState()
         filterInteractor.clearFilters()
         filterInteractor.saveFilterToSharedPreferences(filterInteractor.getFilterState())
     }

@@ -201,8 +201,12 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             if (data.filterStatus.area != null || data.filterStatus.country != null) {
                 filterHasPlacework = true
                 btnArrowForwardPlace.setImageResource(R.drawable.ic_close_24px)
-                setTextPlaceWork(data.filterStatus.country?.name, data.filterStatus.area?.name)
             }
+            if (data.filterStatus.area == null && data.filterStatus.country == null) {
+                filterHasPlacework = false
+                btnArrowForwardPlace.setImageResource(R.drawable.ic_arrow_forward_24px)
+            }
+            setTextPlaceWork(data.filterStatus.country?.name, data.filterStatus.area?.name)
 
             btnReset.isVisible = !data.filterStatus.isDefaultParams()
         }
@@ -215,9 +219,10 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 !country.isNullOrEmpty() -> country
                 !city.isNullOrEmpty() -> city
                 else -> null
+
             }
             editTextPlaceWork.setText(placeWorkText)
-            editTextPlaceWork.isActivated = true
+            editTextPlaceWork.isActivated = !(country == null && city == null)
         }
     }
 

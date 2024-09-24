@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -17,8 +18,15 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
     private var isCountryInputFilled = false
     private var isRegionInputFilled = false
 
+    private var isHaveDataFromFilterSettings = false
+
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChoosingAPlaceOfWorkBinding {
         return FragmentChoosingAPlaceOfWorkBinding.inflate(inflater, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isHaveDataFromFilterSettings = locationViewModel.getDataForCheckHavePlace()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,20 +35,38 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         locationViewModel.getCountryAndRegion()
 
         locationViewModel.selectedCountry.observe(viewLifecycleOwner) { country ->
+            locationViewModel.setNewCountry(country)
+            locationViewModel.comparePlace()
             binding.edCountry.setText(country?.name)
             updateCountryInputUi(country?.name)
         }
 
+        locationViewModel.countryIsChanged.observe(viewLifecycleOwner) { isChanged ->
+            if (isChanged) {
+                locationViewModel.resetRegion()
+            }
+        }
+
         locationViewModel.selectedRegion.observe(viewLifecycleOwner) { region ->
+            locationViewModel.setNewRegion(region)
             binding.edRegion.setText(region?.name)
             updateRegionInputUi(region?.name)
             if (locationViewModel.selectedCountry.value == null && region != null) {
                 locationViewModel.setCountryFromRegion(region.id)
             }
+            locationViewModel.comparePlace()
+        }
+
+        locationViewModel.placeIsChanged.observe(viewLifecycleOwner) { isChanged ->
+            binding.btChoose.isVisible = isChanged
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            locationViewModel.resetCountry()
+            if (!isHaveDataFromFilterSettings) {
+                locationViewModel.resetCountry()
+            } else {
+                locationViewModel.setBackPlaceWork()
+            }
             findNavController().popBackStack()
         }
 
@@ -89,7 +115,6 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         binding.edCountry.isActivated = isCountryInputFilled
         binding.arrowForwardCountry.visibility = if (isCountryInputFilled) View.GONE else View.VISIBLE
         binding.crossCountry.visibility = if (isCountryInputFilled) View.VISIBLE else View.GONE
-        updateChooseBtnVisibility()
     }
 
     private fun updateRegionInputUi(region: String?) {
@@ -97,10 +122,6 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         binding.edRegion.isActivated = isRegionInputFilled
         binding.arrowForwardRegion.visibility = if (isRegionInputFilled) View.GONE else View.VISIBLE
         binding.crossRegion.visibility = if (isRegionInputFilled) View.VISIBLE else View.GONE
-        updateChooseBtnVisibility()
     }
 
-    private fun updateChooseBtnVisibility() {
-        binding.btChoose.visibility = if (isCountryInputFilled || isRegionInputFilled) View.VISIBLE else View.GONE
-    }
 }
