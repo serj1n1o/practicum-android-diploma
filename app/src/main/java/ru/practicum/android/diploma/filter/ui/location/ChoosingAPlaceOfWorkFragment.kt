@@ -17,8 +17,15 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
     private var isCountryInputFilled = false
     private var isRegionInputFilled = false
 
+    private var isHaveDataFromFilterSettings = false
+
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChoosingAPlaceOfWorkBinding {
         return FragmentChoosingAPlaceOfWorkBinding.inflate(inflater, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isHaveDataFromFilterSettings = locationViewModel.getDataForCheckHavePlace()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +55,9 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            locationViewModel.resetCountry()
+            if (!isHaveDataFromFilterSettings) {
+                locationViewModel.resetCountry()
+            }
             findNavController().popBackStack()
         }
 

@@ -27,6 +27,12 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
         getFilterState()
     }
 
+    fun getDataForCheckHavePlace(): Boolean {
+        val country = filterInteractor.getFilterState().country
+        val area = filterInteractor.getFilterState().area
+        return country != null || area != null
+    }
+
     fun setNewCountry(country: Country?) {
         newCountry = country
         _countryIsChanged.value = oldCountry != newCountry
