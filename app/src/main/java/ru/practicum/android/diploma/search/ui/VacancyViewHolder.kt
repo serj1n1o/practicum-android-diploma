@@ -5,10 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.global.util.Constants
-import ru.practicum.android.diploma.global.util.Mapper
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class VacancyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,14 +24,6 @@ class VacancyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .load(vacancy.logo)
             .fitCenter().dontAnimate()
             .placeholder(R.drawable.ic_placeholder_32px)
-            .transform(
-                RoundedCorners(
-                    Mapper.mapRadiusForGlide(
-                        radius = Constants.CORNER_RADIUS_DP,
-                        context = itemView.context
-                    )
-                )
-            )
             .into(ivCompanyCover)
     }
 }

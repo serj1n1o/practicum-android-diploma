@@ -167,7 +167,11 @@
 
     <style name="inputSalaryLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="cursorColor">@color/blue</item>
+    </style>
 
+    <style name="cornerRadiusCoverVacancy">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
     </style>
 
 </resources>
