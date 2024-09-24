@@ -14,6 +14,9 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
     private var oldCountry: Country? = null
     private var newCountry: Country? = null
 
+    private var sourcePlaceWork: FilterStatus? = null
+    private val getSourcePlaceWork get() = sourcePlaceWork
+
     private val _selectedCountry = MutableLiveData<Country?>()
     val selectedCountry: LiveData<Country?> = _selectedCountry
 
@@ -28,9 +31,15 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
     }
 
     fun getDataForCheckHavePlace(): Boolean {
-        val country = filterInteractor.getFilterState().country
-        val area = filterInteractor.getFilterState().area
+        val placeWork = filterInteractor.getFilterState()
+        val country = placeWork.country
+        val area = placeWork.area
+        sourcePlaceWork = placeWork
         return country != null || area != null
+    }
+
+    fun setBackPlaceWork() {
+        getSourcePlaceWork?.let { filterInteractor.setFilterState(it) }
     }
 
     fun setNewCountry(country: Country?) {
@@ -89,5 +98,4 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
         val country = listRegions?.let { Mapper.getCountryByAreaId(id, it) }
         _selectedCountry.postValue(country)
     }
-
 }

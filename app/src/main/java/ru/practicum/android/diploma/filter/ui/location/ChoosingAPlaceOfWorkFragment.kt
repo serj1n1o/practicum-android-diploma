@@ -57,6 +57,8 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             if (!isHaveDataFromFilterSettings) {
                 locationViewModel.resetCountry()
+            } else {
+                locationViewModel.setBackPlaceWork()
             }
             findNavController().popBackStack()
         }
