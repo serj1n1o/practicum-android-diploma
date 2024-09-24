@@ -154,7 +154,7 @@
         android:id="@+id/checkOnlySalary"
         android:layout_width="@dimen/size_24dp"
         android:layout_height="@dimen/size_24dp"
-        android:buttonTint="@color/blue"
+        style="@style/CheckBoxCustom"
         app:layout_constraintBottom_toBottomOf="@id/txtOnlySalary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/txtOnlySalary" />
