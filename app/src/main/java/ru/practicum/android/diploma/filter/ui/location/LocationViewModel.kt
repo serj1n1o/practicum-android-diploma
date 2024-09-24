@@ -11,8 +11,14 @@ import ru.practicum.android.diploma.filter.domain.model.PlaceWork
 import ru.practicum.android.diploma.global.util.Mapper
 
 class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewModel() {
+    private var oldCountry: Country? = null
+    private var newCountry: Country? = null
+
     private val _selectedCountry = MutableLiveData<Country?>()
     val selectedCountry: LiveData<Country?> = _selectedCountry
+
+    private val _countryIsChanged = MutableLiveData<Boolean>()
+    val countryIsChanged: LiveData<Boolean> = _countryIsChanged
 
     private val _selectedRegion = MutableLiveData<Area?>()
     val selectedRegion: LiveData<Area?> = _selectedRegion
@@ -21,17 +27,27 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
         getFilterState()
     }
 
+    fun setNewCountry(country: Country?) {
+        newCountry = country
+        _countryIsChanged.value = oldCountry != newCountry
+        oldCountry = newCountry
+    }
+
     fun getCountryAndRegion() {
         val country = filterInteractor.getFilterState().country
         val area = filterInteractor.getFilterState().area
-        _selectedCountry.postValue(country)
-        _selectedRegion.postValue(area)
+        _selectedCountry.value = country
+        _selectedRegion.value = area
+        if (oldCountry == null) {
+            oldCountry = country
+        }
     }
 
     private fun getFilterState() {
         val filterStatus = filterInteractor.loadFilterFromSharedPreferences()
-        _selectedCountry.postValue(filterStatus.country)
-        _selectedRegion.postValue(filterStatus.area)
+        _selectedCountry.value = filterStatus.country
+        _selectedRegion.value = filterStatus.area
+        oldCountry = filterStatus.country
     }
 
     fun resetCountry() {

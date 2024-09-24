@@ -27,8 +27,16 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         locationViewModel.getCountryAndRegion()
 
         locationViewModel.selectedCountry.observe(viewLifecycleOwner) { country ->
+            locationViewModel.setNewCountry(country)
+
             binding.edCountry.setText(country?.name)
             updateCountryInputUi(country?.name)
+        }
+
+        locationViewModel.countryIsChanged.observe(viewLifecycleOwner) { isChanged ->
+            if (isChanged) {
+                locationViewModel.resetRegion()
+            }
         }
 
         locationViewModel.selectedRegion.observe(viewLifecycleOwner) { region ->
@@ -36,9 +44,6 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
             updateRegionInputUi(region?.name)
             if (locationViewModel.selectedCountry.value == null && region != null) {
                 locationViewModel.setCountryFromRegion(region.id)
-            }
-            if (region == null) {
-                updateRegionInputUi(null)
             }
         }
 
@@ -61,7 +66,6 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
 
         binding.edCountry.setOnClickListener {
             findNavController().navigate(R.id.action_choosingAPlaceOfWorkFragment_to_countryFragment)
-            locationViewModel.resetRegion()
         }
 
         binding.arrowForwardRegion.setOnClickListener {
