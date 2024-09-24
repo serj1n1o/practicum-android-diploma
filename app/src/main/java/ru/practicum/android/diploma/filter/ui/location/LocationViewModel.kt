@@ -11,8 +11,14 @@ import ru.practicum.android.diploma.filter.domain.model.PlaceWork
 import ru.practicum.android.diploma.global.util.Mapper
 
 class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewModel() {
-    private var oldCountry: Country? = null
+    private var sourceCountry: Country? = null
     private var newCountry: Country? = null
+    private var oldCountry: Country? = null
+    private var oldRegion: Area? = null
+    private var newRegion: Area? = null
+
+    private var regionChangedForButtonVisible: Boolean = false
+    private var countryChangedForButtonVisible: Boolean = false
 
     private var sourcePlaceWork: FilterStatus? = null
     private val getSourcePlaceWork get() = sourcePlaceWork
@@ -23,6 +29,9 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
     private val _countryIsChanged = MutableLiveData<Boolean>()
     val countryIsChanged: LiveData<Boolean> = _countryIsChanged
 
+    private val _placeIsChanged = MutableLiveData<Boolean>()
+    val placeIsChanged: LiveData<Boolean> = _placeIsChanged
+
     private val _selectedRegion = MutableLiveData<Area?>()
     val selectedRegion: LiveData<Area?> = _selectedRegion
 
@@ -30,10 +39,21 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
         getFilterState()
     }
 
+    fun comparePlace() {
+        _placeIsChanged.value = countryChangedForButtonVisible == true || regionChangedForButtonVisible == true
+    }
+
     fun getDataForCheckHavePlace(): Boolean {
         val placeWork = filterInteractor.getFilterState()
         val country = placeWork.country
         val area = placeWork.area
+        if (oldCountry == null) {
+            oldCountry = country
+        }
+        if (oldRegion == null) {
+            oldRegion = area
+        }
+
         sourcePlaceWork = placeWork
         return country != null || area != null
     }
@@ -44,8 +64,15 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
 
     fun setNewCountry(country: Country?) {
         newCountry = country
-        _countryIsChanged.value = oldCountry != newCountry
-        oldCountry = newCountry
+        countryChangedForButtonVisible = oldCountry != newCountry
+        _countryIsChanged.value = sourceCountry != newCountry
+        sourceCountry = newCountry
+    }
+
+    fun setNewRegion(region: Area?) {
+        newRegion = region
+        regionChangedForButtonVisible = oldRegion != newRegion
+        oldRegion = newRegion
     }
 
     fun getCountryAndRegion() {
@@ -53,8 +80,8 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
         val area = filterInteractor.getFilterState().area
         _selectedCountry.value = country
         _selectedRegion.value = area
-        if (oldCountry == null) {
-            oldCountry = country
+        if (sourceCountry == null) {
+            sourceCountry = country
         }
     }
 
@@ -62,6 +89,8 @@ class LocationViewModel(private val filterInteractor: FilterInteractor) : ViewMo
         val filterStatus = filterInteractor.loadFilterFromSharedPreferences()
         _selectedCountry.value = filterStatus.country
         _selectedRegion.value = filterStatus.area
+        sourceCountry = filterStatus.country
+        oldRegion = filterStatus.area
         oldCountry = filterStatus.country
     }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -35,7 +36,7 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
 
         locationViewModel.selectedCountry.observe(viewLifecycleOwner) { country ->
             locationViewModel.setNewCountry(country)
-
+            locationViewModel.comparePlace()
             binding.edCountry.setText(country?.name)
             updateCountryInputUi(country?.name)
         }
@@ -47,11 +48,17 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         }
 
         locationViewModel.selectedRegion.observe(viewLifecycleOwner) { region ->
+            locationViewModel.setNewRegion(region)
             binding.edRegion.setText(region?.name)
             updateRegionInputUi(region?.name)
             if (locationViewModel.selectedCountry.value == null && region != null) {
                 locationViewModel.setCountryFromRegion(region.id)
             }
+            locationViewModel.comparePlace()
+        }
+
+        locationViewModel.placeIsChanged.observe(viewLifecycleOwner) { isChanged ->
+            binding.btChoose.isVisible = isChanged
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -108,7 +115,6 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         binding.edCountry.isActivated = isCountryInputFilled
         binding.arrowForwardCountry.visibility = if (isCountryInputFilled) View.GONE else View.VISIBLE
         binding.crossCountry.visibility = if (isCountryInputFilled) View.VISIBLE else View.GONE
-        updateChooseBtnVisibility()
     }
 
     private fun updateRegionInputUi(region: String?) {
@@ -116,10 +122,6 @@ class ChoosingAPlaceOfWorkFragment : CustomFragment<FragmentChoosingAPlaceOfWork
         binding.edRegion.isActivated = isRegionInputFilled
         binding.arrowForwardRegion.visibility = if (isRegionInputFilled) View.GONE else View.VISIBLE
         binding.crossRegion.visibility = if (isRegionInputFilled) View.VISIBLE else View.GONE
-        updateChooseBtnVisibility()
     }
 
-    private fun updateChooseBtnVisibility() {
-        binding.btChoose.visibility = if (isCountryInputFilled || isRegionInputFilled) View.VISIBLE else View.GONE
-    }
 }
