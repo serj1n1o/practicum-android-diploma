@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.favorites.data.VacancyDbConvertor
+import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.filter.domain.model.PlaceWork
 import ru.practicum.android.diploma.global.data.network.NetworkClient
@@ -13,6 +14,7 @@ import ru.practicum.android.diploma.global.db.AppDatabase
 import ru.practicum.android.diploma.global.util.RequestResult
 import ru.practicum.android.diploma.global.util.ResponseCodes
 import ru.practicum.android.diploma.search.data.dto.VacanciesListResponse
+import ru.practicum.android.diploma.search.data.dto.countries.CountriesResponseWrapper
 import ru.practicum.android.diploma.search.data.dto.details.VacancyResponse
 import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponseWrapperDto
 import ru.practicum.android.diploma.search.data.dto.regions.AreasResponseWrapper
@@ -104,6 +106,20 @@ class SearchRepositoryImpl(
                 val industriesResponseDto = (result.data as IndustriesResponseWrapperDto).industries
                 val industries = filterMapper.mapIndustriesResponseDtoToIndustries(industriesResponseDto)
                 emit(RequestResult.Success(industries))
+            }
+        }
+    }
+
+    override fun getCountries(): Flow<RequestResult<List<Country>>> = flow {
+        val request = Request.GetCountries
+        when (val result = networkClient.doRequest(request)) {
+            is RequestResult.Error -> {
+                emit(RequestResult.Error(result.error!!))
+            }
+
+            is RequestResult.Success -> {
+                val countries = (result.data as CountriesResponseWrapper).countriesResponse
+                emit(RequestResult.Success(filterMapper.mapCountriesResponseToCountries(countries)))
             }
         }
     }

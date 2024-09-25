@@ -93,4 +93,11 @@ object Mapper {
         return location?.country
     }
 
+    fun getAreasExceptOtherRegion(area: List<Location>, newCountries: List<Country>): List<Location> {
+        val newCountryIds = newCountries.map { it.id }.toSet()
+        return area.filter { location ->
+            newCountryIds.contains(location.country.id)
+        }
+    }
+
 }
