@@ -124,7 +124,7 @@ class SearchRepositoryImpl(
         if (searchQuery.salary != null) {
             body["salary"] = searchQuery.salary.toString()
         }
-        if (searchQuery.onlyWithSalary != null) {
+        if (searchQuery.onlyWithSalary == true) {
             body["only_with_salary"] = "true"
         }
         return body
