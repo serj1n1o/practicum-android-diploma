@@ -1,26 +1,27 @@
 package ru.practicum.android.diploma.filter.ui.mainfilter
 
-import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterSettingsBinding
 import ru.practicum.android.diploma.global.util.CustomFragment
+import ru.practicum.android.diploma.global.util.HideKeyboardUtil
+import ru.practicum.android.diploma.global.util.debounce
 
 class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
 
     private val viewModel by viewModel<FilterSettingsViewModel>()
-
     private var salary: Int? = null
+    private var filterHasPlacework: Boolean = false
+    private var filterHasIndustry: Boolean = false
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFilterSettingsBinding {
         return FragmentFilterSettingsBinding.inflate(inflater, container, false)
@@ -34,59 +35,124 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getStateAreaAndIndustry()
+
         viewModel.getFilterState().observe(viewLifecycleOwner) { state ->
+            viewModel.setNewState(state)
             when (state) {
                 is FilterState.Content -> renderState(state)
                 is FilterState.Empty -> renderStateReset()
             }
         }
-        initBinding()
+
+        viewModel.getCheckChangedState().observe(viewLifecycleOwner) { changed ->
+            binding.btnApply.isVisible = changed
+        }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        bindingArrowForwardPlace()
+        bindingArrowForwardIndustry()
+        bindingCheckOnlySalary()
+        bindingApply()
+        bindingReset()
+        initSalaryEditText()
     }
 
-    private fun initBinding() {
+    private fun initSalaryEditText() {
+        binding.salaryEditText.doOnTextChanged { text, _, _, _ ->
+            val salaryStr = text.toString()
+            if (salaryStr.isNotEmpty()) {
+                salary = salaryStr.toInt()
+                setSalaryDebounce(salary!!)
+            } else {
+                setSalaryDebounce(null)
+            }
+
+            val hasText = text?.isNotBlank() == true
+            binding.btnResetSalary.isVisible = hasText
+            binding.salaryInputLayout.defaultHintTextColor = ColorState.getColorState(requireContext(), hasText)
+        }
+
         binding.salaryEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideKeyboard()
+                HideKeyboardUtil.hideKeyboard(requireView())
                 binding.salaryInputLayout.clearFocus()
-                viewModel.setSalary(salary)
                 true
             } else {
                 false
             }
         }
 
-        binding.salaryEditText.doOnTextChanged { text, _, _, _ ->
-            val salaryStr = text.toString()
-            if (salaryStr.isNotEmpty()) {
-                salary = salaryStr.toInt()
-            }
-            val hasText = text?.isNotBlank() == true
-            binding.salaryInputLayout.defaultHintTextColor = setColorState(hasText)
+        binding.btnResetSalary.setOnClickListener {
+            viewModel.setSalary(null)
+            binding.salaryEditText.clearFocus()
+            HideKeyboardUtil.hideKeyboard(requireView())
         }
+    }
 
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+    private fun bindingArrowForwardPlace() {
         binding.btnArrowForwardPlace.setOnClickListener {
-            findNavController().navigate(R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment)
+            if (!filterHasPlacework) {
+                findNavController().navigate(
+                    R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment
+                )
+            } else {
+                viewModel.resetPlaceWorkFilter()
+                renderStateResetPlacework()
+            }
         }
+        binding.editTextPlaceWork.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filterSettingsFragment_to_choosingAPlaceOfWorkFragment
+            )
+        }
+    }
 
+    private fun bindingArrowForwardIndustry() {
         binding.btnArrowForwardIndustry.setOnClickListener {
-            findNavController().navigate(R.id.action_filterSettingsFragment_to_filterIndustryFragment)
+            if (!filterHasIndustry) {
+                findNavController().navigate(
+                    R.id.action_filterSettingsFragment_to_filterIndustryFragment
+                )
+            } else {
+                viewModel.resetIndustryFilter()
+                renderStateResetIndustry()
+            }
         }
 
-        binding.checkOnlySalary.setOnClickListener {
-            viewModel.setOnlyWithSalary(binding.checkOnlySalary.isChecked)
+        binding.editTextIndustry.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filterSettingsFragment_to_filterIndustryFragment
+            )
         }
+    }
 
+    private fun bindingReset() {
+        binding.btnReset.setOnClickListener {
+            filterHasPlacework = false
+            filterHasIndustry = false
+            binding.btnArrowForwardIndustry.setImageResource(R.drawable.ic_arrow_forward_24px)
+            binding.btnArrowForwardPlace.setImageResource(R.drawable.ic_arrow_forward_24px)
+            viewModel.resetSettings()
+        }
+    }
+
+    private fun bindingApply() {
         binding.btnApply.setOnClickListener {
             viewModel.saveSettingsFilter()
             findNavController().popBackStack()
         }
+    }
 
-        binding.btnReset.setOnClickListener {
-            viewModel.resetSettings()
+    private fun bindingCheckOnlySalary() {
+        binding.checkOnlySalary.setOnClickListener {
+            viewModel.setOnlyWithSalary(binding.checkOnlySalary.isChecked)
         }
+    }
+
+    private val setSalaryDebounce = debounce<Int?>(DELAY_SET, lifecycleScope, true) { salary ->
+        viewModel.setSalary(salary)
     }
 
     private fun renderStateReset() {
@@ -97,8 +163,24 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
             editTextPlaceWork.isActivated = false
             editTextIndustry.isActivated = false
             checkOnlySalary.isChecked = false
-            btnReset.isVisible = false
-            btnApply.isVisible = false
+        }
+    }
+
+    private fun renderStateResetPlacework() {
+        with(binding) {
+            setTextPlaceWork(country = null, city = null)
+            filterHasPlacework = false
+            editTextPlaceWork.isActivated = false
+            btnArrowForwardPlace.setImageResource(R.drawable.ic_arrow_forward_24px)
+        }
+    }
+
+    private fun renderStateResetIndustry() {
+        with(binding) {
+            setTextIndustry(industry = null)
+            filterHasIndustry = false
+            editTextIndustry.isActivated = false
+            btnArrowForwardIndustry.setImageResource(R.drawable.ic_arrow_forward_24px)
         }
     }
 
@@ -106,16 +188,27 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         with(binding) {
             checkOnlySalary.isChecked = data.filterStatus.onlyWithSalary
 
-            data.filterStatus.salary?.let { salaryEditText.setText(it.toString()) }
-
-            data.filterStatus.industry?.name?.let { setTextIndustry(it) }
-
-            if (data.filterStatus.area != null || data.filterStatus.country != null) {
-                setTextPlaceWork(data.filterStatus.country?.name, data.filterStatus.area?.name)
+            if (data.filterStatus.salary != salary) {
+                salaryEditText.setText(data.filterStatus.salary?.toString())
             }
 
+            data.filterStatus.industry?.name?.let {
+                filterHasIndustry = true
+                btnArrowForwardIndustry.setImageResource(R.drawable.ic_close_24px)
+                setTextIndustry(it)
+            }
+
+            if (data.filterStatus.area != null || data.filterStatus.country != null) {
+                filterHasPlacework = true
+                btnArrowForwardPlace.setImageResource(R.drawable.ic_close_24px)
+            }
+            if (data.filterStatus.area == null && data.filterStatus.country == null) {
+                filterHasPlacework = false
+                btnArrowForwardPlace.setImageResource(R.drawable.ic_arrow_forward_24px)
+            }
+            setTextPlaceWork(data.filterStatus.country?.name, data.filterStatus.area?.name)
+
             btnReset.isVisible = !data.filterStatus.isDefaultParams()
-            btnApply.isVisible = !data.filterStatus.isDefaultParams()
         }
     }
 
@@ -126,9 +219,10 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
                 !country.isNullOrEmpty() -> country
                 !city.isNullOrEmpty() -> city
                 else -> null
+
             }
             editTextPlaceWork.setText(placeWorkText)
-            editTextPlaceWork.isActivated = true
+            editTextPlaceWork.isActivated = !(country == null && city == null)
         }
     }
 
@@ -139,37 +233,7 @@ class FilterSettingsFragment : CustomFragment<FragmentFilterSettingsBinding>() {
         }
     }
 
-    private fun hideKeyboard() {
-        val inputManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(binding.salaryInputLayout.windowToken, 0)
+    companion object {
+        private const val DELAY_SET = 500L
     }
-
-    private fun setColorState(hasText: Boolean): ColorStateList {
-        val colorBlue = requireContext().getColor(R.color.blue)
-        val defColor = requireContext().getColor(R.color.editText_text_hint)
-        val colorBlack = requireContext().getColor(R.color.black)
-        when (hasText) {
-            true -> {
-                return ColorStateList(
-                    arrayOf(
-                        intArrayOf(-android.R.attr.state_focused),
-                        intArrayOf(android.R.attr.state_focused)
-                    ),
-                    intArrayOf(colorBlack, colorBlue)
-                )
-            }
-
-            false -> {
-                return ColorStateList(
-                    arrayOf(
-                        intArrayOf(-android.R.attr.state_focused),
-                        intArrayOf(android.R.attr.state_focused)
-                    ),
-                    intArrayOf(defColor, colorBlue)
-                )
-            }
-        }
-    }
-
 }

@@ -128,12 +128,13 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/salary">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/ic_company"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/size_48dp"
+                    android:layout_height="@dimen/size_48dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/dm_about_item_margin_top"
+                    app:shapeAppearanceOverlay="@style/cornerRadiusCoverVacancy"
                     tools:src="@drawable/ic_yandex_eat" />
 
                 <LinearLayout

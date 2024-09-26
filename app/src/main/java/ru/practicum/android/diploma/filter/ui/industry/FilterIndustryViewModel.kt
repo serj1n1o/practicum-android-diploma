@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
 import ru.practicum.android.diploma.filter.domain.model.FilterStatus
 import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.global.util.RequestResult
+import ru.practicum.android.diploma.global.util.debounce
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 
 class FilterIndustryViewModel(
@@ -40,8 +41,13 @@ class FilterIndustryViewModel(
             is RequestResult.Success -> {
                 val preparedData = result.data!!
                 industries.addAll(preparedData.sortedBy { it.name })
-                renderState(ScreenState.Content(industries))
+                if (industries.size > 0) {
+                    renderState(ScreenState.Content(industries))
+                } else {
+                    renderState(ScreenState.Error(result.error!!))
+                }
             }
+
             is RequestResult.Error -> {
                 renderState(ScreenState.Error(result.error!!))
             }
@@ -51,15 +57,29 @@ class FilterIndustryViewModel(
     fun searchDebounce(changedText: String) {
         if (lastSearchText != changedText) {
             lastSearchText = changedText
-            search(changedText)
+            industrySearchDebounce(changedText)
         }
     }
+
+    private val industrySearchDebounce =
+        debounce<String>(SEARCH_DEBOUNCE_DELAY, viewModelScope, true) { changedText ->
+            search(changedText)
+        }
 
     fun search(input: String) {
         val filteredIndustries = industries.filter {
             it.name.lowercase().startsWith(input.lowercase())
         }
-        renderState(ScreenState.Content(filteredIndustries))
+        if (filteredIndustries.isNotEmpty()) {
+            renderState(ScreenState.Content(filteredIndustries))
+        } else {
+            renderState(ScreenState.NotFound)
+        }
+    }
+
+    fun getSelectedIndustry(): Industry? {
+        val tempFilter = filterInteractor.getFilterState()
+        return tempFilter.industry
     }
 
     fun setIndustry(newIndustry: Industry?) {
@@ -74,5 +94,9 @@ class FilterIndustryViewModel(
             )
             filterInteractor.setFilterState(newFilterStatus)
         }
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }

@@ -25,6 +25,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
     private var currentPage: Int = -1
     private var vacanciesFound: Int = 0
     private var isLoading: Boolean = false
+    private var lastPrefs: FilterStatus = FilterStatus(null, null, null, null, false)
     private var prefs: FilterStatus = FilterStatus(null, null, null, null, false)
 
     private val trackSearchDebounce =
@@ -35,6 +36,14 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
             vacanciesList.clear()
             search(changedText, currentPage)
         }
+
+    fun resetLastSearchText() {
+        pages = 0
+        currentPage = -1
+        vacanciesFound = 0
+        lastSearchText = null
+        vacanciesList.clear()
+    }
 
     fun searchDebounce(changedText: String) {
         if (lastSearchText != changedText) {
@@ -60,12 +69,31 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
         )
     }
 
+    fun updateSearchResult() {
+        if (!lastSearchText.isNullOrEmpty()) {
+            if (!prefs.equals(lastPrefs)) {
+                pages = 0
+                currentPage = -1
+                vacanciesFound = 0
+                vacanciesList.clear()
+                search(lastSearchText.toString(), -1)
+            }
+        } else {
+            resetLastSearchText()
+            renderState(SearchState.EmptyEditText)
+        }
+    }
+
+    fun getFilterStatus(): Boolean {
+        return !prefs.isDefaultParams()
+    }
+
     fun search(input: String, page: Int) {
         if (!input.isNullOrEmpty()) {
-            if (page == 0) {
+            if (page == -1) {
                 renderState(SearchState.Loading)
             }
-
+            lastPrefs = prefs
             viewModelScope.launch {
                 searchInteractor.getVacancies(
                     getSearchQuery(input, page)
@@ -110,7 +138,6 @@ class SearchViewModel(private val searchInteractor: SearchInteractor, private va
     }
 
     fun getSettingsFilter() {
-        // запрос сохраненных данных из sharedPreferences и устанвока в FilterState
         prefs = filterInteractor.loadFilterFromSharedPreferences()
     }
 

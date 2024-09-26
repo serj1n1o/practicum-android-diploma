@@ -12,4 +12,5 @@
     <color name="editText_background">@color/light_gray</color>
     <color name="editText_text_hint">@color/dark_gray</color>
     <color name="about_text_color">@color/black</color>
+    <color name="icon_off_color">@color/black</color>
 </resources>

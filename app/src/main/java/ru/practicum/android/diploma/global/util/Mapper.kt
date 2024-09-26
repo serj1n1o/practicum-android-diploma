@@ -76,11 +76,16 @@ object Mapper {
         }
     }
 
-    fun getAreasByCountry(locations: List<Location>, countryId: String): List<Location> {
-        return locations
-            .filter {
+    fun getAreasByCountry(locations: List<Location>?, countryId: String?): List<Location> {
+        return if (locations != null && countryId != null) {
+            locations.filter {
                 it.country.id == countryId
             }
+        } else if (countryId == null && locations != null) {
+            locations
+        } else {
+            emptyList()
+        }
     }
 
     fun getCountryByAreaId(areaId: String, locations: List<Location>): Country? {

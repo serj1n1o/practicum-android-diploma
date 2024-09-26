@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
     tools:context="ru.practicum.android.diploma.filter.ui.industry.FilterIndustryFragment">
@@ -13,17 +13,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingVertical="16dp">
+
         <ImageView
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_back_24px"/>
+            android:src="@drawable/ic_arrow_back_24px"
+            app:tint="@color/background_reverse" />
+
         <TextView
+            style="@style/text_22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/text_22"
-            android:text="@string/choose_industry"
-            android:layout_marginStart="20dp"/>
+            android:layout_marginStart="20dp"
+            android:text="@string/choose_industry" />
     </LinearLayout>
 
     <FrameLayout
@@ -64,22 +67,23 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:visibility="gone"
-        tools:listitem="@layout/industry_item"/>
+        tools:listitem="@layout/industry_item" />
 
     <ProgressBar
         android:id="@+id/windowProgressBar"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center"
-        android:indeterminateTint="@color/blue"
         android:layout_marginTop="240dp"
-        android:visibility="visible"/>
+        android:indeterminateTint="@color/blue"
+        android:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/errorPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
+
         <ImageView
             android:id="@+id/imageMessage"
             android:layout_width="0dp"
@@ -92,6 +96,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
+
         <TextView
             android:id="@+id/textMessage"
             style="@style/text_22"
@@ -102,15 +107,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageMessage"
-            />
+            app:layout_constraintTop_toBottomOf="@id/imageMessage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-     <Button
-         android:id="@+id/buttonApply"
-         style="@style/blueButton"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:text="@string/choose"
-         android:layout_marginVertical="24dp"
-         android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/buttonApply"
+        style="@style/text_btn_filter_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60dp"
+        android:layout_marginVertical="@dimen/margin_24dp"
+        android:text="@string/choose"
+        android:visibility="gone" />
 </LinearLayout>

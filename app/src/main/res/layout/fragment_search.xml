@@ -26,7 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/background_reverse"
             android:src="@drawable/ic_filter_off__24px" />
     </LinearLayout>
 
@@ -99,7 +98,7 @@
         android:id="@+id/vacancyListLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        tools:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vacancyList"
@@ -119,7 +118,7 @@
             android:id="@+id/countVacancies"
             style="@style/countVacancies"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -128,7 +127,7 @@
         <FrameLayout
             android:id="@+id/recyclerProgressBar"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="@dimen/size_80dp"
             android:background="@color/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -150,5 +149,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:indeterminateTint="@color/blue"
-        android:visibility="visible" />
+        tools:visibility="visible" />
 </LinearLayout>

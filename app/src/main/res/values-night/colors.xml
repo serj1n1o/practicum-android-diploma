@@ -5,4 +5,5 @@
     <color name="editText_text_hint">@color/white</color>
     <color name="editText_background">@color/dark_gray</color>
     <color name="about_text_color">@color/white</color>
+    <color name="icon_off_color">@color/white</color>
 </resources>

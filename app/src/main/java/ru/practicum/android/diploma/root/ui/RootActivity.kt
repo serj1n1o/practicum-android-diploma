@@ -17,9 +17,18 @@ class RootActivity : AppCompatActivity() {
 
         binding.navigationView.setupWithNavController(navController)
 
+        val listFilterFragment = listOf(
+            R.id.filterIndustryFragment,
+            R.id.filterSettingsFragment,
+            R.id.choosingAPlaceOfWorkFragment,
+            R.id.countryFragment,
+            R.id.areaSelectFragment
+        )
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.vacancyFragment, R.id.filterIndustryFragment -> binding.navigationView.isVisible = false
+                R.id.vacancyFragment -> binding.navigationView.isVisible = false
+                in listFilterFragment -> binding.navigationView.isVisible = false
                 else -> binding.navigationView.isVisible = true
             }
         }
