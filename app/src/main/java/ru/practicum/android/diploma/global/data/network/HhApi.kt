@@ -4,6 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.search.data.dto.VacanciesListResponse
+import ru.practicum.android.diploma.search.data.dto.countries.CountriesResponse
 import ru.practicum.android.diploma.search.data.dto.details.VacancyResponse
 import ru.practicum.android.diploma.search.data.dto.industries.IndustriesResponseDto
 import ru.practicum.android.diploma.search.data.dto.regions.AreasResponse
@@ -21,4 +22,7 @@ interface HhApi {
 
     @GET("/industries")
     suspend fun getIndustries(): IndustriesResponseDto
+
+    @GET("/areas/countries")
+    suspend fun getCountries(): CountriesResponse
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filter.domain.api.FilterInteractor
+import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.FilterStatus
 import ru.practicum.android.diploma.filter.domain.model.Location
 import ru.practicum.android.diploma.global.util.Mapper
@@ -19,7 +20,8 @@ class AreaSelectViewModel(
 ) : ViewModel() {
     private val stateLiveData = MutableLiveData<AreaSelectState>()
     private var lastSearchText: String? = null
-    var locations = mutableListOf<Location>()
+    private var locations = mutableListOf<Location>()
+    private val countries = mutableListOf<Country>()
     fun observeState(): LiveData<AreaSelectState> = stateLiveData
 
     private val areaSearchDebounce =
@@ -35,6 +37,11 @@ class AreaSelectViewModel(
     }
 
     fun loadArea() {
+        viewModelScope.launch {
+            searchInteractor.getCountries().collect { result ->
+                processResultCountries(result.first, result.second)
+            }
+        }
         renderState(AreaSelectState.Loading)
         var locationList: List<Location>? = null
         if (filterInteractor.getFilterState().country != null) {
@@ -70,17 +77,24 @@ class AreaSelectViewModel(
     }
 
     private fun processResult(listLocation: List<Location>) {
+        val countryId = filterInteractor.getFilterState().country?.id
+        locations = if (countryId != null) {
+            Mapper.getAreasByCountry(listLocation, countryId).toMutableList()
+        } else {
+            Mapper.getAreasExceptOtherRegion(listLocation, countries).toMutableList()
+        }
+
         when {
             listLocation.isEmpty() -> renderState(AreaSelectState.NotFound)
-            else -> {
-                val countryId = filterInteractor.getFilterState().country?.id
-                locations = if (countryId != null) {
-                    Mapper.getAreasByCountry(listLocation, countryId).toMutableList()
-                } else {
-                    listLocation.toMutableList()
-                }
-                renderState(AreaSelectState.Content(locations))
-            }
+            countryId == null && countries.isEmpty() -> renderState(AreaSelectState.NotFound)
+            else -> renderState(AreaSelectState.Content(locations))
+        }
+    }
+
+    private fun processResultCountries(list: List<Country>?, error: Int?) {
+        when {
+            list != null -> countries.addAll(list)
+            else -> countries.clear()
         }
     }
 

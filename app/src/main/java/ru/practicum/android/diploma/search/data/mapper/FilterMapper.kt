@@ -4,6 +4,7 @@ import ru.practicum.android.diploma.filter.domain.model.Area
 import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.filter.domain.model.Location
+import ru.practicum.android.diploma.search.data.dto.countries.CountriesResponse
 import ru.practicum.android.diploma.search.data.dto.industries.IndustriesDto
 import ru.practicum.android.diploma.search.data.dto.regions.AreasResponse
 import ru.practicum.android.diploma.search.data.dto.regions.AreasResponseCountry
@@ -29,6 +30,15 @@ class FilterMapper {
             }
         }
         return industries
+    }
+
+    fun mapCountriesResponseToCountries(countriesResponse: CountriesResponse): List<Country> {
+        return countriesResponse.map {
+            Country(
+                it.id,
+                it.name
+            )
+        }
     }
 
     fun mapAreasResponseCountryToCountries(areaResponse: AreasResponse): List<Country> {
