@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.search.domain.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.filter.domain.model.PlaceWork
 import ru.practicum.android.diploma.global.util.RequestResult
@@ -36,5 +37,14 @@ class SearchInteractorImpl(private val repository: SearchRepository) : SearchInt
 
     override fun getIndustries(): Flow<RequestResult<List<Industry>>> {
         return repository.getIndustries()
+    }
+
+    override fun getCountries(): Flow<Pair<List<Country>?, Int?>> {
+        return repository.getCountries().map { result ->
+            when (result) {
+                is RequestResult.Error -> Pair(null, result.error)
+                is RequestResult.Success -> Pair(result.data, null)
+            }
+        }
     }
 }

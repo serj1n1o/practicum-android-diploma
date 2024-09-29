@@ -12,4 +12,6 @@ sealed interface Request {
     data object GetAreas : Request
 
     data object GetIndustries : Request
+
+    data object GetCountries : Request
 }

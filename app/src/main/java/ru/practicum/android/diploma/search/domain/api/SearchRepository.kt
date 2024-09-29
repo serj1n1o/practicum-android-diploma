@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.domain.api
 
 import kotlinx.coroutines.flow.Flow
+import ru.practicum.android.diploma.filter.domain.model.Country
 import ru.practicum.android.diploma.filter.domain.model.Industry
 import ru.practicum.android.diploma.filter.domain.model.PlaceWork
 import ru.practicum.android.diploma.global.util.RequestResult
@@ -18,4 +19,6 @@ interface SearchRepository {
     fun getAreas(): Flow<RequestResult<PlaceWork>>
 
     fun getIndustries(): Flow<RequestResult<List<Industry>>>
+
+    fun getCountries(): Flow<RequestResult<List<Country>>>
 }
